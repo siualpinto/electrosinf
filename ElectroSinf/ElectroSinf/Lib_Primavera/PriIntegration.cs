@@ -84,7 +84,6 @@ namespace ElectroSinf.Lib_Primavera
         #endregion Artigo
 
         #region DocsVenda
-
         public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -102,12 +101,10 @@ namespace ElectroSinf.Lib_Primavera
                 if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
                 {
                     // Atribui valores ao cabecalho do doc
-                    //myEnc.set_DataDoc(dv.Data);
                     myEnc.set_Entidade(dv.Entidade);
                     myEnc.set_Serie(dv.Serie);
                     myEnc.set_Tipodoc("ECL");
                     myEnc.set_TipoEntidade("C");
-                    //myEnc.set_DataDoc(data);
                     // Linhas do documento para a lista de linhas
                     lstlindv = dv.LinhasDoc;
                     PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(myEnc, rl);
@@ -145,9 +142,6 @@ namespace ElectroSinf.Lib_Primavera
 
             }
         }
-
-
-
         public static List<Model.DocVenda> Encomendas_List()
         {
 
@@ -198,10 +192,6 @@ namespace ElectroSinf.Lib_Primavera
             }
             return listdv;
         }
-
-
-
-
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
 
@@ -249,7 +239,282 @@ namespace ElectroSinf.Lib_Primavera
             }
             return null;
         }
+        //public static Model.RespostaErro TransformaDoc(Model.DocVenda dc)
+        //{
+
+        //    Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+        //    GcpBEDocumentoVenda objEnc = new GcpBEDocumentoVenda();
+        //    GcpBEDocumentoVenda objGR = new GcpBEDocumentoVenda();
+        //    GcpBELinhasDocumentoVenda objLinEnc = new GcpBELinhasDocumentoVenda();
+        //    PreencheRelacaoVendas rl = new PreencheRelacaoVendas();
+
+        //    List<Model.LinhaDocVenda> lstlindc = new List<Model.LinhaDocVenda>();
+
+        //    try
+        //    {
+        //        if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+        //        {
+
+        //            //objEnc = PriEngine.Engine.Comercial.Vendas.Edita("000", "ECF", "2013", 3);
+        //            objEnc = PriEngine.Engine.Comercial.Vendas.Edita("000", "ECL", "1", 3);
+
+        //            // --- Criar os cabeçalhos da GR
+        //            objGR.set_Entidade(objEnc.get_Entidade());
+        //            objEnc.set_Serie("1");
+        //            objEnc.set_Tipodoc("ECL");
+        //            objEnc.set_TipoEntidade("C");
+
+        //            objGR = PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(objGR, rl);
+
+
+        //            // vão precisar do ciclo para percorrer as linhas da encomenda que pretendem copiar
+        //            double QdeaCopiar;
+        //            lstlindc = dc.LinhasDoc;
+        //            foreach (Model.LinhaDocVenda lin in lstlindc)
+        //            {
+        //                PriEngine.Engine.Comercial.Internos.CopiaLinha("C", objEnc, "C", objGR, lin.NumLinha, QdeaCopiar);
+        //            }
+        //            // precisamos aqui de um metodo que permita actualizar a Qde Satisfeita da linha de encomenda.  Existe em VB mas ainda não sei qual é em c#
+
+        //            PriEngine.Engine.IniciaTransaccao();
+        //            PriEngine.Engine.Comercial.Vendas.Actualiza(objEnc, "");
+        //            PriEngine.Engine.Comercial.Vendas.Actualiza(objGR, "");
+
+        //            PriEngine.Engine.TerminaTransaccao();
+
+        //            erro.Erro = 0;
+        //            erro.Descricao = "Sucesso";
+        //            return erro;
+        //        }
+        //        else
+        //        {
+        //            erro.Erro = 1;
+        //            erro.Descricao = "Erro ao abrir empresa";
+        //            return erro;
+
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        PriEngine.Engine.DesfazTransaccao();
+        //        erro.Erro = 1;
+        //        erro.Descricao = ex.Message;
+        //        return erro;
+        //    }
+
+
+        //}
 
         #endregion DocsVenda
+
+        #region TDU_Carrinho
+
+        public static List<Model.TDU_Carrinho> ListaCarrinho()
+        {
+
+            StdBELista objList;
+            List<Model.TDU_Carrinho> listCarrinho= new List<Model.TDU_Carrinho>();
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT * FROM  TDU_Carrinho");
+                while (!objList.NoFim())
+                {
+                    listCarrinho.Add(new Model.TDU_Carrinho
+                    {
+                        CDU_IdArtigo = objList.Valor("CDU_IdArtigo"),
+                        CDU_IdCliente = objList.Valor("CDU_IdCliente"),
+                        CDU_Quantidade = objList.Valor("CDU_Quantidade")
+                    });
+                    objList.Seguinte();
+
+                }
+
+                return listCarrinho;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.TDU_Carrinho> GetCarrinhoCliente(string codCliente)
+        {
+            StdBELista objList;
+            List<Model.TDU_Carrinho> listCarrinho = new List<Model.TDU_Carrinho>();
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE TDU_IdCliente="+codCliente);
+                while (!objList.NoFim())
+                {
+                    listCarrinho.Add(new Model.TDU_Carrinho
+                    {
+                        CDU_IdArtigo = objList.Valor("CDU_IdArtigo"),
+                        CDU_IdCliente = objList.Valor("CDU_IdCliente"),
+                        CDU_Quantidade = objList.Valor("CDU_Quantidade")
+                    });
+                    objList.Seguinte();
+
+                }
+
+                return listCarrinho;
+            }
+            else
+                return null;
+        }
+
+        //public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.TDU_Carrinho cliente)
+        //{
+        //    Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
+
+        //    GcpBECliente objCli = new GcpBECliente();
+
+        //    try
+        //    {
+
+        //        if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+        //        {
+
+        //            if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.CodCliente) == false)
+        //            {
+        //                erro.Erro = 1;
+        //                erro.Descricao = "O cliente não existe";
+        //                return erro;
+        //            }
+        //            else
+        //            {
+
+        //                objCli = PriEngine.Engine.Comercial.Clientes.Edita(cliente.CodCliente);
+        //                objCli.set_EmModoEdicao(true);
+
+        //                objCli.set_Nome(cliente.NomeCliente);
+        //                objCli.set_NumContribuinte(cliente.NumContribuinte);
+        //                objCli.set_Moeda(cliente.Moeda);
+        //                objCli.set_Morada(cliente.Morada);
+
+        //                PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
+
+        //                erro.Erro = 0;
+        //                erro.Descricao = "Sucesso";
+        //                return erro;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            erro.Erro = 1;
+        //            erro.Descricao = "Erro ao abrir a empresa";
+        //            return erro;
+
+        //        }
+
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        erro.Erro = 1;
+        //        erro.Descricao = ex.Message;
+        //        return erro;
+        //    }
+
+        //}
+
+
+        public static Lib_Primavera.Model.RespostaErro DelArtigoCarrinho(Model.TDU_Carrinho carrinho)
+        {
+
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
+            StdBECamposChave tdu_carrinho = new StdBECamposChave();
+
+            try
+            {
+                if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+                    tdu_carrinho.AddCampoChave("CDU_IdCliente", carrinho.CDU_IdCliente);
+                    tdu_carrinho.AddCampoChave("CDU_IdArtigo", carrinho.CDU_IdArtigo);
+
+                    PriEngine.Engine.TabelasUtilizador.Remove("TDU_Carrinho", tdu_carrinho);
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+
+
+
+        }
+
+
+
+        public static Lib_Primavera.Model.RespostaErro InsereCarrinhoObj(Model.TDU_Carrinho carrinho)
+        {
+
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
+            StdBERegistoUtil tdu_carrinho = new StdBERegistoUtil();
+            StdBECampos cmps = new StdBECampos();
+            StdBECampo idCliente = new StdBECampo();
+            StdBECampo idArtigo = new StdBECampo();
+            StdBECampo quantidade = new StdBECampo();
+
+            try
+            {
+                if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+                {
+
+                    idCliente.Nome = "CDU_IdCliente";
+                    idArtigo.Nome = "CDU_IdArtigo";
+                    quantidade.Nome = "CDU_Quantidade";
+                    idCliente.Valor = carrinho.CDU_IdCliente;
+                    idArtigo.Valor = carrinho.CDU_IdArtigo;
+                    quantidade.Valor = carrinho.CDU_Quantidade;
+
+                    cmps.Insere(idCliente);
+                    cmps.Insere(idArtigo);
+                    cmps.Insere(quantidade);
+
+                    tdu_carrinho.set_Campos(cmps);
+                    PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_Carrinho", tdu_carrinho);
+
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+
+
+        }
+        #endregion TDU_Carrinho
     }
 }
