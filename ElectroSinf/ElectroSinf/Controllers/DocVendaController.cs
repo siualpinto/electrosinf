@@ -12,16 +12,12 @@ namespace ElectroSinf.Controllers
 {
     public class DocVendaController : ApiController
     {
-        //
-        // GET: /Clientes/
 
         public IEnumerable<Lib_Primavera.Model.DocVenda> Get()
         {
             return Lib_Primavera.PriIntegration.Encomendas_List();
         }
-
-
-        // GET api/cliente/5    
+ 
         public Lib_Primavera.Model.DocVenda Get(string id)
         {
             Lib_Primavera.Model.DocVenda docvenda = Lib_Primavera.PriIntegration.Encomenda_Get(id);
@@ -37,7 +33,6 @@ namespace ElectroSinf.Controllers
             }
         }
 
-
         public HttpResponseMessage Post(Lib_Primavera.Model.DocVenda dv)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
@@ -49,14 +44,16 @@ namespace ElectroSinf.Controllers
                    HttpStatusCode.Created, dv.id);
                 string uri = Url.Link("DefaultApi", new { DocId = dv.id });
                 response.Headers.Location = new Uri(uri);
+                response.Content = new StringContent(erro.Descricao);
                 return response;
             }
 
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                HttpResponseMessage error = Request.CreateResponse(HttpStatusCode.BadRequest);
+                error.Content = new StringContent(erro.Descricao);
+                return error;
             }
-
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ElectroSinf.Lib_Primavera.Model
             get;
             set;
         }
-        public string CDU_Quantidade
+        public int CDU_Quantidade
         {
             get;
             set;
