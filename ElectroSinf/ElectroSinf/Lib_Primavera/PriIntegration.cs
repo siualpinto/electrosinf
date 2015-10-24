@@ -456,5 +456,62 @@ namespace ElectroSinf.Lib_Primavera
             }
         }
         #endregion TDU_Carrinho
+        #region Categoria
+        public static Lib_Primavera.Model.TDU_Categoria GetCategoria(int id)
+        {         
+            StdBECamposChave pk = new StdBECamposChave();
+            //Primary Key of TDU_Categoria Table 
+            pk.AddCampoChave("CDU_IdCategoria", id);                 
+            Model.TDU_Categoria myCat = new Model.TDU_Categoria();
+            
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+                {
+                    if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_Categoria", pk) == false)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        myCat.CDU_IdCategoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", pk, "CDU_IdCategoria");
+                        myCat.CDU_Categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", pk, "CDU_Categoria");
+                        return myCat;
+                    }
+
+                }
+                else
+                {
+                    return null;
+                }
+        }
+        #endregion Categoria
+        #region TipoArtigo
+        public static Lib_Primavera.Model.TDU_TipoArtigo GetTipoArtigo(int id)
+        {
+            StdBECamposChave pk = new StdBECamposChave();
+            //Primary Key of TDU_TipoArtigo Table 
+            pk.AddCampoChave("CDU_IdTipo", id);
+            Model.TDU_TipoArtigo mytip = new Model.TDU_TipoArtigo();
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_TipoArtigo", pk) == false)
+                {
+                    return null;
+                }
+                else
+                {
+                    mytip.CDU_IdTipo = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_TipoArtigo", pk, "CDU_idTipo");
+                    mytip.CDU_TipoArtigo = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_TipoArtigo", pk, "CDU_TipoArtigo");
+                    return mytip;
+                }
+
+            }
+            else
+            {
+                return null;
+            }
+        }
+        #endregion TipoArtigo
+
     }
 }
