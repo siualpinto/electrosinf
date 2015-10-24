@@ -18,8 +18,7 @@ namespace ElectroSinf.Controllers
             return Lib_Primavera.PriIntegration.Encomendas_List();
         }
  
-        public Lib_Primavera.Model.DocVenda Get(string id)
-        {
+        public Lib_Primavera.Model.DocVenda Get(string id){
             Lib_Primavera.Model.DocVenda docvenda = Lib_Primavera.PriIntegration.Encomenda_Get(id);
             if (docvenda == null)
             {

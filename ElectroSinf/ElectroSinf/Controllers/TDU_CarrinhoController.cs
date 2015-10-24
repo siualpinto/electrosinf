@@ -16,7 +16,7 @@ namespace ElectroSinf.Controllers
             return Lib_Primavera.PriIntegration.ListaCarrinho();
         }
 
-        // GET GET http://localhost:49234/api/TDU_Carrinho/MIGUEL
+        //GET http://localhost:49234/api/TDU_Carrinho/MIGUEL
         public List<TDU_Carrinho> Get(string id)
         {
             List<TDU_Carrinho> carrinho = Lib_Primavera.PriIntegration.GetCarrinhoCliente(id);

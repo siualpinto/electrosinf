@@ -8,6 +8,7 @@ using Interop.StdBE800;
 using Interop.GcpBE800;
 using ADODB;
 using Interop.IGcpBS800;
+using ElectroSinf.Lib_Primavera.Model;
 //using Interop.StdBESql800;
 //using Interop.StdBSSql800;
 
@@ -82,10 +83,11 @@ namespace ElectroSinf.Lib_Primavera
         }
 
         #endregion Artigo
-        #region DocsVenda
+        #region DocVenda
         public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+
             GcpBEDocumentoVenda myEnc = new GcpBEDocumentoVenda();
 
             GcpBELinhaDocumentoVenda myLin = new GcpBELinhaDocumentoVenda();
@@ -99,19 +101,23 @@ namespace ElectroSinf.Lib_Primavera
             {
                 if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
                 {
+                    //atributos que por enquanto não são dinamicos:
+                    string serie = "1";
+                    double desconto = 0.0;
+                    string armazem = "A1";
+
                     // Atribui valores ao cabecalho do doc
                     myEnc.set_Entidade(dv.Entidade);
-                    myEnc.set_Serie(dv.Serie);
-                    myEnc.set_Tipodoc("ECL");
+                    myEnc.set_Serie(serie);
+                    myEnc.set_Tipodoc("FA");
                     myEnc.set_TipoEntidade("C");
                     // Linhas do documento para a lista de linhas
                     lstlindv = dv.LinhasDoc;
                     PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(myEnc, rl);
                     foreach (Model.LinhaDocVenda lin in lstlindv)
                     {
-                        PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade, "", "", lin.PrecoUnitario, lin.Desconto);
+                        PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade, armazem, "", lin.PrecoUnitario, desconto);
                     }
-
 
                     // PriEngine.Engine.Comercial.Compras.TransformaDocumento(
 
@@ -119,7 +125,7 @@ namespace ElectroSinf.Lib_Primavera
                     PriEngine.Engine.Comercial.Vendas.Actualiza(myEnc, "Teste");
                     PriEngine.Engine.TerminaTransaccao();
                     erro.Erro = 0;
-                    erro.Descricao = "Sucesso";
+                    erro.Descricao = "Sucesso" + myEnc.get_ID();
                     return erro;
                 }
                 else
@@ -161,7 +167,7 @@ namespace ElectroSinf.Lib_Primavera
 
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL'");
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='FA'");
                 while (!objListCab.NoFim())
                 {
                     dv = new Model.DocVenda();
@@ -212,7 +218,7 @@ namespace ElectroSinf.Lib_Primavera
             {
 
 
-                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
+                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='FA' and NumDoc='" + numdoc + "'";
                 objListCab = PriEngine.Engine.Consulta(st);
                 dv = new Model.DocVenda();
                 dv.id = objListCab.Valor("id");
@@ -245,47 +251,46 @@ namespace ElectroSinf.Lib_Primavera
             }
             return null;
         }
-        //public static Model.RespostaErro TransformaDoc(Model.DocVenda dc)
+
+        //public static Model.RespostaErro TransformaDoc(string id)
         //{
 
         //    Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-        //    GcpBEDocumentoVenda objEnc = new GcpBEDocumentoVenda();
-        //    GcpBEDocumentoVenda objGR = new GcpBEDocumentoVenda();
+        //    GcpBEDocumentoVenda objFact = new GcpBEDocumentoVenda();
+        //    GcpBEDocumentoVenda objRE = new GcpBEDocumentoVenda();
         //    GcpBELinhasDocumentoVenda objLinEnc = new GcpBELinhasDocumentoVenda();
         //    PreencheRelacaoVendas rl = new PreencheRelacaoVendas();
 
-        //    List<Model.LinhaDocVenda> lstlindc = new List<Model.LinhaDocVenda>();
+        //    GcpBELinhasDocumentoVenda lstlindc = new GcpBELinhasDocumentoVenda();
 
         //    try
         //    {
         //        if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
         //        {
-
-        //            //objEnc = PriEngine.Engine.Comercial.Vendas.Edita("000", "ECF", "2013", 3);
-        //            objEnc = PriEngine.Engine.Comercial.Vendas.Edita("000", "ECL", "1", 3);
-
-        //            // --- Criar os cabeçalhos da GR
-        //            objGR.set_Entidade(objEnc.get_Entidade());
-        //            objEnc.set_Serie("1");
-        //            objEnc.set_Tipodoc("ECL");
-        //            objEnc.set_TipoEntidade("C");
-
-        //            objGR = PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(objGR, rl);
-
-
-        //            // vão precisar do ciclo para percorrer as linhas da encomenda que pretendem copiar
-        //            double QdeaCopiar;
-        //            lstlindc = dc.LinhasDoc;
-        //            foreach (Model.LinhaDocVenda lin in lstlindc)
+        //            if (!PriEngine.Engine.Comercial.Vendas.ExisteID(id))
         //            {
-        //                PriEngine.Engine.Comercial.Internos.CopiaLinha("C", objEnc, "C", objGR, lin.NumLinha, QdeaCopiar);
+        //                erro.Erro = 1;
+        //                erro.Descricao = "Documento inexistente";
+        //                return erro;
         //            }
-        //            // precisamos aqui de um metodo que permita actualizar a Qde Satisfeita da linha de encomenda.  Existe em VB mas ainda não sei qual é em c#
+        //            objFact = PriEngine.Engine.Comercial.Vendas.EditaID(id);
+                                    
+        //            // --- Criar os cabeçalhos da RE
+        //            objRE.set_Entidade(objFact.get_Entidade());
+        //            objRE.set_Serie("1");
+        //            objRE.set_Tipodoc("ECL");
+        //            objRE.set_TipoEntidade("C");
 
+        //            objRE = PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(objRE, rl);
+
+        //            lstlindc = objFact.get_Linhas();
+        //            for (int i = 1; i <= lstlindc.NumItens; i++)
+        //            {
+        //                PriEngine.Engine.Comercial.Internos.CopiaLinha("V", objFact, "V", objRE, i,lstlindc[i].get_Quantidade());
+        //            }
         //            PriEngine.Engine.IniciaTransaccao();
-        //            PriEngine.Engine.Comercial.Vendas.Actualiza(objEnc, "");
-        //            PriEngine.Engine.Comercial.Vendas.Actualiza(objGR, "");
-
+        //            PriEngine.Engine.Comercial.Vendas.Actualiza(objFact, "");
+        //            PriEngine.Engine.Comercial.Vendas.Actualiza(objRE, "");
         //            PriEngine.Engine.TerminaTransaccao();
 
         //            erro.Erro = 0;
@@ -303,16 +308,16 @@ namespace ElectroSinf.Lib_Primavera
         //    }
         //    catch (Exception ex)
         //    {
-        //        PriEngine.Engine.DesfazTransaccao();
+        //        try
+        //        {
+        //            PriEngine.Engine.DesfazTransaccao();
+        //        }catch { }
         //        erro.Erro = 1;
         //        erro.Descricao = ex.Message;
         //        return erro;
         //    }
-
-
         //}
-
-        #endregion DocsVenda
+        #endregion DocVenda
         #region TDU_Carrinho
         public static List<Model.TDU_Carrinho> ListaCarrinho()
         {
