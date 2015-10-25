@@ -34,9 +34,8 @@ namespace ElectroSinf.Lib_Primavera
                 else
                 {
                     objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
-                    myArt.CodArtigo = objArtigo.get_Artigo();
-                    myArt.DescArtigo = objArtigo.get_Descricao();
-
+                    double pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(codArtigo, "EUR", "UN", "PVP1", false,0);
+                    myArt = new Model.Artigo(objArtigo,pvp1);
                     return myArt;
                 }
 
@@ -517,6 +516,5 @@ namespace ElectroSinf.Lib_Primavera
             }
         }
         #endregion TipoArtigo
-
     }
 }

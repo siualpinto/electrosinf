@@ -265,6 +265,8 @@
     <Compile Include="Controllers\DocVendaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TDU_CarrinhoController.cs" />
+    <Compile Include="Controllers\TDU_CategoriaController.cs" />
+    <Compile Include="Controllers\TDU_TipoArtigoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -273,6 +275,8 @@
     <Compile Include="Lib_Primavera\Model\LinhaDocVenda.cs" />
     <Compile Include="Lib_Primavera\Model\RespostaErro.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_Carrinho.cs" />
+    <Compile Include="Lib_Primavera\Model\TDU_Categoria.cs" />
+    <Compile Include="Lib_Primavera\Model\TDU_TipoArtigo.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
     <Compile Include="Lib_Primavera\PriIntegration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
