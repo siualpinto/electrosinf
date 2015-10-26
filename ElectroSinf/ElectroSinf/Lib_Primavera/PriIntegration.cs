@@ -487,6 +487,37 @@ namespace ElectroSinf.Lib_Primavera
                     return null;
                 }
         }
+        public static List<Model.TDU_Categoria> ListaCategorias()
+        {
+            StdBELista objList;
+
+            Model.TDU_Categoria categoria = new Model.TDU_Categoria();
+            List<Model.TDU_Categoria> listCategorias = new List<Model.TDU_Categoria>();
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT * FROM DBO.TDU_Categoria");
+
+                while (!objList.NoFim())
+                {
+                    categoria = new Model.TDU_Categoria();
+                    categoria.CDU_IdCategoria = objList.Valor("CDU_IdCategoria");
+                    categoria.CDU_Categoria = objList.Valor("CDU_Categoria");
+
+                    listCategorias.Add(categoria);
+                    objList.Seguinte();
+                }
+
+                return listCategorias;
+
+            }
+            else
+            {
+                return null;
+
+            }
+        }
         #endregion Categoria
         #region TipoArtigo
         public static Lib_Primavera.Model.TDU_TipoArtigo GetTipoArtigo(int id)
@@ -506,6 +537,7 @@ namespace ElectroSinf.Lib_Primavera
                 {
                     mytip.CDU_IdTipo = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_TipoArtigo", pk, "CDU_idTipo");
                     mytip.CDU_TipoArtigo = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_TipoArtigo", pk, "CDU_TipoArtigo");
+                    mytip.CDU_Categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_TipoArtigo", pk, "CDU_Categoria");
                     return mytip;
                 }
 
@@ -515,6 +547,72 @@ namespace ElectroSinf.Lib_Primavera
                 return null;
             }
         }
+        public static List<Model.TDU_TipoArtigo> ListaTiposArtigos()
+        {
+            StdBELista objList;
+
+            Model.TDU_TipoArtigo tipo = new Model.TDU_TipoArtigo();
+            List<Model.TDU_TipoArtigo> listTipos = new List<Model.TDU_TipoArtigo>();
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT * FROM DBO.TDU_TipoArtigo");
+
+                while (!objList.NoFim())
+                {
+                    tipo = new Model.TDU_TipoArtigo();
+                    tipo.CDU_IdTipo = objList.Valor("CDU_IdTipo");
+                    tipo.CDU_TipoArtigo = objList.Valor("CDU_TipoArtigo");
+                    tipo.CDU_Categoria = objList.Valor("CDU_Categoria");
+
+                    listTipos.Add(tipo);
+                    objList.Seguinte();
+                }
+
+                return listTipos;
+
+            }
+            else
+            {
+                return null;
+
+            }
+        }
         #endregion TipoArtigo
+        #region TDU_TipoArtigobyCDU_Categoria
+        public static List<Model.TDU_TipoArtigobyCDU_Categoria> ListaTiposArtigosbyCategoria(int id)
+        {
+            StdBELista objList;
+
+            Model.TDU_TipoArtigobyCDU_Categoria tipoByCategoria = new Model.TDU_TipoArtigobyCDU_Categoria();
+            List<Model.TDU_TipoArtigobyCDU_Categoria> listTipos = new List<Model.TDU_TipoArtigobyCDU_Categoria>();
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT * FROM DBO.TDU_TipoArtigo where CDU_Categoria="+id);
+
+                while (!objList.NoFim())
+                {
+                    tipoByCategoria = new Model.TDU_TipoArtigobyCDU_Categoria();
+                    tipoByCategoria.CDU_IdTipo = objList.Valor("CDU_IdTipo");
+                    tipoByCategoria.CDU_TipoArtigo = objList.Valor("CDU_TipoArtigo");
+                    tipoByCategoria.CDU_Categoria = objList.Valor("CDU_Categoria");
+
+                    listTipos.Add(tipoByCategoria);
+                    objList.Seguinte();
+                }
+
+                return listTipos;
+
+            }
+            else
+            {
+                return null;
+
+            }
+        }
+        #endregion TDU_TipoArtigobyCDU_Categoria
     }
 }

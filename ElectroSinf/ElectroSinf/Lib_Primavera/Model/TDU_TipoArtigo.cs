@@ -16,6 +16,11 @@ namespace ElectroSinf.Lib_Primavera.Model
         {
             get;
             set;
-        }        
+        }
+        public int CDU_Categoria
+        {
+            get;
+            set;
+        }   
     }
 }

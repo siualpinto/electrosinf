@@ -9,7 +9,11 @@ using ElectroSinf.Lib_Primavera.Model;
 namespace ElectroSinf.Controllers
 {
     public class TDU_CategoriaController : ApiController
-    {        
+    {
+        public IEnumerable<Lib_Primavera.Model.TDU_Categoria> Get()
+        {
+            return Lib_Primavera.PriIntegration.ListaCategorias();
+        }
         public TDU_Categoria Get(int id)
         {
             Lib_Primavera.Model.TDU_Categoria categoria = Lib_Primavera.PriIntegration.GetCategoria(id);
