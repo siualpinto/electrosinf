@@ -25,7 +25,7 @@ namespace ElectroSinf.Lib_Primavera.Model
             StdBECamposChave cdu_categoria_chave = new StdBECamposChave();
             cdu_categoria_chave.AddCampoChave("CDU_IdCategoria", cdu_categoria);
             Categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", cdu_categoria_chave, "CDU_Categoria");
-            Disponibilidade = PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(CodArtigo);
+            Stock = PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(CodArtigo);
         }
         public string CodArtigo { get; set; }
         public string DescArtigo { get; set; }
@@ -34,7 +34,6 @@ namespace ElectroSinf.Lib_Primavera.Model
         public string Marca { set; get; }
         public string Modelo { set; get; }
         public double Preco { set; get; }
-        public Double Disponibilidade { set; get; }
         public Double Stock { set; get; }
         public List<Model.TDU_Especificacao> Especificacoes { set; get; }
     }
