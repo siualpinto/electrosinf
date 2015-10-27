@@ -210,3 +210,4 @@ C:\Users\user\Desktop\electrosinf\ElectroSinf\ElectroSinf\bin\zh-Hans\System.Spa
 C:\Users\user\Desktop\electrosinf\ElectroSinf\ElectroSinf\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\user\Desktop\electrosinf\ElectroSinf\ElectroSinf\obj\Debug\ElectroSinf.dll
 C:\Users\user\Desktop\electrosinf\ElectroSinf\ElectroSinf\obj\Debug\ElectroSinf.pdb
+C:\Users\user\Desktop\electrosinf\ElectroSinf\ElectroSinf\obj\Debug\ElectroSinf.csprojResolveAssemblyReference.cache
