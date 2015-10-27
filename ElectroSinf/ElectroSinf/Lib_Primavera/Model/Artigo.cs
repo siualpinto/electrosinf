@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Interop.StdBE800;
 
 namespace ElectroSinf.Lib_Primavera.Model
 {
@@ -12,29 +13,28 @@ namespace ElectroSinf.Lib_Primavera.Model
         {
             CodArtigo = objArtigo.get_Artigo();
             DescArtigo = objArtigo.get_Descricao();
-            Familia = PriEngine.Engine.Comercial.Familias.Edita(objArtigo.get_Familia()).get_Descricao();
-            SubFamilia = PriEngine.Engine.Comercial.Familias.EditaSubFamilia(objArtigo.get_SubFamilia(), objArtigo.get_Familia()).get_Descricao();
-            Peso = objArtigo.get_Peso();
-            Volume = objArtigo.get_Volume();
             Marca = PriEngine.Engine.Comercial.Marcas.Edita(objArtigo.get_Marca()).get_Descricao();
-            Dim1 = objArtigo.get_Dimensao1();
-            Dim2 = objArtigo.get_Dimensao2();
-            Dim3 = objArtigo.get_Dimensao3();
             Modelo = PriEngine.Engine.Comercial.Modelos.Edita(objArtigo.get_Marca(), objArtigo.get_Modelo()).get_Descricao();
-            Preco = pvp1 * (1 + Convert.ToDouble(objArtigo.get_IVA()) / 100.0);
+            Preco = pvp1;// *(1 + Convert.ToDouble(objArtigo.get_IVA()) / 100.0);
+            Especificacoes = PriIntegration.ListaEspecificacoesArtigo(CodArtigo);
+            int cdu_tipo = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(CodArtigo, "CDU_Tipo");
+            Tipo = PriIntegration.GetTipoArtigo(cdu_tipo).CDU_TipoArtigo;
+            StdBECamposChave cdu_tipo_chave = new StdBECamposChave();
+            cdu_tipo_chave.AddCampoChave("CDU_IdTipo", cdu_tipo);
+            int cdu_categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_TipoArtigo", cdu_tipo_chave, "CDU_Categoria");
+            StdBECamposChave cdu_categoria_chave = new StdBECamposChave();
+            cdu_categoria_chave.AddCampoChave("CDU_IdCategoria", cdu_categoria);
+            Categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", cdu_categoria_chave, "CDU_Categoria");
+
         }
         public string CodArtigo { get; set; }
         public string DescArtigo { get; set; }
-        public string Familia { get; set; }
-        public string SubFamilia { get; set; }
-        public double Peso { set; get; }
-        public double Volume { set; get; }
+        public string Tipo { get; set; }
+        public string Categoria { get; set; }
         public string Marca { set; get; }
-        public string Dim1 { set; get; }
-        public string Dim2 { set; get; }
-        public string Dim3 { set; get; }
         public string Modelo { set; get; }
         public double Preco { set; get; }
         public string Disponibilidade { set; get; }
+        public List<Model.TDU_Especificacao> Especificacoes { set; get; }
     }
 }

@@ -614,5 +614,32 @@ namespace ElectroSinf.Lib_Primavera
             }
         }
         #endregion TDU_TipoArtigobyCDU_Categoria
+        #region TDU_Especificacao
+        public static List<Model.TDU_Especificacao> ListaEspecificacoesArtigo(string idArtigo)
+        {
+
+            StdBELista objList;
+            List<Model.TDU_Especificacao> listEspecs = new List<Model.TDU_Especificacao>();
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT * FROM  TDU_Especificacao WHERE CDU_idArtigo ='"+idArtigo+"'");
+                while (!objList.NoFim())
+                {
+                    listEspecs.Add(new Model.TDU_Especificacao
+                    {
+                        CDU_Nome = objList.Valor("CDU_Nome"),
+                        CDU_Valor = objList.Valor("CDU_Valor")
+                    });
+                    objList.Seguinte();
+
+                }
+
+                return listEspecs;
+            }
+            else return null;
+        }
+        #endregion TDU_Especificacao
     }
 }

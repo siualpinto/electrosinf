@@ -277,6 +277,7 @@
     <Compile Include="Lib_Primavera\Model\RespostaErro.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_Carrinho.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_Categoria.cs" />
+    <Compile Include="Lib_Primavera\Model\TDU_Especificacao.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_TipoArtigo.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_TipoArtigobyCDU_Categoria.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
