@@ -37,6 +37,7 @@ namespace ElectroSinf.Lib_Primavera.Model
         public string Modelo { set; get; }
         public double Preco { set; get; }
         public Double Disponibilidade { set; get; }
+        public Double Stock { set; get; }
         public List<Model.TDU_Especificacao> Especificacoes { set; get; }
     }
 }
