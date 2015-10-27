@@ -13,9 +13,15 @@ namespace ElectroSinf.Lib_Primavera.Model
         {
             CodArtigo = objArtigo.get_Artigo();
             DescArtigo = objArtigo.get_Descricao();
-            Marca = PriEngine.Engine.Comercial.Marcas.Edita(objArtigo.get_Marca()).get_Descricao();
-            Modelo = PriEngine.Engine.Comercial.Modelos.Edita(objArtigo.get_Marca(), objArtigo.get_Modelo()).get_Descricao();
-            Preco =Math.Round(pvp1 * (1 + Convert.ToDouble(objArtigo.get_IVA()) / 100.0),2);
+            if (objArtigo.get_Marca() != "")
+            {
+                Marca = PriEngine.Engine.Comercial.Marcas.Edita(objArtigo.get_Marca()).get_Descricao();
+            }
+            if (objArtigo.get_Modelo() != "" && objArtigo.get_Marca() != "")
+            {
+                Modelo = PriEngine.Engine.Comercial.Modelos.Edita(objArtigo.get_Marca(), objArtigo.get_Modelo()).get_Descricao();
+            }
+            Preco = Math.Round(pvp1 * (1 + Convert.ToDouble(objArtigo.get_IVA()) / 100.0), 2);
             Especificacoes = PriIntegration.ListaEspecificacoesArtigo(CodArtigo);
             int cdu_tipo = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(CodArtigo, "CDU_Tipo");
             Tipo = PriIntegration.GetTipoArtigo(cdu_tipo).CDU_TipoArtigo;
@@ -25,7 +31,7 @@ namespace ElectroSinf.Lib_Primavera.Model
             StdBECamposChave cdu_categoria_chave = new StdBECamposChave();
             cdu_categoria_chave.AddCampoChave("CDU_IdCategoria", cdu_categoria);
             Categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", cdu_categoria_chave, "CDU_Categoria");
-            Stock = PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(CodArtigo);
+            Stock = objArtigo.get_StkActual();
         }
         public string CodArtigo { get; set; }
         public string DescArtigo { get; set; }

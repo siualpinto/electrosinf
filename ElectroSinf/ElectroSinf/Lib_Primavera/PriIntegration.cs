@@ -607,7 +607,6 @@ namespace ElectroSinf.Lib_Primavera
         }
         #endregion TDU_Especificacao
         #region Search
-
         public static List<Model.Artigo> SearchArtigosNome(string id)
         {
             StdBELista objList;
@@ -615,7 +614,7 @@ namespace ElectroSinf.Lib_Primavera
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1IvaIncluido, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo  WHERE Descricao LIKE '%"+id+"%'");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo  WHERE Descricao LIKE '%"+id+"%'");
 
 
                 while (!objList.NoFim())
@@ -626,7 +625,7 @@ namespace ElectroSinf.Lib_Primavera
                         DescArtigo = objList.Valor("Descricao"),
                         Stock = Convert.ToDouble(objList.Valor("STKActual")),
                         Marca = objList.Valor("Marca"),
-                        Preco = Convert.ToDouble(objList.Valor("PVP1IvaIncluido"))
+                        Preco = Math.Round((Convert.ToDouble(objList.Valor("PVP1"))*(1+Convert.ToDouble(objList.Valor("IVA"))/100.0)),2)
                     });
                     objList.Seguinte();
 
@@ -644,7 +643,7 @@ namespace ElectroSinf.Lib_Primavera
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("IF(select COUNT(*) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) GROUP BY Artigo) >$9 BEGIN select Art.Artigo, Descricao, STKActual, Marca, PVP1IvaIncluido, Moeda, Total from (SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1IvaIncluido, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo) as Art Join (select top 10 Artigo, COUNT(*) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) GROUP BY Artigo HAVING COUNT(*) > 1 ORDER BY COUNT(*) DESC) as Linhas on Art.Artigo = Linhas.Artigo END ELSE SELECT top 10 Artigo.Artigo, Descricao, STKActual, Marca, PVP1IvaIncluido, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()");
+                objList = PriEngine.Engine.Consulta("IF(select COUNT(*) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) GROUP BY Artigo) >$9 BEGIN select Art.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda, Total from (SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo) as Art Join (select top 10 Artigo, COUNT(*) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) GROUP BY Artigo HAVING COUNT(*) > 1 ORDER BY COUNT(*) DESC) as Linhas on Art.Artigo = Linhas.Artigo END ELSE SELECT top 10 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()");
 
 
                 while (!objList.NoFim())
@@ -655,7 +654,7 @@ namespace ElectroSinf.Lib_Primavera
                         DescArtigo = objList.Valor("Descricao"),
                         Stock = Convert.ToDouble(objList.Valor("STKActual")),
                         Marca = objList.Valor("Marca"),
-                        Preco = Convert.ToDouble(objList.Valor("PVP1IvaIncluido"))
+                        Preco = Math.Round((Convert.ToDouble(objList.Valor("PVP1")) * (1 + Convert.ToDouble(objList.Valor("IVA")) / 100.0)), 2)
                     });
                     objList.Seguinte();
 
