@@ -264,6 +264,7 @@
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TDU_CarrinhoController.cs" />
     <Compile Include="Controllers\TDU_CategoriaController.cs" />
     <Compile Include="Controllers\TDU_TipoArtigobyCDU_CategoriaController.cs" />

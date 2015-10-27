@@ -320,52 +320,17 @@ namespace ElectroSinf.Lib_Primavera
         #region TDU_Carrinho
         public static List<Model.TDU_Carrinho> ListaCarrinho()
         {
-
-            StdBELista objList;
-            List<Model.TDU_Carrinho> listCarrinho = new List<Model.TDU_Carrinho>();
-
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-
-                objList = PriEngine.Engine.Consulta("SELECT * FROM  TDU_Carrinho");
-                while (!objList.NoFim())
-                {
-                    listCarrinho.Add(new Model.TDU_Carrinho
-                    {
-                        CDU_IdArtigo = objList.Valor("CDU_IdArtigo"),
-                        CDU_IdCliente = objList.Valor("CDU_IdCliente"),
-                        CDU_Quantidade = objList.Valor("CDU_Quantidade")
-                    });
-                    objList.Seguinte();
-
-                }
-
-                return listCarrinho;
+                return Model.TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM  TDU_Carrinho"));
             }
             else return null;
         }
         public static List<Model.TDU_Carrinho> GetCarrinhoCliente(string codCliente)
         {
-            StdBELista objList;
-            List<Model.TDU_Carrinho> listCarrinho = new List<Model.TDU_Carrinho>();
-
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-
-                objList = PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + codCliente + "'");
-                while (!objList.NoFim())
-                {
-                    listCarrinho.Add(new Model.TDU_Carrinho
-                    {
-                        CDU_IdArtigo = objList.Valor("CDU_IdArtigo"),
-                        CDU_IdCliente = objList.Valor("CDU_IdCliente"),
-                        CDU_Quantidade = objList.Valor("CDU_Quantidade")
-                    });
-                    objList.Seguinte();
-
-                }
-
-                return listCarrinho;
+                return Model.TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + codCliente + "'"));
             }
             else return null;
         }

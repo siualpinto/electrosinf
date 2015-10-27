@@ -15,7 +15,7 @@ namespace ElectroSinf.Lib_Primavera.Model
             DescArtigo = objArtigo.get_Descricao();
             Marca = PriEngine.Engine.Comercial.Marcas.Edita(objArtigo.get_Marca()).get_Descricao();
             Modelo = PriEngine.Engine.Comercial.Modelos.Edita(objArtigo.get_Marca(), objArtigo.get_Modelo()).get_Descricao();
-            Preco = pvp1 * (1 + Convert.ToDouble(objArtigo.get_IVA()) / 100.0);
+            Preco =Math.Round(pvp1 * (1 + Convert.ToDouble(objArtigo.get_IVA()) / 100.0),2);
             Especificacoes = PriIntegration.ListaEspecificacoesArtigo(CodArtigo);
             int cdu_tipo = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(CodArtigo, "CDU_Tipo");
             Tipo = PriIntegration.GetTipoArtigo(cdu_tipo).CDU_TipoArtigo;
