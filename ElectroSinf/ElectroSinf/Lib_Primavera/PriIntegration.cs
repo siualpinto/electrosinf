@@ -34,8 +34,8 @@ namespace ElectroSinf.Lib_Primavera
                 else
                 {
                     objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
-                    double pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(codArtigo, "EUR", "UN", "PVP1", false,0);
-                    myArt = new Model.Artigo(objArtigo,pvp1);
+                    double pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(codArtigo, "EUR", "UN", "PVP1", false, 0);
+                    myArt = new Model.Artigo(objArtigo, pvp1);
                     return myArt;
                 }
 
@@ -81,6 +81,48 @@ namespace ElectroSinf.Lib_Primavera
 
         }
 
+        public static List<Artigo> getRelacionados(string id, int tipo, double pvp1)
+        {
+            List<Artigo> relacionados = new List<Artigo>();
+            double precoMax = pvp1 * 1.25;
+            string precoString = precoMax.ToString();
+            precoString = precoString.Replace(",", ".");
+
+            StdBELista lst = new StdBELista();
+            lst = PriEngine.Engine.Consulta("IF(SELECT COUNT(DISTINCT Artigo) Total FROM LinhasDoc WHERE Data >= DATEADD(month,-3,GETDATE()) AND Artigo IN (SELECT Artigo FROM Artigo WHERE CDU_Tipo=" + tipo + ") AND LinhasDoc.PrecUnit <= " + precoString + ") >$4"
+                                        + "BEGIN "
+                                        + "	SELECT Art.Artigo, Descricao, PVP1, IVA, Total "
+                                        + "	FROM "
+                                        + "		(SELECT Artigo.Artigo, Descricao, PVP1, IVA "
+                                        + "		FROM Artigo "
+                                        + "		JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo"
+                                        + "		WHERE CDU_Tipo=" + tipo + " AND PVP1 <= " + precoString + " AND Artigo.Artigo!='" + id + "' ) AS Art "
+                                        + "		JOIN (SELECT TOP 5 Artigo, COUNT(*) Total "
+                                        + "			FROM LinhasDoc "
+                                        + "			WHERE Data >= DATEADD(month,-3,GETDATE())"
+                                        + "			GROUP BY Artigo "
+                                        + "			HAVING COUNT(*) > 1"
+                                        + "			ORDER BY COUNT(*) DESC) AS Linhas ON Art.Artigo = Linhas.Artigo "
+                                        + "END "
+                                        + "ELSE "
+                                        + "SELECT Artigo.Artigo, Descricao, PVP1, IVA "
+                                        + "FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo "
+                                        + "WHERE CDU_Tipo=" + tipo + " AND Artigo.Artigo!='" + id + "' "
+                                        + "ORDER BY NEWID() "
+                                        + "SET ROWCOUNT 5");
+
+            Artigo art;
+            while (!lst.NoFim())
+            {
+                art = new Artigo();
+                art.CodArtigo = lst.Valor("artigo");
+                art.DescArtigo = lst.Valor("descricao");
+                art.Preco = Math.Round(lst.Valor("PVP1") * (1 + Convert.ToDouble(lst.Valor("IVA")) / 100.0), 2);
+                relacionados.Add(art);
+                lst.Seguinte();
+            }
+            return relacionados;
+        }
         #endregion Artigo
         #region DocVenda
         public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
@@ -108,7 +150,7 @@ namespace ElectroSinf.Lib_Primavera
                     // Atribui valores ao cabecalho do doc
                     myEnc.set_Entidade(dv.Entidade);
                     myEnc.set_Serie(serie);
-                    myEnc.set_Tipodoc("FA");
+                    myEnc.set_Tipodoc(dv.DocType);
                     myEnc.set_TipoEntidade("C");
                     // Linhas do documento para a lista de linhas
                     lstlindv = dv.LinhasDoc;
@@ -119,7 +161,7 @@ namespace ElectroSinf.Lib_Primavera
                         pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(lin.CodArtigo, "EUR", "UN", "PVP1", false, 0);
                         PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade, armazem, "", pvp1, desconto);
                     }
-                    
+
                     PriEngine.Engine.IniciaTransaccao();
                     PriEngine.Engine.Comercial.Vendas.Actualiza(myEnc, "Teste");
                     PriEngine.Engine.TerminaTransaccao();
@@ -273,7 +315,7 @@ namespace ElectroSinf.Lib_Primavera
         //                return erro;
         //            }
         //            objFact = PriEngine.Engine.Comercial.Vendas.EditaID(id);
-                                    
+
         //            // --- Criar os cabeçalhos da RE
         //            objRE.set_Entidade(objFact.get_Entidade());
         //            objRE.set_Serie("1");
@@ -427,30 +469,30 @@ namespace ElectroSinf.Lib_Primavera
         #endregion TDU_Carrinho
         #region Categoria
         public static Lib_Primavera.Model.TDU_Categoria GetCategoria(int id)
-        {         
+        {
             StdBECamposChave pk = new StdBECamposChave();
             //Primary Key of TDU_Categoria Table 
-            pk.AddCampoChave("CDU_IdCategoria", id);                 
+            pk.AddCampoChave("CDU_IdCategoria", id);
             Model.TDU_Categoria myCat = new Model.TDU_Categoria();
-            
-            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
-                {
-                    if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_Categoria", pk) == false)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        myCat.CDU_IdCategoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", pk, "CDU_IdCategoria");
-                        myCat.CDU_Categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", pk, "CDU_Categoria");
-                        return myCat;
-                    }
 
-                }
-                else
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_Categoria", pk) == false)
                 {
                     return null;
                 }
+                else
+                {
+                    myCat.CDU_IdCategoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", pk, "CDU_IdCategoria");
+                    myCat.CDU_Categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", pk, "CDU_Categoria");
+                    return myCat;
+                }
+
+            }
+            else
+            {
+                return null;
+            }
         }
         public static List<Model.TDU_Categoria> ListaCategorias()
         {
@@ -544,23 +586,48 @@ namespace ElectroSinf.Lib_Primavera
 
             }
         }
+        public static List<Artigo> ListaArtigosbyTipo(int id)
+        {
+            List<Artigo> artigos = new List<Artigo>();
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                StdBELista lst = PriEngine.Engine.Consulta("SELECT Artigo.Artigo,Descricao,IVA,PVP1 FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo WHERE CDU_Tipo=" + id);
+                Artigo art;
+                while (!lst.NoFim())
+                {
+                    art = new Artigo();
+                    art.CodArtigo = lst.Valor("Artigo");
+                    art.DescArtigo = lst.Valor("Descricao");
+                    art.Preco = Math.Round(lst.Valor("PVP1") * (1 + Convert.ToDouble(lst.Valor("IVA")) / 100.0), 2);
+                    artigos.Add(art);
+                    lst.Seguinte();
+                }
+                return artigos;
+            }
+            else
+            {
+                return null;
+
+            }
+
+        }
         #endregion TipoArtigo
         #region TDU_TipoArtigobyCDU_Categoria
-        public static List<Model.TDU_TipoArtigobyCDU_Categoria> ListaTiposArtigosbyCategoria(int id)
+        public static List<Model.TDU_TipoArtigo> ListaTiposArtigosbyCategoria(int id)
         {
             StdBELista objList;
 
-            Model.TDU_TipoArtigobyCDU_Categoria tipoByCategoria = new Model.TDU_TipoArtigobyCDU_Categoria();
-            List<Model.TDU_TipoArtigobyCDU_Categoria> listTipos = new List<Model.TDU_TipoArtigobyCDU_Categoria>();
+            Model.TDU_TipoArtigo tipoByCategoria = new Model.TDU_TipoArtigo();
+            List<Model.TDU_TipoArtigo> listTipos = new List<Model.TDU_TipoArtigo>();
 
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT * FROM DBO.TDU_TipoArtigo where CDU_Categoria="+id);
+                objList = PriEngine.Engine.Consulta("SELECT * FROM DBO.TDU_TipoArtigo where CDU_Categoria=" + id);
 
                 while (!objList.NoFim())
                 {
-                    tipoByCategoria = new Model.TDU_TipoArtigobyCDU_Categoria();
+                    tipoByCategoria = new Model.TDU_TipoArtigo();
                     tipoByCategoria.CDU_IdTipo = objList.Valor("CDU_IdTipo");
                     tipoByCategoria.CDU_TipoArtigo = objList.Valor("CDU_TipoArtigo");
                     tipoByCategoria.CDU_Categoria = objList.Valor("CDU_Categoria");
@@ -589,7 +656,7 @@ namespace ElectroSinf.Lib_Primavera
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT * FROM  TDU_Especificacao WHERE CDU_idArtigo ='"+idArtigo+"'");
+                objList = PriEngine.Engine.Consulta("SELECT * FROM  TDU_ArtigoEspecificacao JOIN TDU_Especificacao ON TDU_ArtigoEspecificacao.CDU_IdEspecificacao=TDU_Especificacao.CDU_idEspecificacao WHERE CDU_IdArtigo ='" + idArtigo + "'");
                 while (!objList.NoFim())
                 {
                     listEspecs.Add(new Model.TDU_Especificacao
@@ -614,7 +681,7 @@ namespace ElectroSinf.Lib_Primavera
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo  WHERE Descricao LIKE '%"+id+"%'");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo  WHERE Descricao LIKE '%" + id + "%'");
 
 
                 while (!objList.NoFim())
@@ -625,7 +692,7 @@ namespace ElectroSinf.Lib_Primavera
                         DescArtigo = objList.Valor("Descricao"),
                         Stock = Convert.ToDouble(objList.Valor("STKActual")),
                         Marca = objList.Valor("Marca"),
-                        Preco = Math.Round((Convert.ToDouble(objList.Valor("PVP1"))*(1+Convert.ToDouble(objList.Valor("IVA"))/100.0)),2)
+                        Preco = Math.Round((Convert.ToDouble(objList.Valor("PVP1")) * (1 + Convert.ToDouble(objList.Valor("IVA")) / 100.0)), 2)
                     });
                     objList.Seguinte();
 

@@ -23,17 +23,17 @@ namespace ElectroSinf.Controllers
                 return tipos;
             }
         }
-        public TDU_TipoArtigo Get(int id)
+        public IEnumerable<Lib_Primavera.Model.Artigo> Get(int id)
         {
-            Lib_Primavera.Model.TDU_TipoArtigo tipoArtigo = Lib_Primavera.PriIntegration.GetTipoArtigo(id);
-            if (tipoArtigo == null)
+            IEnumerable<Lib_Primavera.Model.Artigo> tipos = Lib_Primavera.PriIntegration.ListaArtigosbyTipo(id);
+            if (tipos == null)
             {
                 throw new HttpResponseException(
                   Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
-                return tipoArtigo;
+                return tipos;
             }
         }
     }
