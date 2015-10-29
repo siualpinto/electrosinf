@@ -1,0 +1,1 @@
+delete PRIELECSINF.dbo.TDU_TipoArtigo where CDU_IdCategoria=2;

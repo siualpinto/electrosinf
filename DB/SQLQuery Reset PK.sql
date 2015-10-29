@@ -1,0 +1,1 @@
+DBCC CHECKIDENT (TDU_TipoArtigo , RESEED, 0)
