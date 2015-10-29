@@ -17,29 +17,32 @@ namespace ElectroSinf.Lib_Primavera.Model
         public string CDU_IdCliente { get; set; }
         public int CDU_Quantidade { get; set; }
         public double PrecoTotal { set; get; }
+        public string Nome { set; get; }
 
         public static List<TDU_Carrinho> toCarrinhoList(Interop.StdBE800.StdBELista objList)
         {
-            double pvp1 = 0, iva=0;
-            string idArtigo;
+            double pvp1 = 0, iva = 0;
+            string idArtigo, descricao;
             List<Model.TDU_Carrinho> listCarrinho = new List<TDU_Carrinho>();
             while (!objList.NoFim())
             {
                 idArtigo = objList.Valor("CDU_IdArtigo");
+                descricao = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(idArtigo, "Descricao");
                 pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(idArtigo, "EUR", "UN", "PVP1", false, 0);
-                iva =Convert.ToDouble(PriEngine.Engine.Comercial.Artigos.DaValorAtributo(idArtigo, "IVA"));
-                pvp1 = Math.Round(pvp1*(1 + iva/100.0),2);
+                iva = Convert.ToDouble(PriEngine.Engine.Comercial.Artigos.DaValorAtributo(idArtigo, "IVA"));
+                pvp1 = Math.Round(pvp1 * (1 + iva / 100.0), 2);
                 listCarrinho.Add(new TDU_Carrinho
                 {
                     CDU_IdArtigo = idArtigo,
                     CDU_IdCliente = objList.Valor("CDU_IdCliente"),
                     CDU_Quantidade = objList.Valor("CDU_Quantidade"),
-                    PrecoTotal = (pvp1 * objList.Valor("CDU_Quantidade"))
+                    PrecoTotal = (pvp1 * objList.Valor("CDU_Quantidade")),
+                    Nome = descricao
                 });
                 objList.Seguinte();
 
             }
             return listCarrinho;
-        } 
+        }
     }
 }

@@ -14,17 +14,17 @@ namespace ElectroSinf.Controllers
         {
             return Lib_Primavera.PriIntegration.ListaCategorias();
         }
-        public TDU_Categoria Get(int id)
+        public IEnumerable<Lib_Primavera.Model.TDU_TipoArtigo> Get(int id)
         {
-            Lib_Primavera.Model.TDU_Categoria categoria = Lib_Primavera.PriIntegration.GetCategoria(id);
-            if (categoria == null)
+            IEnumerable<Lib_Primavera.Model.TDU_TipoArtigo> tipos = Lib_Primavera.PriIntegration.ListaTiposArtigosbyCategoria(id);
+            if (tipos == null)
             {
                 throw new HttpResponseException(
                   Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
-                return categoria;
+                return tipos;
             }
         }
     }

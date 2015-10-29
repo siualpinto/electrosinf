@@ -49,7 +49,7 @@ namespace ElectroSinf.Lib_Primavera.Model
             get;
             set;
         }
-
+        public string DocType { set; get; }
 
     }
 }
