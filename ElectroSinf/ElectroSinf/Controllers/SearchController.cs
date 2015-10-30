@@ -12,21 +12,14 @@ namespace ElectroSinf.Controllers
 {
     public class SearchController : ApiController
     {
-        //
-        // GET: /Artigos/
-
-        public IEnumerable<Lib_Primavera.Model.Artigo> Get(string id)
+        public IEnumerable<Lib_Primavera.Model.Artigo> Get(string search)
         {
-            IEnumerable<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.SearchArtigosNome(id);
-            return artigos;
+            return  Lib_Primavera.PriIntegration.SearchArtigosNome(search.Replace("\"", ""));
         }
 
         public IEnumerable<Lib_Primavera.Model.Artigo> Get()
         {
-            IEnumerable<Lib_Primavera.Model.Artigo> artigos = Lib_Primavera.PriIntegration.SearchArtigosHome();
-            return artigos;
+            return Lib_Primavera.PriIntegration.SearchArtigosHome(); ;
         }
-
-
     }
 }
