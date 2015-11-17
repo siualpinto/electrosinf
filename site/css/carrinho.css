@@ -1,3 +1,7 @@
+html{
+	padding-bottom:5%;
+}
+
 .shop-label{
 	border:1px solid black;
 	margin-top:2%;
@@ -6,4 +10,9 @@
 .shop-item{
 	margin-top:2%;
 	padding:0px;
+}
+
+.shop-image{
+	padding-left:5%;
+	padding-right:5%;
 }

@@ -1,0 +1,43 @@
+.product-mini{
+	margin-left:1%;
+	margin-right:1%;
+	border:1px solid #333;
+}
+
+.product-info-container{
+	padding-top:5%;
+	
+}
+
+.product-info-item{
+	margin-top:2%;
+	
+}
+
+.product-spec-hidden{
+	display:none;
+	
+}
+
+.product-spec-toggle{
+	cursor:pointer;
+	
+}
+
+#product-spec-text {
+    color: #333;
+    text-decoration: none;
+}
+
+.product-related-info{
+	border:2px solid #333;
+	padding-top:5%;
+	padding-bottom:5%;
+}
+.product-related-mini{
+	cursor:pointer;
+}
+
+html{
+	padding-bottom:5%;
+}
