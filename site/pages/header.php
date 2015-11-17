@@ -34,13 +34,7 @@
     <div class="container">
 
         <div class="text-center">
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default">Todas os Produtos</button>
-                <button type="button" class="btn btn-default">Novidades</button>
-                <button type="button" class="btn btn-default">Grandes Eletrodomésticos</button>
-                <button type="button" class="btn btn-default">Pequenos Eletrodomésticos</button>
-                <button type="button" class="btn btn-default">Informática</button>
-                <button type="button" class="btn btn-default">Comunicações</button>
+            <div class="btn-group" id="displayshit" role="group" aria-label="...">
 
             </div>
         </div>
