@@ -141,7 +141,6 @@
     <script src="../js/bootstrap.min.js"></script>
     <!-- Other JS -->
 
-
 </body>
 
 </html>
