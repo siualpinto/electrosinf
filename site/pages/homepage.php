@@ -17,9 +17,9 @@
 </head>
 
 <body>
-  
-<?php include_once 'header.php';?>
-    
+
+    <?php include_once 'header.php';?>
+
         <div class="carousel-container">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
@@ -138,16 +138,17 @@
 
         </div>
 
-    </div>
-
+        </div>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- Other JS -->
-    <script src="../js/header.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="../js/bootstrap.min.js"></script>
+            <!-- Other JS -->
+            <script src="../js/header.js"></script>
+            <script src="../js/homepage.js"></script>
+
 
 
 </body>
