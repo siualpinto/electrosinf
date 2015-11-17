@@ -14,7 +14,7 @@ namespace ElectroSinf.Controllers
     {
         //
         // GET: /Artigos/
-
+        
         public IEnumerable<Lib_Primavera.Model.Artigo> Get()
         {
             return Lib_Primavera.PriIntegration.ListaArtigos();

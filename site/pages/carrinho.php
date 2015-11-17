@@ -141,6 +141,7 @@
     <script src="../js/bootstrap.min.js"></script>
     <!-- Other JS -->
     <script src="../js/header.js"></script>
+    <script src="../js/carrinho.js"></script>
 
 </body>
 
