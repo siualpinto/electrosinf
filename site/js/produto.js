@@ -7,3 +7,18 @@ $(".product-spec-toggle").click(function(){
 	
 	$(".product-spec-hidden").toggle();
 });
+
+function produto(){
+	var produto = $.ajax({
+		type: "GET",
+		url: "http://localhost:49234/api/artigos/A001",
+		
+		crossDomain: true,
+	}).done(function(data) {
+		window.alert(data);
+		console.log(data);
+	});
+	console.log("fim");
+}
+
+$(produto);
