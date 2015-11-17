@@ -19,7 +19,7 @@
                         <a href="#"> <span class="glyphicon glyphicon-share" aria-hidden="true"></span> </a>
                     </li>
                     <li>
-                        <a href="shopping-cart.html"> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> </a>
+                        <a href="carrinho.php"> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> </a>
                     </li>
                     <li>
                         <a href="#"> <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> </a>

@@ -221,6 +221,7 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/produto.js"></script>
     <!-- Other JS -->
+    <script src="../js/header.js"></script>
 
 
 </body>
