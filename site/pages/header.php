@@ -3,17 +3,17 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">EletroSinf</a>
+                <a class="navbar-brand" href="homepage.php">EletroSinf</a>
             </div>
 
             <!-- Collect the nav links, forms,  and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left" role="search">
+                <div class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" id="search" placeholder="Search">
                     </div>
-                    <button type="submit" class="btn btn-default btn-sm">Procurar</button>
-                </form>
+                    <button type="button" class="btn btn-default btn-sm" id="search_button">Procurar</button>
+                </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#"> <span class="glyphicon glyphicon-share" aria-hidden="true"></span> </a>
@@ -31,7 +31,7 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <div class="container">
+ <div class="container">
 
         <div class="text-center">
             <div class="btn-group" id="displayshit" role="group" aria-label="...">

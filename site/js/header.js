@@ -1,16 +1,7 @@
 $(document).ready(function() {
-    console.log( "ready!" );
-    
-    function search(texto){
+    console.log("ready!");
         
-        //fazer redirect para pagina search com argumento texto
-    }
-   function display(){
-       //inject code id="displayshit"
-       // <button type="button" class="btn btn-default">Todas os Produtos</button>
-       
-   } 
-    var res=$.ajax({
+    $.ajax({
         type: "GET",
         dataType: "json",
         url: "http://localhost:49234/api/TDU_Categoria",
@@ -29,7 +20,7 @@ $(document).ready(function() {
         async: false
     }).done(function(dat) {
                 for(var a = 0; a < dat.length; ++a){
-                    $('#dropdown_categoria_'+data[i]['CDU_IdCategoria']).append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#">'+dat[a]['CDU_TipoArtigo']+'</a></li>');
+                    $('#dropdown_categoria_'+data[i]['CDU_IdCategoria']).append('<li role="presentation"><a role="menuitem" tabindex="-1" href="search.php?tipo=1&valor='+dat[a]['CDU_IdTipo']+'">'+dat[a]['CDU_TipoArtigo']+'</a></li>');
                 }
            })
     .fail(function(){
@@ -42,5 +33,10 @@ $(document).ready(function() {
     .fail(function(){
     alert( "Recarrege a pagina" );
   });
-    console.log(res);
+
+     $("#search_button").on("click",function() {
+         window.location = "search.php?tipo=0&valor="+$('#search').val();
+     });
+ 
 });
+ 
