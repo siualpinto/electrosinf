@@ -1,0 +1,1 @@
+C:\xampp\htdocs\electrosinf\ElectroSinf\ElectroSinf.Tests\obj\Debug\ElectroSinf.Tests.csprojResolveAssemblyReference.cache
