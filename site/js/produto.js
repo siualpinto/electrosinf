@@ -12,7 +12,7 @@ function produto(){
 	var produto = $.ajax({
 		type: "GET",
 		url: "http://localhost:49234/api/artigos/A001",
-		
+		async: true,
 		crossDomain: true,
 	}).done(function(data) {
 		window.alert(data);
@@ -21,4 +21,4 @@ function produto(){
 	console.log("fim");
 }
 
-$(produto);
+window.onpaint= $(produto);

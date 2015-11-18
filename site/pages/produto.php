@@ -14,13 +14,21 @@
     <!-- Other Css -->
     <link href="../css/top-bar.css" rel="stylesheet">
     <link href="../css/produto.css" rel="stylesheet">
-
+    
 </head>
+    
 
 <body>
-   <?php include_once 'header.php';?>
-    <div class="container">
+   
 
+    <div class="container">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="../js/produto.js"></script>
+        <big><p> 
+            <?php
+            $_GET['CodArtigo']
+            ?>
+            </p></big>
         <div class="col-md-6">
             <div class="col-md-8 col-md-offset-2">
                 <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
@@ -216,10 +224,10 @@
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/produto.js"></script>
+    
     <!-- Other JS -->
     <script src="../js/header.js"></script>
 
