@@ -19,7 +19,7 @@
     
 
 <body>
-   
+   <?php include_once 'header.php';?>
 <?php echo '<input type="text" id="artigo_id" class="hidden"value="'.$_GET['id'].'">';?>
     <div class="container">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
