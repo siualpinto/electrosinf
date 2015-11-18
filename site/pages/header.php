@@ -30,3 +30,11 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+
+ <div class="container">
+
+        <div class="text-center">
+            <div class="btn-group" id="displayshit" role="group" aria-label="...">
+
+            </div>
+        </div>

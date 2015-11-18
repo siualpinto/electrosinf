@@ -13,7 +13,7 @@
 
     <!-- Other Css -->
     <link href="../css/top-bar.css" rel="stylesheet">
-    <link href="../css/produto.css" rel="stylesheet">
+    <link href="../css/carrinho.css" rel="stylesheet">
 
 </head>
 
@@ -26,8 +26,8 @@
     echo '<input type="text" id="valor" class="hidden"value="'.$_GET['valor'].'">';?>
     
     <div class="container" id="displayitems">
-
         
+
         
     </div>
 
