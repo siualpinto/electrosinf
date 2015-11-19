@@ -21,7 +21,7 @@
     <?php include_once 'header.php';?>
     
     
-<?php
+<?php 
     echo '<input type="text" id="type" class="hidden"value="'.$_GET['tipo'].'">';
     echo '<input type="text" id="valor" class="hidden"value="'.$_GET['valor'].'">';?>
     

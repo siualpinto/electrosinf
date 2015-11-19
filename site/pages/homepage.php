@@ -18,7 +18,7 @@
 
 <body>
 
-    <?php include_once 'header.php';?>
+    <?php include_once 'header.php';?> 
 
         <div class="carousel-container">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -62,31 +62,7 @@
             <div class="novidades-title">
                 <h3>Novidades</h3>
             </div>
-
-            <div class="novidades-list col-md-12">
-                <div class="novidades-item col-md-4">
-                    <img src="../img/micro.jpg" class="img-responsive" alt="Micro">
-                </div>
-
-                <div class="novidades-item col-md-4">
-                    <img src="../img/micro.jpg" class="img-responsive" alt="Micro">
-                </div>
-
-                <div class="novidades-item col-md-4">
-                    <img src="../img/micro.jpg" class="img-responsive" alt="Micro">
-                </div>
-                <div class="novidades-item col-md-4">
-                    <img src="../img/micro.jpg" class="img-responsive" alt="Micro">
-                </div>
-
-                <div class="novidades-item col-md-4">
-                    <img src="../img/micro.jpg" class="img-responsive" alt="Micro">
-                </div>
-
-                <div class="novidades-item col-md-4">
-                    <img src="../img/micro.jpg" class="img-responsive" alt="Micro">
-                </div>
-
+            <div class="novidades-list col-md-12">                
             </div>
 
         </div>
