@@ -16,6 +16,7 @@ namespace ElectroSinf.Lib_Primavera.Model
         public string CDU_IdArtigo { get; set; }
         public string CDU_IdCliente { get; set; }
         public int CDU_Quantidade { get; set; }
+        public int Stock { get; set; }
         public double PrecoTotal { set; get; }
         public string Nome { set; get; }
 
@@ -30,14 +31,15 @@ namespace ElectroSinf.Lib_Primavera.Model
                 descricao = PriEngine.Engine.Comercial.Artigos.DaValorAtributo(idArtigo, "Descricao");
                 pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(idArtigo, "EUR", "UN", "PVP1", false, 0);
                 iva = Convert.ToDouble(PriEngine.Engine.Comercial.Artigos.DaValorAtributo(idArtigo, "IVA"));
-                pvp1 = Math.Round(pvp1 * (1 + iva / 100.0), 2);
+                pvp1 = pvp1 * (1 + iva / 100.0);
                 listCarrinho.Add(new TDU_Carrinho
                 {
                     CDU_IdArtigo = idArtigo,
                     CDU_IdCliente = objList.Valor("CDU_IdCliente"),
                     CDU_Quantidade = objList.Valor("CDU_Quantidade"),
-                    PrecoTotal = (pvp1 * objList.Valor("CDU_Quantidade")),
-                    Nome = descricao
+                    PrecoTotal = Math.Round((pvp1 * objList.Valor("CDU_Quantidade")),2),
+                    Nome = descricao,
+                    Stock = (int)PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(idArtigo)
                 });
                 objList.Seguinte();
 

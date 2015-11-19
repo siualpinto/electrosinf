@@ -153,20 +153,50 @@ namespace ElectroSinf.Lib_Primavera
                     myEnc.set_Tipodoc(dv.DocType);
                     myEnc.set_TipoEntidade("C");
                     // Linhas do documento para a lista de linhas
-                    lstlindv = dv.LinhasDoc;
+                    //lstlindv = dv.LinhasDoc;
                     PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(myEnc, rl);
-                    double pvp1 = 0;
+                    double pvp1 = 0, quantidade = 0;
+                    string idArtigo = "";
+                    int Stock = 0;
+                    StdBELista carrinho = PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + dv.Entidade + "'");
+                    while (!carrinho.NoFim())
+                    {
+                        idArtigo = carrinho.Valor("CDU_IdArtigo");
+                        quantidade = Convert.ToDouble(carrinho.Valor("CDU_Quantidade"));
+                        Stock = (int)PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(idArtigo);
+                        if (quantidade > Stock)
+                        {
+                            erro.Erro = 1;
+                            erro.Descricao = "quantidadeErrada";
+                            return erro;
+                        }
+                        pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(idArtigo, "EUR", "UN", "PVP1", false, 0);
+                        PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, idArtigo, quantidade, armazem, "", pvp1, desconto);
+                        carrinho.Seguinte();
+                    }
+
+                    /*
                     foreach (Model.LinhaDocVenda lin in lstlindv)
                     {
                         pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(lin.CodArtigo, "EUR", "UN", "PVP1", false, 0);
                         PriEngine.Engine.Comercial.Vendas.AdicionaLinha(myEnc, lin.CodArtigo, lin.Quantidade, armazem, "", pvp1, desconto);
                     }
-
+                    */
                     PriEngine.Engine.IniciaTransaccao();
                     PriEngine.Engine.Comercial.Vendas.Actualiza(myEnc, "Teste");
                     PriEngine.Engine.TerminaTransaccao();
                     erro.Erro = 0;
                     erro.Descricao = "Sucesso";
+                    carrinho.Inicio();
+                    while (!carrinho.NoFim())
+                    {
+                        idArtigo = carrinho.Valor("CDU_IdArtigo");
+                        StdBECamposChave tdu_carrinho = new StdBECamposChave();
+                        tdu_carrinho.AddCampoChave("CDU_IdCliente", dv.Entidade);
+                        tdu_carrinho.AddCampoChave("CDU_IdArtigo", idArtigo);
+                        PriEngine.Engine.TabelasUtilizador.Remove("TDU_Carrinho", tdu_carrinho);
+                        carrinho.Seguinte();
+                    }
                     return erro;
                 }
                 else
