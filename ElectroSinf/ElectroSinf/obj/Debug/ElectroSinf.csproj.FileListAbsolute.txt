@@ -283,3 +283,4 @@ C:\xampp\htdocs\electrosinf\ElectroSinf\ElectroSinf\bin\zh-Hans\System.Spatial.r
 C:\xampp\htdocs\electrosinf\ElectroSinf\ElectroSinf\bin\zh-Hant\System.Spatial.resources.dll
 C:\xampp\htdocs\electrosinf\ElectroSinf\ElectroSinf\obj\Debug\ElectroSinf.dll
 C:\xampp\htdocs\electrosinf\ElectroSinf\ElectroSinf\obj\Debug\ElectroSinf.pdb
+C:\xampp\htdocs\electrosinf\ElectroSinf\ElectroSinf\obj\Debug\ElectroSinf.csprojResolveAssemblyReference.cache

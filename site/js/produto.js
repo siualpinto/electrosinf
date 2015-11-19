@@ -7,7 +7,7 @@ $(document).ready(function() {
         dataType: "json",
         data: {},
         async: false
-    }).done(function(data) {
+    }).done(function(data) { 
                     console.log(data);
                     $('#product-title').append('<h3>'+data['DescArtigo']+'</h3>'); 
                     $('#price').append('<strong>Preço: '+data['Preco']+'€ </strong>');
