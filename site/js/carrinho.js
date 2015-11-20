@@ -1,4 +1,5 @@
 function getCarrinho(){
+	$('#loading-indicator').show();
 	var clienteID = $("#clienteID").val();
 	var carrinho = $.ajax({
 		method: "GET",
@@ -7,7 +8,7 @@ function getCarrinho(){
 		var total = 0;
 		var produtos = $("#produtos");
 		var podeGerarFatura = true
-
+		 $('#loading-indicator').hide();
 		$.each(data, function(index,element){
 			total+=element.PrecoTotal;
 			if(element.Stock < element.CDU_Quantidade){
@@ -21,7 +22,7 @@ function getCarrinho(){
 					            +"</div>"
 					            +"<div class=\"col-md-12 product-info text-center\">"
 					                +"<div class=\"col-md-3 shop-image\">"
-					                    +"<img src=\"../img/maquinalavar.png\" class=\"img-responsive\" alt=\"Micro\">" /*FALTA A IMAGEM*/
+					                    +"<img src=\"../img/"+element.CDU_IdArtigo+"/1.jpg\" class=\"img-responsive\" alt=\"Micro\">" /*FALTA A IMAGEM*/
 					             	+"</div>"
 					                +"<div class=\"col-md-3\">"
 					                    +"<h4>"+element.Stock+" Produtos</h4>" /*FALTA DISPONIBILIDADE NO WS DO CARRINHO*/
