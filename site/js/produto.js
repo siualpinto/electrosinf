@@ -44,7 +44,7 @@ $(document).ready(function() {
                 for(var i=0; i < data['Relacionados'].length; ++i){
                         if(i<4){
                         $('#related-products').append(
-                            '<div class="col-md-3 product-related-mini"><div><a href="produto.php?id='+data['Relacionados'][i]['CodArtigo']+'"><img src="../img/ml1.png" class="img-responsive" alt="Maquina Lavar AEG"></div><div class="product-related-title"><small><strong>'+data['Relacionados'][i]['DescArtigo']+'</strong></small></div></a><div class="product-related-price">'+data['Relacionados'][i]['Preco']+'€</div></div>');
+                            '<div class="col-md-3 product-related-mini"><div><a href="produto.php?id='+data['Relacionados'][i]['CodArtigo']+'"><img src="../img/'+data['Relacionados'][i]['CodArtigo']+'/1.jpg" class="img-responsive" alt="Maquina Lavar AEG"></div><div class="product-related-title"><small><strong>'+data['Relacionados'][i]['DescArtigo']+'</strong></small></div></a><div class="product-related-price">'+data['Relacionados'][i]['Preco']+'€</div></div>');
                         }
                 }
             })
