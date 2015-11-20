@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="product-info-item">
-                    <button type="button" class="btn btn-success">Adicionar ao carrinho</button>
+                    <button id="adicionar_carrinho" onclick="add_carrinho()" type="button" class="btn btn-success">Adicionar ao carrinho</button>
                 </div>
 
             </div>

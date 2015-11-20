@@ -47,10 +47,35 @@ $(document).ready(function() {
                             '<div class="col-md-3 product-related-mini"><div><a href="produto.php?id='+data['Relacionados'][i]['CodArtigo']+'"><img src="../img/'+data['Relacionados'][i]['CodArtigo']+'/1.jpg" class="img-responsive" alt="Maquina Lavar AEG"></div><div class="product-related-title"><small><strong>'+data['Relacionados'][i]['DescArtigo']+'</strong></small></div></a><div class="product-related-price">'+data['Relacionados'][i]['Preco']+'€</div></div>');
                         }
                 }
+        
+
             })
             .fail(function(){
                 alert( "Recarrege a pagina" );
             });
     
 });
+
+$("#adicionar_carrinho").on("click",add_carrinho(){
+                        console.log("A adicionar ao carrinho!");            
+                        var resultado = $.ajax({
+                        type: "POST",
+                        url:"http://localhost:49234/api/TDU_Carrinho/",
+                        dataType: "json",
+                        data: {
+                            CDU_IdCliente: "CLIENTE2",
+                            CDU_IdArtigo: data['CodArtigo'],
+                            CDU_Quantidade: 1
+                        },
+                        async: false
+                        }).done(function() {
+                            console.log("Feito");
+                        }).fail(function(){
+                            console.log("Erro ao adicionar ao carrinho!");
+                        })
+                        });
+
+
+
+
 
