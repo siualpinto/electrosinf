@@ -25,8 +25,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="../js/produto.js"></script>
         <div class="col-md-6">
-            <div class="col-md-8 col-md-offset-2">
-                <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
+            <div id="img_artigo" class="col-md-8 col-md-offset-2">
             </div>
 
             <div class="col-md-12">

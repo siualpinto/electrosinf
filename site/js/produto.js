@@ -20,7 +20,8 @@ $(document).ready(function() {
                     } else {
                         $('#availability').append('<strong>Disponibilidade: Indisponível </strong>');
                     }
-        
+                    $('#img_artigo').append('<img  src="../img/'+data['CodArtigo']+'/1.jpg" class="img-responsive" alt="Maquina Lavar AEG">')
+                    src="../img/'+artigos[i]['CodArtigo']+'/1.jpg"
                     for(var i=0; i < data['Especificacoes'].length; ++i){
                         if(i<5){
                         $('#specifications').append(
