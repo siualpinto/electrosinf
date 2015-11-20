@@ -19,6 +19,7 @@
 
 <body>
    <?php include_once 'header.php';?>
+    <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?> style= "display: none" >
     <div id="produtos" class="container">
 
         <div class="shop-label col-md-12 text-center">

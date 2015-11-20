@@ -1,12 +1,13 @@
 function getCarrinho(){
+	var clienteID = $("#clienteID").val();
 	var carrinho = $.ajax({
 		method: "GET",
-		url: "http://localhost:49234/api/TDU_Carrinho/C001"
+		url: "http://localhost:49234/api/TDU_Carrinho/"+clienteID
 	}).done(function(data) {
 		var total = 0;
 		var produtos = $("#produtos");
 		var podeGerarFatura = true
-		/*data.each(function(index,element){*/
+
 		$.each(data, function(index,element){
 			total+=element.PrecoTotal;
 			if(element.Stock < element.CDU_Quantidade){
@@ -61,7 +62,7 @@ function getCarrinho(){
 				var fatura = $.ajax({
 					method: "POST",
 					url: "http://localhost:49234/api/docvenda/",
-					data: {Entidade:"C001", DocType:"FA"}
+					data: {Entidade:clienteID, DocType:"FA"}
 				}).done(function(result){
 					if(result == "quantidadeErrada"){
 						window.alert("Ocorreu um erro");

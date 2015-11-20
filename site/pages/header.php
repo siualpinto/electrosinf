@@ -1,4 +1,8 @@
-  
+<?
+    session_set_cookie_params(0, '/', 'http://localhost:3000/'); 
+    session_start();  
+    $_SESSION['clienteID']='C001'
+?>
 <nav class="navbar navbar-default">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
