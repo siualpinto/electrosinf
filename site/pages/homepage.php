@@ -58,21 +58,21 @@
             </div>
         </div>
 
-        <div class="novidades-container">
-            <div class="novidades-title">
-                <h3>Novidades</h3>
+        <div class="top-container">
+            <div class="top-title">
+                <h3>Top Vendas</h3>
             </div>
-            <div class="novidades-list col-md-12">                
+            <div class="top-list col-md-12">                
             </div>
 
         </div>
 
-        <div class="texto-container col-md-8">
+        <div class="texto-container col-md-12 text-justify">
             <div class="texto-title">
                 <h3>Dê à sua esposa as ferramentas para o fazer feliz</h3>
             </div>
             <div class="texto">
-                <p>Conheça a nossa gama para Arrumação e organização de alimentos , vai encontrar opções que garantem que os alimentos não percam o sabor. Os nossos recipientes mantêm tudo arrumado e fácil de encontrar, para que se possa concentrar nos cozinhados. Com tampas transparentes, ou com as laterais em vidro, permitem que saiba num piscar de olhos se precisa de reabastecer. Transforme as sobras de hoje no petisco de amanhã. Coloque no frigorífico , permite-lhe desperdiçar menos comida (e dinheiro). paleio paleio paleio</p>
+                <p>Conheça a nossa gama para Arrumação e organização de alimentos , vai encontrar opções que garantem que os alimentos não percam o sabor. Os nossos recipientes mantêm tudo arrumado e fácil de encontrar, para que se possa concentrar nos cozinhados. Com tampas transparentes, ou com as laterais em vidro, permitem que saiba num piscar de olhos se precisa de reabastecer. Transforme as sobras de hoje no petisco de amanhã. Coloque no frigorífico , permite-lhe desperdiçar menos comida (e dinheiro).</p>
             </div>
         </div>
 
