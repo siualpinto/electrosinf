@@ -82,31 +82,31 @@
 
         <div class="promocao-list col-md-12">
             <div class="promocao-item col-md-4">
-                <img src="../img/frigo.jpg" class="img-responsive" alt="Micro">
+                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
             </div>
 
             <div class="promocao-item col-md-4">
-                <img src="../img/frigo.jpg" class="img-responsive" alt="Micro">
+                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
             </div>
 
             <div class="promocao-item col-md-4">
-                <img src="../img/frigo.jpg" class="img-responsive" alt="Micro">
+                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
             </div>
 
             <div class="promocao-item col-md-4">
-                <img src="../img/frigo.jpg" class="img-responsive" alt="Micro">
+                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
             </div>
 
             <div class="promocao-item col-md-4">
-                <img src="../img/frigo.jpg" class="img-responsive" alt="Micro">
+                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
             </div>
 
             <div class="promocao-item col-md-4">
-                <img src="../img/frigo.jpg" class="img-responsive" alt="Micro">
+                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
             </div>
 
             <div class="promocao-item col-md-4">
-                <img src="../img/frigo.jpg" class="img-responsive" alt="Micro">
+                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
             </div>
 
         </div>
