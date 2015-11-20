@@ -17,7 +17,7 @@ $(document).ready(function() {
         async: false
     }).done(function(data) {
                 for(var i = 0; i < data.length; ++i){
-                    $('#displayitems').append('<a href="produto.php?id='+data[i]['CodArtigo']+'"><div class="shop-item col-md-12"><div class="product-title"><h4>'+data[i]['DescArtigo']+'</h4></div><div class="col-md-12 product-info text-center"><div class="col-md-3 shop-image"><img src="../img/micro.png" class="img-responsive" alt="Micro"></div><div class="col-md-3"><h4>Disponivel: '+data[i]['Stock']+'</h4></div><div class="col-md-3"><h4>Preco: '+data[i]['Preco']+'€</h4></div></div></div></a>');
+                    $('#displayitems').append('<a href="produto.php?id='+data[i]['CodArtigo']+'"><div class="shop-item col-md-12"><div class="product-title"><h4>'+data[i]['DescArtigo']+'</h4></div><div class="col-md-12 product-info text-center"><div class="col-md-3 shop-image"> <img src="../img/'+data[i]['CodArtigo']+'/1.jpg" class="img-responsive" alt="'+data[i]['DescArtigo']+'"> </div><div class="col-md-3"><h4>Disponivel: '+data[i]['Stock']+'</h4></div><div class="col-md-3"><h4>Preco: '+data[i]['Preco']+'€</h4></div></div></div></a>');
                     
                 }
             })
