@@ -59,12 +59,13 @@ function getCarrinho(){
 	
 		if(podeGerarFatura && total >0){
 			$("#checkout").on("click",function gerarFatura(){
-				window.alert("start fatura");
+				$('#loading-indicator').show();
 				var fatura = $.ajax({
 					method: "POST",
 					url: "http://localhost:49234/api/docvenda/",
 					data: {Entidade:clienteID, DocType:"FA"}
 				}).done(function(result){
+					$('#loading-indicator').hide();
 					if(result == "quantidadeErrada"){
 						window.alert("Ocorreu um erro");
 						window.location.reload();

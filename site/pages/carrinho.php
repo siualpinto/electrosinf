@@ -39,9 +39,8 @@
                 <h4>Preço</h4>
             </div>
         </div>
-        <img src="../img/loader/ajax-loader.gif" id="loading-indicator" style="display:none" />
     </div>
-
+   <img src="../img/loader/ajax-loader.gif" id="loading-indicator" style="display:none" />
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
