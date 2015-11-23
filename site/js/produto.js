@@ -1,6 +1,8 @@
+var id=$('#artigo_id').val();
+
 $(document).ready(function() {
     console.log("ready!");
-    var id=$('#artigo_id').val();
+    
     var produto = $.ajax({
         type: "GET",
         url:"http://localhost:49234/api/artigos/" + id,
@@ -9,6 +11,10 @@ $(document).ready(function() {
         async: false
     }).done(function(data) { 
                     console.log(data);
+                    codArtigo=data['codArtigo'];
+    
+    
+    
                     $('#product-title').append('<h3>'+data['DescArtigo']+'</h3>'); 
                     $('#price').append('<strong>Preço: '+data['Preco']+'€ </strong>');
                     $('#brand').append('<strong>Marca: '+data['Marca']+'</strong>');
@@ -20,9 +26,16 @@ $(document).ready(function() {
                     } else {
                         $('#availability').append('<strong>Disponibilidade: Indisponível </strong>');
                     }
-                    $('#img_artigo').append('<img  src="../img/'+data['CodArtigo']+'/1.jpg" class="img-responsive" alt="Maquina Lavar AEG">')
-                    src="../img/'+artigos[i]['CodArtigo']+'/1.jpg"
-                    for(var i=0; i < data['Especificacoes'].length; ++i){
+                    $('#img_artigo').append('<img  src="../img/'+data['CodArtigo']+'/1.jpg" class="img-responsive" alt="Maquina Lavar AEG">');
+                    
+       
+        
+        
+        
+        
+        
+        
+        for(var i=0; i < data['Especificacoes'].length; ++i){
                         if(i<5){
                         $('#specifications').append(
                             '<tr><td><strong>'+data['Especificacoes'][i]['CDU_Nome']+'</strong></td><td>'+data['Especificacoes'][i]["CDU_Valor"]+ '</td></tr>')
@@ -31,6 +44,11 @@ $(document).ready(function() {
                             '<tr class="product-spec-hidden"><td><strong>'+data['Especificacoes'][i]['CDU_Nome']+'</strong></td><td>'+data['Especificacoes'][i]["CDU_Valor"]+ '</td></tr>')
                         }
                     }
+        
+        
+       
+        
+        
                     
                     $(".product-spec-toggle").click(function(){
                         var $toggler = $("#product-spec-text");
@@ -41,6 +59,8 @@ $(document).ready(function() {
                         $(".product-spec-hidden").toggle();
                     });
         
+        
+        
                 for(var i=0; i < data['Relacionados'].length; ++i){
                         if(i<4){
                         $('#related-products').append(
@@ -48,32 +68,37 @@ $(document).ready(function() {
                         }
                 }
         
+        
+        
 
             })
             .fail(function(){
                 alert( "Recarrege a pagina" );
             });
-    
-});
+ });
 
-$("#adicionar_carrinho").on("click",add_carrinho(){
-                        console.log("A adicionar ao carrinho!");            
-                        var resultado = $.ajax({
-                        type: "POST",
-                        url:"http://localhost:49234/api/TDU_Carrinho/",
-                        dataType: "json",
-                        data: {
-                            CDU_IdCliente: "CLIENTE2",
-                            CDU_IdArtigo: data['CodArtigo'],
-                            CDU_Quantidade: 1
-                        },
-                        async: false
-                        }).done(function() {
-                            console.log("Feito");
-                        }).fail(function(){
-                            console.log("Erro ao adicionar ao carrinho!");
-                        })
-                        });
+var id=$('#artigo_id').val();
+function add_carrinho(){
+                console.log("A adicionar ao carrinho!");    
+                var resultado = $.ajax({
+                type: "POST",
+                url:"http://localhost:49234/api/TDU_Carrinho/",
+                dataType: "json",
+                data: {
+                    CDU_IdCliente:"C002", 
+                    CDU_IdArtigo:id,
+                    CDU_Quantidade:1
+                },
+                async: false
+                }).done(function() {
+                   console.log("Feito");
+                }).fail(function(){
+                   console.log("Erro ao adicionar ao carrinho!");
+                })  
+};
+
+
+
 
 
 
