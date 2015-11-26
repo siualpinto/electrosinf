@@ -20,7 +20,7 @@
 
 <body>
    <?php include_once 'header.php';?>
-    <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?> style= "display: none" >
+    <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?>>
 <?php echo '<input type="text" id="artigo_id" class="hidden"value="'.$_GET['id'].'">';?>
     <div class="container">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -29,7 +29,7 @@
             <div id="img_artigo" class="col-md-8 col-md-offset-2">
             </div>
 
-            <div class="col-md-12">
+            <!--div class="col-md-12">
                 <div class="col-md-2 product-mini">
                     <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
                 </div>
@@ -45,7 +45,7 @@
                 <div class="col-md-2 product-mini">
                     <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
                 </div>
-            </div>
+            </div-->
 
         </div>
 
