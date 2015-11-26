@@ -7,9 +7,9 @@ $(document).ready(function() {
         async: false
     }).done(function (artigos) {        
         for(var i = 0; i < artigos.length; ++i){  
-        $('.top-list').append('<div class="top-item col-md-6"><a href="produto.php?"><img src="../img/'+
+        $('.top-list').append('<div class="top-item col-md-6"><a href="produto.php?id='+artigos[i]['CodArtigo']+'"><img src="../img/'+
                               artigos[i]['CodArtigo']+'/1.jpg" class="img-responsive" alt="'+
-                              artigos[i]['DescArtigo']+'"></a><div class="artigo-dados text-left"><a href="produto.php?id="'+
+                              artigos[i]['DescArtigo']+'"></a><div class="artigo-dados text-left"><a href="produto.php?id='+
                               artigos[i]['CodArtigo']+'"><div class="descricao">'+
                               artigos[i]['DescArtigo']+'</div></a><div class="preco"><strong>'+
                               artigos[i]['Preco']+' </strong><span class="glyphicon glyphicon-euro" aria-hidden="true"></span></div></div>');
