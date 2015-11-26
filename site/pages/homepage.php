@@ -75,44 +75,6 @@
         </div>
     </div>
 
-    <div class="promocao-container col-md-12">
-        <div class="promocao-title">
-            <h3>Promoção</h3>
-        </div>
-
-        <div class="promocao-list col-md-12">
-            <div class="promocao-item col-md-4">
-                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
-            </div>
-
-            <div class="promocao-item col-md-4">
-                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
-            </div>
-
-            <div class="promocao-item col-md-4">
-                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
-            </div>
-
-            <div class="promocao-item col-md-4">
-                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
-            </div>
-
-            <div class="promocao-item col-md-4">
-                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
-            </div>
-
-            <div class="promocao-item col-md-4">
-                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
-            </div>
-
-            <div class="promocao-item col-md-4">
-                <img src="../img/frigo.png" class="img-responsive" alt="Micro">
-            </div>
-
-        </div>
-
-    </div>
-
     </div>
 
 
