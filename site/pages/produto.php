@@ -64,6 +64,17 @@
                 <div id="availability" class="product-info-item">
                 </div>
 
+                
+                
+                <input type="text" name="TextBox" id="TextBox" value="1" readonly/>
+                <input type="Button" id='AddButton' value="+" />
+                <input type="Button" id='MinusButton' value="-" />
+
+        
+       
+                
+                
+                
                 <div class="product-info-item">
                     <button id="adicionar_carrinho" onclick="add_carrinho()" type="button" class="btn btn-success">Adicionar ao carrinho</button>
                 </div>

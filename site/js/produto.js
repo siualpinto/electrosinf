@@ -69,6 +69,20 @@ $(document).ready(function() {
                         }
                 }
         
+                $('#AddButton').click( function() {
+                        var counter = $('#TextBox').val();
+                        counter++ ;
+                        $('#TextBox').val(counter);
+                });
+
+                $('#MinusButton').click( function() {
+                        var counter = $('#TextBox').val();
+                        if(counter != 1){
+                        counter-- ;
+                        }
+                        $('#TextBox').val(counter);
+                });
+        
         
         
 
@@ -80,7 +94,10 @@ $(document).ready(function() {
 
 
 var id=$('#artigo_id').val();
+
 function add_carrinho(){
+                var qtdade=$('#TextBox').val();
+                
                 console.log(clienteID);
                 console.log("A adicionar ao carrinho!");    
                 var resultado = $.ajax({
@@ -90,7 +107,7 @@ function add_carrinho(){
                 data: {
                     CDU_IdCliente:clienteID, 
                     CDU_IdArtigo:id,
-                    CDU_Quantidade:1
+                    CDU_Quantidade:qtdade
                 },
                 async: false
                 }).done(function() {
@@ -99,6 +116,9 @@ function add_carrinho(){
                    console.log("Erro ao adicionar ao carrinho!");
                 })  
 };
+
+
+
 
 
 
