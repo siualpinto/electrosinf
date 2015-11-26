@@ -1,4 +1,5 @@
 var id=$('#artigo_id').val();
+var clienteID = $("#clienteID").val();
 
 $(document).ready(function() {
     console.log("ready!");
@@ -77,15 +78,17 @@ $(document).ready(function() {
             });
  });
 
+
 var id=$('#artigo_id').val();
 function add_carrinho(){
+                console.log(clienteID);
                 console.log("A adicionar ao carrinho!");    
                 var resultado = $.ajax({
                 type: "POST",
                 url:"http://localhost:49234/api/TDU_Carrinho/",
                 dataType: "json",
                 data: {
-                    CDU_IdCliente:"C002", 
+                    CDU_IdCliente:clienteID, 
                     CDU_IdArtigo:id,
                     CDU_Quantidade:1
                 },
