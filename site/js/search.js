@@ -7,7 +7,7 @@ $(document).ready(function() {
         url="http://localhost:49234/api/TDU_TipoArtigo/"+valor;
     }
     else{
-        url="http://localhost:49234/api/search/"+valor;
+        url = "http://localhost:49234/api/search?search=\""+valor+"\"";
     }
     $.ajax({
         type: "GET",
