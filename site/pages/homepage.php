@@ -20,7 +20,7 @@
 
     <?php include_once 'header.php';?>
 
-    <div class="carousel-container">
+    <div class="carousel-container text-center">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
@@ -30,20 +30,8 @@
             </ol>
 
             <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img src="../img/logo.jpg" alt="...">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="../img/logo.jpg" alt="...">
-                    <div class="carousel-caption">
-                        ...
-                    </div>
-                </div>
-                ...
+            <div id="carousel" class="carousel-inner" role="listbox">
+                
             </div>
 
             <!-- Controls -->

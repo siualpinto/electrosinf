@@ -733,34 +733,36 @@ namespace ElectroSinf.Lib_Primavera
             else
                 return null;
         }
-        public static List<Model.Artigo> SearchArtigosHome()
+        public static List<List<Artigo>> SearchArtigosHome()
         {
-            StdBELista objList;
-            List<Model.Artigo> listArtigos = new List<Model.Artigo>();
+            List<List<Artigo>> artigosHome = new List<List<Artigo>>();   
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("IF(select COUNT(DISTINCT Artigo) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) ) >$9 BEGIN select Art.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda, Total from (SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo) as Art Join (select top 10 Artigo, SUM(Quantidade) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) GROUP BY Artigo ORDER BY SUM(Quantidade) DESC) as Linhas on Art.Artigo = Linhas.Artigo END ELSE SELECT top 10 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()");
-
-
-                while (!objList.NoFim())
-                {
-                    listArtigos.Add(new Model.Artigo
-                    {
-                        CodArtigo = objList.Valor("Artigo"),
-                        DescArtigo = objList.Valor("Descricao"),
-                        Stock = Convert.ToDouble(objList.Valor("STKActual")),
-                        Marca = objList.Valor("Marca"),
-                        Preco = Math.Round((Convert.ToDouble(objList.Valor("PVP1")) * (1 + Convert.ToDouble(objList.Valor("IVA")) / 100.0)), 2)
-                    });
-                    objList.Seguinte();
-
-                }
-
-                return listArtigos;
+                artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("SELECT top 3 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()")));
+                artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("IF(select COUNT(DISTINCT Artigo) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) ) >$9 BEGIN select Art.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda, Total from (SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo) as Art Join (select top 10 Artigo, SUM(Quantidade) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) GROUP BY Artigo ORDER BY SUM(Quantidade) DESC) as Linhas on Art.Artigo = Linhas.Artigo END ELSE SELECT top 10 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()")));
+                return artigosHome;
             }
             else
                 return null;
+        }
+
+        public static List<Artigo> toArtigoList(StdBELista objList)
+        {
+            List<Model.Artigo> listArtigos = new List<Model.Artigo>();
+            while (!objList.NoFim())
+            {
+                listArtigos.Add(new Model.Artigo
+                {
+                    CodArtigo = objList.Valor("Artigo"),
+                    DescArtigo = objList.Valor("Descricao"),
+                    Stock = Convert.ToDouble(objList.Valor("STKActual")),
+                    Marca = objList.Valor("Marca"),
+                    Preco = Math.Round((Convert.ToDouble(objList.Valor("PVP1")) * (1 + Convert.ToDouble(objList.Valor("IVA")) / 100.0)), 2)
+                });
+                objList.Seguinte();
+            }
+            return listArtigos;
         }
         #endregion Search
     }

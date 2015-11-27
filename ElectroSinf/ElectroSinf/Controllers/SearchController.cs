@@ -17,7 +17,7 @@ namespace ElectroSinf.Controllers
             return  Lib_Primavera.PriIntegration.SearchArtigosNome(search.Replace("\"", ""));
         }
 
-        public IEnumerable<Lib_Primavera.Model.Artigo> Get()
+        public List<List<Artigo>> Get()
         {
             return Lib_Primavera.PriIntegration.SearchArtigosHome(); ;
         }
