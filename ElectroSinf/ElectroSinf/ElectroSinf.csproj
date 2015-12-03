@@ -285,6 +285,7 @@
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TDU_CarrinhoController.cs" />
     <Compile Include="Controllers\TDU_CategoriaController.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
     <Compile Include="Lib_Primavera\Model\DocVenda.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocVenda.cs" />
+    <Compile Include="Lib_Primavera\Model\Register.cs" />
     <Compile Include="Lib_Primavera\Model\RespostaErro.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_Carrinho.cs" />
     <Compile Include="Lib_Primavera\Model\TDU_Categoria.cs" />

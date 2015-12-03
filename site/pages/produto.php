@@ -28,25 +28,6 @@
         <div class="col-md-6">
             <div id="img_artigo" class="col-md-8 col-md-offset-2">
             </div>
-
-            <!--div class="col-md-12">
-                <div class="col-md-2 product-mini">
-                    <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
-                </div>
-                <div class="col-md-2 product-mini">
-                    <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
-                </div>
-                <div class="col-md-2 product-mini">
-                    <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
-                </div>
-                <div class="col-md-2 product-mini">
-                    <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
-                </div>
-                <div class="col-md-2 product-mini">
-                    <img src="../img/maquinalavar.png" class="img-responsive" alt="Maquina Lavar AEG">
-                </div>
-            </div-->
-
         </div>
 
         <div class="col-md-6">

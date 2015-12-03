@@ -765,5 +765,54 @@ namespace ElectroSinf.Lib_Primavera
             return listArtigos;
         }
         #endregion Search
+        #region Register
+        public static Model.RespostaErro Register(Model.Register input)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();     
+
+            GcpBECliente cliente = new GcpBECliente();
+            try
+            {
+                if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+                {                    
+
+                    cliente.set_Cliente(input.cliente);
+                    cliente.set_Nome(input.nome);
+                    cliente.set_NomeFiscal(input.nome_fiscal);
+                    cliente.set_Morada(input.morada);
+                    cliente.set_NumContribuinte(input.numContribuinte);
+              
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;            
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    PriEngine.Engine.DesfazTransaccao();
+                }
+                catch (Exception)
+                {
+
+                }
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                Console.Write(erro.Descricao);
+                return erro;
+
+            }
+        }
+        #endregion Register
+
     }
 }
