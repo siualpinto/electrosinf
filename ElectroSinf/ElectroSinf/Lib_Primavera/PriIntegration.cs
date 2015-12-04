@@ -770,23 +770,26 @@ namespace ElectroSinf.Lib_Primavera
         {
 
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-
-
             GcpBECliente myCli = new GcpBECliente();
 
             try
             {
                 if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
-                {
-                    GcpBECliente lastClient = new GcpBECliente();
-                  //  StdBELista a = new StdBELista();
-                    //  a=  PriEngine.Engine.Comercial.Clientes.LstClientes;
-                  //  lastClient = PriEngine.Engine.Comercial.Clientes.Consulta("SELECT TOP 1 Cliente FROM PRIELECSINF.dbo.Clientes ORDER BY Cliente DESC");
-                   // Console.WriteLine( lastClient.get_Cliente());
-                    
-                    StdBELista a = new StdBELista();
-                    a = PriEngine.Engine.Consulta("SELECT TOP 1 Cliente FROM Clientes ORDER BY Cliente DESC");               
-                   // myCli.set_Cliente(a.Valor("Cliente"));
+                {     
+                    StdBELista lastClient = new StdBELista();
+                    lastClient = PriEngine.Engine.Consulta("SELECT top 1 Cliente FROM PRIELECSINF.[dbo].[Clientes] WHERE Cliente LIKE 'C%' ORDER BY Cliente DESC;");
+                    string b = lastClient.Valor("Cliente");
+                    b=b.Replace("C", "0");
+                    int x = 0;
+                    Int32.TryParse(b, out x);
+                    x++;
+                    string n = x.ToString();
+                    string codCliente= "C";
+                    for(int i= 0; i<(3-n.Length);i++){
+                        codCliente = string.Concat(codCliente, "0");
+                    }
+                    cli.CodCliente = string.Concat(codCliente, n);                   
+                    myCli.set_Cliente(cli.CodCliente);
                     myCli.set_Nome(cli.NomeCliente);
                     myCli.set_NomeFiscal(cli.NomeCliente);
                     myCli.set_NumContribuinte(cli.NumContribuinte);
@@ -796,8 +799,14 @@ namespace ElectroSinf.Lib_Primavera
                     myCli.set_CodigoPostal(cli.CodPostal);
                     myCli.set_Distrito(cli.Distrito);
                     myCli.set_Pais(cli.Pais);
+                    myCli.set_Cliente("C005");
+                    myCli.set_Nome("ola");
+                    myCli.set_NumContribuinte("123456987");
+                    PriEngine.Engine.IniciaTransaccao();
                    // PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
-
+                    PriEngine.Engine.TerminaTransaccao();
+                    
+                   // PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
                     erro.Erro = 0;
                     erro.Descricao = "Sucesso";
                     return erro;
@@ -812,6 +821,7 @@ namespace ElectroSinf.Lib_Primavera
 
             catch (Exception ex)
             {
+                PriEngine.Engine.DesfazTransaccao();
                 erro.Erro = 1;
                 erro.Descricao = ex.Message;
                 return erro;

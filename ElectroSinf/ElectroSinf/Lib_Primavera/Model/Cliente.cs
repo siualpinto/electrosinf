@@ -7,13 +7,11 @@ namespace ElectroSinf.Lib_Primavera.Model
 {
     public class Cliente
     {
-
         public string CodCliente
         {
             get;
             set;
         }
-
         public string NomeCliente
         {
             get;
