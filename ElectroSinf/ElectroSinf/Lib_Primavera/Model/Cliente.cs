@@ -24,6 +24,36 @@ namespace ElectroSinf.Lib_Primavera.Model
         {
             get;
             set;
-        }        
+        }
+        public string Moeda
+        {
+            get;
+            set;
+        }
+        public string Morada
+        {
+            get;
+            set;
+        }
+        public string Localidade
+        {
+            get;
+            set;
+        }
+        public string CodPostal
+        {
+            get;
+            set;
+        }
+        public string Distrito 
+        {
+            get;
+            set;
+        }
+        public string Pais //País
+        {
+            get;
+            set;
+        }
     }
 }

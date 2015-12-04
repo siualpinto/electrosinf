@@ -778,12 +778,25 @@ namespace ElectroSinf.Lib_Primavera
             {
                 if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
                 {
-
-                    myCli.set_Cliente(cli.CodCliente);
+                    GcpBECliente lastClient = new GcpBECliente();
+                  //  StdBELista a = new StdBELista();
+                    //  a=  PriEngine.Engine.Comercial.Clientes.LstClientes;
+                  //  lastClient = PriEngine.Engine.Comercial.Clientes.Consulta("SELECT TOP 1 Cliente FROM PRIELECSINF.dbo.Clientes ORDER BY Cliente DESC");
+                   // Console.WriteLine( lastClient.get_Cliente());
+                    
+                    StdBELista a = new StdBELista();
+                    a = PriEngine.Engine.Consulta("SELECT TOP 1 Cliente FROM Clientes ORDER BY Cliente DESC");               
+                   // myCli.set_Cliente(a.Valor("Cliente"));
                     myCli.set_Nome(cli.NomeCliente);
-                    myCli.set_NumContribuinte(cli.NumContribuinte);                   
-
-                    PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
+                    myCli.set_NomeFiscal(cli.NomeCliente);
+                    myCli.set_NumContribuinte(cli.NumContribuinte);
+                    myCli.set_Moeda(cli.Moeda);
+                    myCli.set_Morada(cli.Morada);
+                    myCli.set_Localidade(cli.Localidade);
+                    myCli.set_CodigoPostal(cli.CodPostal);
+                    myCli.set_Distrito(cli.Distrito);
+                    myCli.set_Pais(cli.Pais);
+                   // PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 
                     erro.Erro = 0;
                     erro.Descricao = "Sucesso";
