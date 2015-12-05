@@ -799,11 +799,11 @@ namespace ElectroSinf.Lib_Primavera
                     myCli.set_CodigoPostal(cli.CodPostal);
                     myCli.set_Distrito(cli.Distrito);
                     myCli.set_Pais(cli.Pais);
-                    myCli.set_Cliente("C005");
-                    myCli.set_Nome("ola");
-                    myCli.set_NumContribuinte("123456987");
+                   // myCli.set_Cliente("C005");
+                    //myCli.set_Nome("ola");
+                    //myCli.set_NumContribuinte("123456987");
                     PriEngine.Engine.IniciaTransaccao();
-                   // PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
+                    PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
                     PriEngine.Engine.TerminaTransaccao();
                     
                    // PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
