@@ -797,7 +797,16 @@ namespace ElectroSinf.Lib_Primavera
                     {
                         cli.CodCliente = "C001";
                     }
-                 
+                    StdBECampos cmps = new StdBECampos();
+                    StdBECampo email = new StdBECampo();
+                    StdBECampo pwd = new StdBECampo();
+                    email.Nome = "CDU_Email";
+                    pwd.Nome = "CDU_Password";
+                    email.Valor = cli.Email;
+                    pwd.Valor = PriEngine.Platform.Criptografia.Encripta(cli.Password, 50);
+                    cmps.Insere(email);
+                    cmps.Insere(pwd);
+                    myCli.set_CamposUtil(cmps);                
                     myCli.set_Cliente(cli.CodCliente);
                     myCli.set_Nome(cli.NomeCliente);
                     myCli.set_NomeFiscal(cli.NomeCliente);

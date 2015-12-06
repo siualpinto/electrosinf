@@ -7,6 +7,16 @@ namespace ElectroSinf.Lib_Primavera.Model
 {
     public class Cliente
     {
+        public string Email
+        {
+            get;
+            set;
+        }
+        public string Password
+        {
+            get;
+            set;
+        }
         public string CodCliente
         {
             get;
