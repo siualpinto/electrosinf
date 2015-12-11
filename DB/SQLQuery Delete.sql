@@ -1,1 +1,1 @@
-delete PRIELECSINF.dbo.TDU_TipoArtigo where CDU_IdCategoria=2;
+delete PRIELECSINF.dbo.clientes where [Nome]=2;
