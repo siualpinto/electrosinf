@@ -58,6 +58,16 @@ namespace ElectroSinf.Lib_Primavera.Model
             get;
             set;
         }
+        public string ModoPagamento
+        {
+            get;
+            set;
+        }
+        public string CondicaoPagamento
+        {
+            get;
+            set;
+        }
         public string Pais //País
         {
             get;

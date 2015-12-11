@@ -818,6 +818,8 @@ namespace ElectroSinf.Lib_Primavera
                     myCli.set_Distrito(cli.Distrito);
                     myCli.set_Pais(cli.Pais);
                     myCli.set_LocalidadeCodigoPostal(cli.Localidade);
+                    myCli.set_ModoPag(cli.ModoPagamento);
+                    myCli.set_CondPag(cli.CondicaoPagamento);
                     PriEngine.Engine.IniciaTransaccao();
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
                     PriEngine.Engine.TerminaTransaccao();

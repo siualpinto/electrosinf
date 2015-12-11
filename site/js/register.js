@@ -9,6 +9,8 @@
      var CodPostal = $('#registar #CodPostal').val();
      var distrito = $('#registar #distrito').val();
      var pais = $('#registar #pais').val();
+     var pagamento = $('#registar #pagamento').val();
+     var condicao = $('#registar #condicao').val();
      $.ajax({
          method: "POST",     
          url: "http://localhost:49234/api/clientes",
@@ -22,7 +24,9 @@
              Localidade: localidade,
              CodPostal: CodPostal,
              Distrito: distrito,
-             Pais: pais
+             Pais: pais,
+             ModoPagamento: pagamento,
+             CondicaoPagamento: condicao
          },
          async: false
      }).done(function() {

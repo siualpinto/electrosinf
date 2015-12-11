@@ -23,25 +23,25 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Email:</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Insira o seu email.">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="pwd">Password:</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter Password. Min length: 5" required pattern="(?=.*[\d.a-z.A-Z]).{5,256}" title="Deve ter 5 ou mais caracteres">
+                    <input type="password" class="form-control" id="pwd" placeholder="Insira a sua password. Tamanho mínimo: 5." required pattern="(?=.*[\d.a-z.A-Z]).{5,256}" title="Deve ter 5 ou mais caracteres">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="nome">Nome:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="nome" id="nome" placeholder="Enter nome">
+                    <input type="text" class="form-control" name="nome" id="nome" placeholder="Insira o seu nome completo.">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="numContribuinte">NºContribuinte:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="numContribuinte" required pattern="(^\d{9}$)" title="Deve conter 9 numeros" id="numContribuinte" placeholder="Enter número contribuinte">
+                    <input type="text" class="form-control" name="numContribuinte" required pattern="(^\d{9}$)" title="Deve conter 9 numeros" id="numContribuinte" placeholder="Insira o seu número contribuinte.">
                 </div>
             </div>
             <div class="form-group">
@@ -55,19 +55,19 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="morada">Morada:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="morada" id="morada" placeholder="Enter morada">
+                    <input type="text" class="form-control" name="morada" id="morada" placeholder="Insira a sua morada.">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="localidade">Localidade:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="localidade" id="localidade" placeholder="Enter Localidade">
+                    <input type="text" class="form-control" name="localidade" id="localidade" placeholder="Insira a sua localidade.">
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" data-fv-zipcode="true" for="CodPostal">Codigo Postal:</label>
+                <label class="control-label col-sm-2" data-fv-zipcode="true" for="CodPostal">Código Postal:</label>
                 <div class="col-sm-10">
-                    <input type="text" id="CodPostal" name="codigoPostal" required pattern="(^\d{4}-\d{3}$)" title="exemplo(4563-132)" class="form-control" placeholder="Enter CodPostal">
+                    <input type="text" id="CodPostal" name="codigoPostal" required pattern="(^\d{4}-\d{3}$)" title="exemplo(4563-132)" class="form-control" placeholder="Insira o seu código postal.">
                 </div>
             </div>
             <div class="form-group">
@@ -111,6 +111,22 @@
                 <div class="col-xs-2">
                     <select class="form-control" id="pais" name="pais">
                         <option value="PT">Portugal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pagamento">Método de Pagamento:</label>
+                <div class="col-xs-2">
+                    <select class="form-control" id="pagamento" name="pagamento">
+                        <option value="MB">Multibanco</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="condicao">Condição de Pagamento:</label>
+                <div class="col-xs-2">
+                    <select class="form-control" id="condicao" name="condicao">
+                        <option value="1">Pronto Pagamento</option>
                     </select>
                 </div>
             </div>
