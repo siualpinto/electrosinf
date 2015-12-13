@@ -13,7 +13,8 @@ function start () {
 		$.each(data, function(index,element){
 			artigos = "<ul>";
 			$.each(element.LinhasDoc, function(k,artigo){
-				artigos+="<li>"+artigo.DescArtigo+"</li>";
+				if(artigo.DescArtigo!="" && artigo.DescArtigo.substring(0,6)!="ECL Nº")
+					artigos+="<li>"+artigo.DescArtigo+" ["+artigo.Quantidade+"]</li>";
 			});
 			artigos +="</ul>"
 			dateLiq = element.DataLiq.split("T")[0];
@@ -39,20 +40,6 @@ function start () {
 					        +"</div>");
 			
 		});
-
-
-Data: "2015-11-26T00:00:00"
-DataLiq: "2015-12-04T00:00:00"
-DocType: null
-Entidade: null
-LinhasDoc: null
-NumDoc: 0
-Serie: null
-TotalMerc: 0
-estado: "Pronto"
-id: "{AE77033E-9480-11E5-BC47-0800278ABB53}"
-
 	});
 }
-
 $(start);

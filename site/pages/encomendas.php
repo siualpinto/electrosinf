@@ -38,7 +38,7 @@
             </div>
 
             <div class="col-md-4">
-                <h4>Artigos</h4>
+                <h4>Artigo [Quantidade]</h4>
             </div>
         </div>
     </div>

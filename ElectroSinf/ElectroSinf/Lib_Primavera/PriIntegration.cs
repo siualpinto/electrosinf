@@ -300,7 +300,7 @@ namespace ElectroSinf.Lib_Primavera
                         dv.estado = "Em Espera";
                     }
 
-                    objListLin = PriEngine.Engine.Consulta("SELECT Artigo,Descricao from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
+                    objListLin = PriEngine.Engine.Consulta("SELECT Artigo,Descricao,Quantidade from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
                     listlindv = new List<Model.LinhaDocVenda>();
 
                     while (!objListLin.NoFim())
@@ -308,6 +308,7 @@ namespace ElectroSinf.Lib_Primavera
                         lindv = new Model.LinhaDocVenda();
                         lindv.DescArtigo = objListLin.Valor("Descricao");
                         lindv.CodArtigo = objListLin.Valor("Artigo");
+                        lindv.Quantidade = objListLin.Valor("Quantidade");
                         listlindv.Add(lindv);
                         objListLin.Seguinte();
                     }
