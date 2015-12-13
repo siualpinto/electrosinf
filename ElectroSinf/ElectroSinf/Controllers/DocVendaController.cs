@@ -18,9 +18,10 @@ namespace ElectroSinf.Controllers
             return Lib_Primavera.PriIntegration.Encomendas_List();
         }
  
-        public Lib_Primavera.Model.DocVenda Get(string id){
-            Lib_Primavera.Model.DocVenda docvenda = Lib_Primavera.PriIntegration.Encomenda_Get(id);
-            if (docvenda == null)
+        /*obter faturas de um cliente e estado do pedido*/
+        public List<DocVenda> Get(string id){
+            List<DocVenda> encomendasCliente = Lib_Primavera.PriIntegration.GET_Faturas(id);
+            if (encomendasCliente == null)
             {
                 throw new HttpResponseException(
                         Request.CreateResponse(HttpStatusCode.NotFound));
@@ -28,7 +29,7 @@ namespace ElectroSinf.Controllers
             }
             else
             {
-                return docvenda;
+                return encomendasCliente;
             }
         }
 
