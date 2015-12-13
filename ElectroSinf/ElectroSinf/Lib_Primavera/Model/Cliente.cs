@@ -15,7 +15,7 @@ namespace ElectroSinf.Lib_Primavera.Model
         public string Password
         {
             get;
-            set;
+            set; 
         }
         public string CodCliente
         {
