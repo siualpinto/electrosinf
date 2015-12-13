@@ -25,7 +25,7 @@ function getCarrinho(){
 					                    +"<img src=\"../img/"+element.CDU_IdArtigo+"/1.jpg\" class=\"img-responsive\" alt=\"Micro\">" /*FALTA A IMAGEM*/
 					             	+"</div>"
 					                +"<div class=\"col-md-3\">"
-					                    +"<h4>"+element.Stock+" Produtos</h4>" /*FALTA DISPONIBILIDADE NO WS DO CARRINHO*/
+					                    +"<h4>"+element.Stock+" Produtos</h4>" 
 					                +"</div>"
 					                +"<div class=\"col-md-3\">"
 					                    +"<div class=\"col-md-4 col-md-offset-4\">"

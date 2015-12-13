@@ -275,6 +275,52 @@ namespace ElectroSinf.Lib_Primavera
             }
             return listdv;
         }
+        public static List<Model.DocVenda> GET_Faturas(string idCliente)
+        {
+            StdBELista objList, objListLin;
+            List<Model.DocVenda> listdv = new List<Model.DocVenda>();
+            List<Model.LinhaDocVenda> listlindv = new List<Model.LinhaDocVenda>();
+            LinhaDocVenda lindv;
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("select DataDoc,DataLiq,IdDoc from Historico where TipoDoc = 'FA' and Entidade = '"+idCliente+"';");
+                while (!objList.NoFim())
+                {
+                    Model.DocVenda dv = new Model.DocVenda();
+                    dv.id = objList.Valor("IdDoc");
+                    dv.Data = objList.Valor("DataDoc");
+                    try
+                    {
+                        dv.DataLiq = objList.Valor("DataLiq");
+                        dv.estado = "Pronto";
+                    }
+                    catch
+                    {
+                        dv.estado = "Em Espera";
+                    }
+
+                    objListLin = PriEngine.Engine.Consulta("SELECT Artigo,Descricao from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
+                    listlindv = new List<Model.LinhaDocVenda>();
+
+                    while (!objListLin.NoFim())
+                    {
+                        lindv = new Model.LinhaDocVenda();
+                        lindv.DescArtigo = objListLin.Valor("Descricao");
+                        lindv.CodArtigo = objListLin.Valor("Artigo");
+                        listlindv.Add(lindv);
+                        objListLin.Seguinte();
+                    }
+
+                    dv.LinhasDoc = listlindv;
+
+                    listdv.Add(dv);
+                    objList.Seguinte();
+                }
+            }
+            return listdv;
+        }
+        /*
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
 
@@ -301,6 +347,8 @@ namespace ElectroSinf.Lib_Primavera
                 objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
                 listlindv = new List<Model.LinhaDocVenda>();
 
+               
+
                 while (!objListLin.NoFim())
                 {
                     lindv = new Model.LinhaDocVenda();
@@ -322,7 +370,7 @@ namespace ElectroSinf.Lib_Primavera
             }
             return null;
         }
-
+        */
         //public static Model.RespostaErro TransformaDoc(string id)
         //{
 
