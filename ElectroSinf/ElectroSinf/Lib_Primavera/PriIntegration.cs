@@ -787,9 +787,28 @@ namespace ElectroSinf.Lib_Primavera
             List<List<Artigo>> artigosHome = new List<List<Artigo>>();   
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
+                artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("SELECT top 3 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by Artigo DESC")));
 
-                artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("SELECT top 3 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()")));
-                artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("IF(select COUNT(DISTINCT Artigo) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) ) >$9 BEGIN select Art.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda, Total from (SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo) as Art Join (select top 10 Artigo, SUM(Quantidade) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) GROUP BY Artigo ORDER BY SUM(Quantidade) DESC) as Linhas on Art.Artigo = Linhas.Artigo END ELSE SELECT top 10 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()")));
+                string queryContaTop = "select COUNT(DISTINCT Artigo) Total from LinhasDoc JOIN CabecDoc ON LinhasDoc.IdCabecDoc = CabecDoc.Id where CabecDoc.Data >= DATEADD(month,-3,GETDATE()) and TipoDoc = 'FA';";
+
+                string queryGetTop = "select Art.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda, Total "
+                                        + "from (SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda "
+                                        + "FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo) as Art Join"
+                                        + "(select top 10 Artigo, SUM(Quantidade) Total "
+                                        + "from LinhasDoc JOIN CabecDoc ON LinhasDoc.IdCabecDoc = CabecDoc.Id "
+                                        + "where CabecDoc.Data >= DATEADD(month,-3,GETDATE()) and TipoDoc = 'FA' and LinhasDoc.Artigo !=''"
+                                        + "GROUP BY Artigo ORDER BY SUM(Quantidade) DESC) as Linhas on Art.Artigo = Linhas.Artigo ;";
+
+                string queryGetRandom = "SELECT top 10 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda "
+                                            + " FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by Artigo DESC;";
+                if (PriEngine.Engine.Consulta(queryContaTop).Valor("Total") > 9)
+                {
+                    artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta(queryGetTop)));
+                }
+                else
+                {
+                    artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta(queryGetRandom)));
+                }
                 return artigosHome;
             }
             else

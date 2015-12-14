@@ -8,7 +8,7 @@ function getCarrinho(){
 		var total = 0;
 		var produtos = $("#produtos");
 		var podeGerarFatura = true
-		 $('#loading-indicator').hide();
+		$('#loading-indicator').hide();
 		$.each(data, function(index,element){
 			total+=element.PrecoTotal;
 			if(element.Stock < element.CDU_Quantidade){
@@ -63,7 +63,7 @@ function getCarrinho(){
 				var fatura = $.ajax({
 					method: "POST",
 					url: "http://localhost:49234/api/docvenda/",
-					data: {Entidade:clienteID, DocType:"FA"}
+					data: {Entidade:clienteID, DocType:"ECL"}
 				}).done(function(result){
 					$('#loading-indicator').hide();
 					if(result == "quantidadeErrada"){
