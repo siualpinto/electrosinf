@@ -20,7 +20,7 @@ namespace ElectroSinf.Controllers
  
         /*obter faturas de um cliente e estado do pedido*/
         public List<DocVenda> Get(string id){
-            List<DocVenda> encomendasCliente = Lib_Primavera.PriIntegration.GET_Faturas(id);
+            List<DocVenda> encomendasCliente = Lib_Primavera.PriIntegration.GET_Pedidos(id);
             if (encomendasCliente == null)
             {
                 throw new HttpResponseException(

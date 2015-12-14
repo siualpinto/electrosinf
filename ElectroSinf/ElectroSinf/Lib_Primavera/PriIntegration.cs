@@ -275,7 +275,7 @@ namespace ElectroSinf.Lib_Primavera
             }
             return listdv;
         }
-        public static List<Model.DocVenda> GET_Faturas(string idCliente)
+        public static List<Model.DocVenda> GET_Pedidos(string idCliente)
         {
             StdBELista objList, objListLin;
             List<Model.DocVenda> listdv = new List<Model.DocVenda>();
@@ -284,21 +284,21 @@ namespace ElectroSinf.Lib_Primavera
 
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("select DataDoc,DataLiq,IdDoc from Historico where TipoDoc = 'FA' and Entidade = '"+idCliente+"';");
+                objList = PriEngine.Engine.Consulta("select Id,Data, Estado from CabecDoc JOIN CabecDocStatus ON CabecDoc.Id = CabecDocStatus.IdCabecDoc where TipoDoc = 'ECL' and Entidade = '"+idCliente+"'");
                 while (!objList.NoFim())
                 {
                     Model.DocVenda dv = new Model.DocVenda();
-                    dv.id = objList.Valor("IdDoc");
-                    dv.Data = objList.Valor("DataDoc");
-                    try
+                    dv.id = objList.Valor("Id");
+                    dv.Data = objList.Valor("Data");
+                    if (objList.Valor("Estado") == "T")
                     {
-                        dv.DataLiq = objList.Valor("DataLiq");
                         dv.estado = "Pronto";
                     }
-                    catch
+                    else if (objList.Valor("Estado") == "P")
                     {
                         dv.estado = "Em Espera";
                     }
+                    else dv.estado = "Anulado";
 
                     objListLin = PriEngine.Engine.Consulta("SELECT Artigo,Descricao,Quantidade from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
                     listlindv = new List<Model.LinhaDocVenda>();

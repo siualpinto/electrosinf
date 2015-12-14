@@ -22,19 +22,15 @@
     <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?> style= "display: none" >
     <div id="faturas" class="container">
         <div class="shop-label col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <h4>Referência</h4>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <h4>Data da encomenda</h4>
             </div>
 
             <div class="col-md-2">
                 <h4>Estado</h4>
-            </div>
-
-            <div class="col-md-2">
-                <h4>Enviado em</h4>
             </div>
 
             <div class="col-md-4">

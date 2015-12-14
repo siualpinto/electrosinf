@@ -18,20 +18,17 @@ function start () {
 			});
 			artigos +="</ul>"
 			dateLiq = element.DataLiq.split("T")[0];
-			if (dateLiq=="0001-01-01")
-				dateLiq = element.estado;	
+			//if (dateLiq=="0001-01-01")
+			//	dateLiq = element.estado;	
 			faturas.append("<div class=\"shop-item col-md-12\">"
-								+"<div class=\"col-md-2\">"
+								+"<div class=\"col-md-3\">"
 					                +"<h4>"+element.id.replace("{","").replace("}","")+"</h4>"
 					            +"</div>"
-					            +"<div class=\"col-md-2\">"
+					            +"<div class=\"col-md-3\">"
 					                +"<h4>"+element.Data.split("T")[0]+"</h4>"
 					            +"</div>"
 					            +"<div class=\"col-md-2\">"
 					                +"<h4>"+element.estado+"</h4>"
-					            +"</div>"
-					            +"<div class=\"col-md-2\">"
-					                +"<h4>"+dateLiq+"</h4>"
 					            +"</div>"
 					            +"<div class=\"col-md-4\">"
 					                +artigos
