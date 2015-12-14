@@ -486,6 +486,51 @@ namespace ElectroSinf.Lib_Primavera
                 return erro;
             }
         }
+        public static Lib_Primavera.Model.RespostaErro UpdateCarrinhoObj(Model.TDU_Carrinho carrinho)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBECamposChave tdu_carrinhoChaves = new StdBECamposChave();
+            if (carrinho.CDU_Quantidade < 1)
+            {
+                erro.Erro = 1;
+                erro.Descricao = "Quantidade errada";
+                return erro;
+            }
+            try
+            {
+                if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+                {
+                    tdu_carrinhoChaves.AddCampoChave("CDU_IdCliente", carrinho.CDU_IdCliente);
+                    tdu_carrinhoChaves.AddCampoChave("CDU_IdArtigo", carrinho.CDU_IdArtigo);
+
+                    if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_Carrinho", tdu_carrinhoChaves))
+                    {
+                        PriEngine.Engine.TabelasUtilizador.ActualizaValorAtributo("TDU_Carrinho", tdu_carrinhoChaves, "CDU_Quantidade", carrinho.CDU_Quantidade);
+                    }
+                    else
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "Artigo não existe no carrinho";
+                        return erro;
+                    }
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
         public static Lib_Primavera.Model.RespostaErro InsereCarrinhoObj(Model.TDU_Carrinho carrinho)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -496,6 +541,13 @@ namespace ElectroSinf.Lib_Primavera
             StdBECampo idArtigo = new StdBECampo();
             StdBECampo quantidade = new StdBECampo();
             int quantidadeExistente = 0;
+
+            if (carrinho.CDU_Quantidade < 1)
+            {
+                erro.Erro = 1;
+                erro.Descricao = "Quantidade errada";
+                return erro;
+            }
 
             try
             {

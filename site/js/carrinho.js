@@ -11,13 +11,14 @@ function getCarrinho(){
 		$('#loading-indicator').hide();
 		$.each(data, function(index,element){
 			total+=element.PrecoTotal;
-			if(element.Stock < element.CDU_Quantidade){
+			if(element.Stock < element.CDU_Quantidade || element.CDU_Quantidade<1){
 				podeGerarFatura=false;
 				red="border : 3px solid red";
 			}else red="";
 			
 			produtos.append("<div class=\"shop-item col-md-12\">"
-					            +"<div class=\"product-title\">"
+								+"<input type=\"hidden\" id=\"\" value=\""+element.CDU_IdArtigo+"\" >"
+					            +"<div class=\"col-md-3 product-title\">"
 					                +"<h4>"+element.Nome+"</h4>"
 					            +"</div>"
 					            +"<div class=\"col-md-12 product-info text-center\">"
@@ -29,12 +30,15 @@ function getCarrinho(){
 					                +"</div>"
 					                +"<div class=\"col-md-3\">"
 					                    +"<div class=\"col-md-4 col-md-offset-4\">"
-					                        +"<input style=\""+red+"\" type=\"number\" class=\"form-control\" placeholder=\"2\" value="+element.CDU_Quantidade+">"
+					                        +"<input style=\""+red+"\" type=\"number\" min=\"1\" class=\"form-control quantidade\" value="+element.CDU_Quantidade+">"
 					                    +"</div>"
 					                +"</div>"
 
-					                +"<div class=\"col-md-3\">"
+					                +"<div class=\"col-md-2\">"
 					                    +"<h4>"+element.PrecoTotal.toFixed(2)+"</h4>"
+					                +"</div>"
+					                +"<div class=\"col-md-1\">"
+					                    +"<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" ></span>"
 					                +"</div>"
 					            +"</div>"
 					        +"</div>");
@@ -66,19 +70,40 @@ function getCarrinho(){
 					data: {Entidade:clienteID, DocType:"ECL"}
 				}).done(function(result){
 					$('#loading-indicator').hide();
-					if(result == "quantidadeErrada"){
-						window.alert("Ocorreu um erro");
-						window.location.reload();
-					}else if (result == "Sucesso"){
+					if (result == "Sucesso"){
 						window.alert(result);
 						window.location.href = "http://localhost:3000/electrosinf/site/pages/homepage.php";
+					}else {
+						window.alert("Ocorreu um erro");
+						window.location.reload();
 					}
 				});
 			});
 		}
+
+		$(".glyphicon-remove").on("click",function(){
+			var id = $(this).parent().parent().parent().children("input").val();
+			$.ajax({
+				method: "DELETE",
+				url: "http://localhost:49234/api/TDU_Carrinho/",
+				data: {CDU_IdCliente:clienteID,CDU_IdArtigo:id}
+			}).done(function(data){
+				window.location.reload();
+			});
+		});
+		$(".quantidade").change(function(){
+			var value = this.value;
+			var id = $(this).parent().parent().parent().parent().children("input").val();
+			$.ajax({
+				method: "PUT",
+				url: "http://localhost:49234/api/TDU_Carrinho/",
+				data: {CDU_IdCliente:clienteID,CDU_IdArtigo:id,CDU_Quantidade:value}
+			}).done(function(data){
+				window.location.reload();
+			});
+		});
 	});
 }
-
 function start(){
 	getCarrinho();
 }

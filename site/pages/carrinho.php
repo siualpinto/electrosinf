@@ -35,8 +35,11 @@
                 <h4>Quantidade</h4>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <h4>Preço</h4>
+            </div>
+            <div class="col-md-1">
+                <h4></h4>
             </div>
         </div>
     </div>

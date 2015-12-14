@@ -45,6 +45,20 @@ namespace ElectroSinf.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
             }
         }
+        //POST http://localhost:49234/api/TDU_Carrinho/
+        public HttpResponseMessage Put(TDU_Carrinho carrinhoLinha)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            erro = Lib_Primavera.PriIntegration.UpdateCarrinhoObj(carrinhoLinha);
+            if (erro.Erro == 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.Created, erro.Descricao);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+            }
+        }
 
         //DELETE http://localhost:49234/api/TDU_Carrinho/
         public HttpResponseMessage Delete(TDU_Carrinho carrinho)
