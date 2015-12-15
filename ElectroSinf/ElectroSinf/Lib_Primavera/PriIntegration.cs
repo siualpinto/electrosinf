@@ -900,66 +900,77 @@ namespace ElectroSinf.Lib_Primavera
 
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             GcpBECliente myCli = new GcpBECliente();
-
+            StdBELista objList;
             try
             {
-                if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+                objList = PriEngine.Engine.Consulta("SELECT * FROM PRIELECSINF.[dbo].[Clientes] where CDU_Email='" + cli.Email+"'");
+                if (objList.Vazia())
                 {
-                    StdBELista lastClient = new StdBELista();
-                    if (PriEngine.Engine.Comercial.Clientes.Existe("C001"))
+                    if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
                     {
-                        lastClient = PriEngine.Engine.Consulta("SELECT top 1 Cliente FROM PRIELECSINF.[dbo].[Clientes] WHERE Cliente LIKE 'C%' ORDER BY Cliente DESC;");
-                        string b = lastClient.Valor("Cliente");
-                        b = b.Replace("C", "0");
-                        int x = 0;
-                        Int32.TryParse(b, out x);
-                        x++;
-                        string n = x.ToString();
-                        string codCliente = "C";
-                        for (int i = 0; i < (3 - n.Length); i++)
+                        StdBELista lastClient = new StdBELista();
+                        if (PriEngine.Engine.Comercial.Clientes.Existe("C001"))
                         {
-                            codCliente = string.Concat(codCliente, "0");
+                            lastClient = PriEngine.Engine.Consulta("SELECT top 1 Cliente FROM PRIELECSINF.[dbo].[Clientes] WHERE Cliente LIKE 'C%' ORDER BY Cliente DESC;");
+                            string b = lastClient.Valor("Cliente");
+                            b = b.Replace("C", "0");
+                            int x = 0;
+                            Int32.TryParse(b, out x);
+                            x++;
+                            string n = x.ToString();
+                            string codCliente = "C";
+                            for (int i = 0; i < (3 - n.Length); i++)
+                            {
+                                codCliente = string.Concat(codCliente, "0");
+                            }
+                            cli.CodCliente = string.Concat(codCliente, n);
                         }
-                        cli.CodCliente = string.Concat(codCliente, n);
+                        else
+                        {
+                            cli.CodCliente = "C001";
+                        }
+                        StdBECampos cmps = new StdBECampos();
+                        StdBECampo email = new StdBECampo();
+                        StdBECampo pwd = new StdBECampo();
+                        email.Nome = "CDU_Email";
+                        pwd.Nome = "CDU_Password";
+                        email.Valor = cli.Email;
+                        pwd.Valor = PriEngine.Platform.Criptografia.Encripta(cli.Password, 50);
+                        cmps.Insere(email);
+                        cmps.Insere(pwd);
+                        myCli.set_CamposUtil(cmps);
+                        myCli.set_Cliente(cli.CodCliente);
+                        myCli.set_Nome(cli.NomeCliente);
+                        myCli.set_NomeFiscal(cli.NomeCliente);
+                        myCli.set_NumContribuinte(cli.NumContribuinte);
+                        myCli.set_Moeda(cli.Moeda);
+                        myCli.set_Morada(cli.Morada);
+                        myCli.set_Localidade(cli.Localidade);
+                        myCli.set_CodigoPostal(cli.CodPostal);
+                        myCli.set_Distrito(cli.Distrito);
+                        myCli.set_Pais(cli.Pais);
+                        myCli.set_Telefone(cli.NumTelefone);
+                        myCli.set_LocalidadeCodigoPostal(cli.LocalidadeCodPostal);
+                        myCli.set_ModoPag(cli.ModoPagamento);
+                        myCli.set_CondPag(cli.CondicaoPagamento);
+                        PriEngine.Engine.IniciaTransaccao();
+                        PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
+                        PriEngine.Engine.TerminaTransaccao();
+                        erro.Erro = 0;
+                        erro.Descricao = "Sucesso";
+                        return erro;
                     }
                     else
                     {
-                        cli.CodCliente = "C001";
+                        erro.Erro = 1;
+                        erro.Descricao = "Erro ao abrir empresa";
+                        return erro;
                     }
-                    StdBECampos cmps = new StdBECampos();
-                    StdBECampo email = new StdBECampo();
-                    StdBECampo pwd = new StdBECampo();
-                    email.Nome = "CDU_Email";
-                    pwd.Nome = "CDU_Password";
-                    email.Valor = cli.Email;
-                    pwd.Valor = PriEngine.Platform.Criptografia.Encripta(cli.Password, 50);
-                    cmps.Insere(email);
-                    cmps.Insere(pwd);
-                    myCli.set_CamposUtil(cmps);
-                    myCli.set_Cliente(cli.CodCliente);
-                    myCli.set_Nome(cli.NomeCliente);
-                    myCli.set_NomeFiscal(cli.NomeCliente);
-                    myCli.set_NumContribuinte(cli.NumContribuinte);
-                    myCli.set_Moeda(cli.Moeda);
-                    myCli.set_Morada(cli.Morada);
-                    myCli.set_Localidade(cli.Localidade);
-                    myCli.set_CodigoPostal(cli.CodPostal);
-                    myCli.set_Distrito(cli.Distrito);
-                    myCli.set_Pais(cli.Pais);
-                    myCli.set_LocalidadeCodigoPostal(cli.Localidade);
-                    myCli.set_ModoPag(cli.ModoPagamento);
-                    myCli.set_CondPag(cli.CondicaoPagamento);
-                    PriEngine.Engine.IniciaTransaccao();
-                    PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
-                    PriEngine.Engine.TerminaTransaccao();
-                    erro.Erro = 0;
-                    erro.Descricao = "Sucesso";
-                    return erro;
                 }
                 else
                 {
-                    erro.Erro = 1;
-                    erro.Descricao = "Erro ao abrir empresa";
+                    erro.Erro = -1;
+                    erro.Descricao = "Já existe pessoa com mesmo email";
                     return erro;
                 }
             }

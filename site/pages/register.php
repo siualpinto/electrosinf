@@ -19,11 +19,11 @@
     <?php include_once 'header.php';?>
     <div class="container">
         <h2>Registar Conta</h2>
-        <form class="form-horizontal" role="form" id="registar">
+        <form class="form-horizontal" role="form" id="registar" method="POST">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Email:</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Insira o seu email.">
+                    <input type="email" class="form-control" required=true id="email" placeholder="Insira o seu email.">
                 </div>
             </div>
             <div class="form-group">
@@ -35,40 +35,52 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="nome">Nome:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="nome" id="nome" placeholder="Insira o seu nome completo.">
+                    <input type="text" class="form-control" required=true id="nome" placeholder="Insira o seu nome completo.">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="numContribuinte">NºContribuinte:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="numContribuinte" required pattern="(^\d{9}$)" title="Deve conter 9 numeros" id="numContribuinte" placeholder="Insira o seu número contribuinte.">
+                    <input type="text" class="form-control" required pattern="(^\d{9}$)" title="Deve conter 9 numeros" id="numContribuinte" placeholder="Insira o seu número contribuinte.">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="moeda">Moeda:</label>
                 <div class="col-xs-2">
-                    <select class="form-control" name="moeda">
-                        <option id="moeda" name="moeda" value="EUR">Euro</option>
+                    <select class="form-control" >
+                        <option id="moeda"  value="EUR">Euro</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="morada">Morada:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="morada" id="morada" placeholder="Insira a sua morada.">
+                    <input type="text" class="form-control" required=true id="morada" placeholder="Insira a sua morada.">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="numTelefone">Telefone:</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" required pattern="(^\d+)" title="Deve conter numeros" id="numTelefone" placeholder="Insira o seu número telefone.">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="localidade">Localidade:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="localidade" id="localidade" placeholder="Insira a sua localidade.">
+                    <input type="text" class="form-control" required=true id="localidade" placeholder="Insira a sua localidade.">
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" data-fv-zipcode="true" for="CodPostal">Código Postal:</label>
-                <div class="col-sm-10">
-                    <input type="text" id="CodPostal" name="codigoPostal" required pattern="(^\d{4}-\d{3}$)" title="exemplo(4563-132)" class="form-control" placeholder="Insira o seu código postal.">
+                <label class="control-label col-sm-2" data-fv-zipcode="true" for="codPostal">Código Postal:</label>
+                <div class="col-sm-3">
+                    <input type="text" id="codPostal" required pattern="(^\d{4}-\d{3}$)" title="exemplo(4563-132)" class="form-control" placeholder="Insira o seu código postal.">
+                </div>                
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" required=true id="localidadeCodPostal" placeholder="Insira a sua localidade do Código Postal.">
                 </div>
+            </div>
+             <div class="form-group">
+                
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="distrito">Distrito:</label>
@@ -124,7 +136,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="condicao">Condição de Pagamento:</label>
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                     <select class="form-control" id="condicao" name="condicao">
                         <option value="1">Pronto Pagamento</option>
                     </select>
@@ -132,7 +144,9 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button id="registarbtn" type="submit" class="btn btn-default">Registar</button>
+                    <!--button id="registarbtn" type="submit" class="btn btn-default">Registar</button-->
+                    <!--input id="registarbtn" type="submit" onclick="this.disabled = true" class="btn btn-default" value="Registar"/-->
+                    <input id="registarbtn" type="submit" class="btn btn-default" value="Registar"/>
                 </div>
             </div>
         </form>

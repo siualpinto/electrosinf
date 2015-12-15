@@ -47,7 +47,7 @@ namespace ElectroSinf.Lib_Primavera.Model
         {
             get;
             set;
-        }
+        }        
         public string CodPostal
         {
             get;
@@ -80,7 +80,15 @@ namespace ElectroSinf.Lib_Primavera.Model
             get;
             set;
         }
-        public List<TDU_Carrinho> carrinho { set; get; }
-        public string NumTelefone { set; get; }
+        public List<TDU_Carrinho> carrinho
+        { 
+            set; 
+            get; 
+        }
+        public string NumTelefone
+        { 
+            set; 
+            get; 
+        }
     }
 }
