@@ -32,6 +32,7 @@ namespace ElectroSinf.Lib_Primavera.Model
             cdu_categoria_chave.AddCampoChave("CDU_IdCategoria", cdu_categoria);
             Categoria = PriEngine.Engine.TabelasUtilizador.DaValorAtributo("TDU_Categoria", cdu_categoria_chave, "CDU_Categoria");
             Stock = objArtigo.get_StkActual();
+            Stock_armazem = PriIntegration.getStock_armazem(CodArtigo);
             Relacionados = PriIntegration.getRelacionados(CodArtigo, cdu_tipo,pvp1);
         }
         public string CodArtigo { get; set; }
@@ -42,6 +43,9 @@ namespace ElectroSinf.Lib_Primavera.Model
         public string Modelo { set; get; }
         public double Preco { set; get; }
         public Double Stock { set; get; }
+
+        //lista de armazem com stock
+        public List<Armazem_stock> Stock_armazem { set; get; }
         public List<Model.TDU_Especificacao> Especificacoes { set; get; }
         public List<Artigo> Relacionados { set; get; }
     }

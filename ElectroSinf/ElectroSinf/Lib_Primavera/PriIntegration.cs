@@ -163,7 +163,9 @@ namespace ElectroSinf.Lib_Primavera
                     {
                         idArtigo = carrinho.Valor("CDU_IdArtigo");
                         quantidade = Convert.ToDouble(carrinho.Valor("CDU_Quantidade"));
+                        armazem = carrinho.Valor("CDU_Armazem");
                         Stock = (int)PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(idArtigo);
+                        //ARMAZEM
                         if (quantidade > Stock)
                         {
                             erro.Erro = 1;
@@ -437,6 +439,8 @@ namespace ElectroSinf.Lib_Primavera
                 return erro;
             }
         }
+
+        //MUDADO PARA RECEBER ARMAZEM
         public static Lib_Primavera.Model.RespostaErro InsereCarrinhoObj(Model.TDU_Carrinho carrinho)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -447,13 +451,23 @@ namespace ElectroSinf.Lib_Primavera
             StdBECampo idArtigo = new StdBECampo();
             StdBECampo quantidade = new StdBECampo();
             int quantidadeExistente = 0;
+            //AQUI
+            StdBECampo armazem = new StdBECampo();
 
             try
             {
                 if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
                 {
+
+                    StdBELista objListCab;
+                    string st = "SELECT Armazem From Armazens where Descricao='" + carrinho.CDU_Armazem + "'";
+                    objListCab = PriEngine.Engine.Consulta(st);
+
+
                     tdu_carrinhoChaves.AddCampoChave("CDU_IdCliente", carrinho.CDU_IdCliente);
                     tdu_carrinhoChaves.AddCampoChave("CDU_IdArtigo", carrinho.CDU_IdArtigo);
+                    //AQUI
+                    tdu_carrinhoChaves.AddCampoChave("CDU_Armazem", objListCab.Valor("Armazem"));
 
                     if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_Carrinho", tdu_carrinhoChaves))
                     {
@@ -470,10 +484,19 @@ namespace ElectroSinf.Lib_Primavera
                         idCliente.Valor = carrinho.CDU_IdCliente;
                         idArtigo.Valor = carrinho.CDU_IdArtigo;
                         quantidade.Valor = carrinho.CDU_Quantidade + quantidadeExistente;
+                        //AQUI
+                        armazem.Nome = "CDU_Armazem";
+
+
+                       
+
+                        armazem.Valor = objListCab.Valor("Armazem");
 
                         cmps.Insere(idCliente);
                         cmps.Insere(idArtigo);
                         cmps.Insere(quantidade);
+                        //AQUI
+                        cmps.Insere(armazem);
 
                         tdu_carrinhoNovo.set_Campos(cmps);
                         PriEngine.Engine.TabelasUtilizador.Actualiza("TDU_Carrinho", tdu_carrinhoNovo);
@@ -832,5 +855,30 @@ namespace ElectroSinf.Lib_Primavera
 
         #endregion Cliente
 
+
+        internal static List<Armazem_stock> getStock_armazem(string CodArtigo)
+        {
+            List<Armazem_stock> stock_armazem = new List<Armazem_stock>();
+
+            StdBELista lst = new StdBELista();
+            lst = PriEngine.Engine.Consulta("SELECT ArtigoArmazem.Armazem,ArtigoArmazem.StkActual,Armazens.Descricao,Armazens.Morada,Armazens.Localidade,Armazens.Cp,Armazens.CpLocalidade FROM ArtigoArmazem JOIN Armazens ON ArtigoArmazem.Armazem = Armazens.Armazem WHERE Artigo ='" + CodArtigo + "'");
+
+            Armazem_stock arm_stc;
+            while (!lst.NoFim())
+            {
+                arm_stc = new Armazem_stock();
+                arm_stc.Armazem_id = lst.Valor("Armazem");
+                arm_stc.Stock_qtdd = lst.Valor("StkActual");
+                arm_stc.Descricao = lst.Valor("Descricao");
+                arm_stc.Morada = lst.Valor("Morada");
+                arm_stc.Localidade = lst.Valor("Localidade");
+                arm_stc.Cp = lst.Valor("Cp");
+                arm_stc.CpLocalidade = lst.Valor("CpLocalidade");
+
+                stock_armazem.Add(arm_stc);
+                lst.Seguinte();
+            }
+            return stock_armazem;
+        }
+        }
     }
-}
