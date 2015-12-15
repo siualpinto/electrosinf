@@ -974,7 +974,50 @@ namespace ElectroSinf.Lib_Primavera
 
 
         }
+        public static Lib_Primavera.Model.RespostaErro login(Model.Cliente cli)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
 
+            try
+            {
+                if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+                {
+                    StdBELista cliente = PriEngine.Engine.Consulta("SELECT Cliente,CDU_Password from Clientes where CDU_Email='" + cli.Email + "';");
+                    if (cliente.Vazia())
+                    {
+                        erro.Erro = -1;
+                        erro.Descricao = "Email Errado";
+                    }
+                    else
+                    {
+                        string inserida = PriEngine.Platform.Criptografia.Encripta(cli.Password, 50);
+                        if (inserida == cliente.Valor("CDU_Password"))
+                        {
+                            erro.Erro = 0;
+                            erro.Descricao = cliente.Valor("Cliente");
+                        }
+                        else
+                        {
+                            erro.Erro = -1;
+                            erro.Descricao = "Password Errada";
+                        }
+                    }
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
         #endregion Cliente
 
     }

@@ -12,14 +12,15 @@ namespace ElectroSinf.Controllers
 {
     public class DocVendaController : ApiController
     {
-
+        public static Object _lock = new Object();
         public IEnumerable<Lib_Primavera.Model.DocVenda> Get()
         {
             return Lib_Primavera.PriIntegration.Encomendas_List();
         }
- 
+
         /*obter faturas de um cliente e estado do pedido*/
-        public List<DocVenda> Get(string id){
+        public List<DocVenda> Get(string id)
+        {
             List<DocVenda> encomendasCliente = Lib_Primavera.PriIntegration.GET_Pedidos(id);
             if (encomendasCliente == null)
             {
@@ -35,24 +36,27 @@ namespace ElectroSinf.Controllers
 
         public HttpResponseMessage Post(Lib_Primavera.Model.DocVenda dv)
         {
-            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
-            erro = Lib_Primavera.PriIntegration.Encomendas_New(dv);
-
-            if (erro.Erro == 0)
+            lock (_lock)
             {
-                var response = Request.CreateResponse(
-                   HttpStatusCode.Created, dv.id);
-                string uri = Url.Link("DefaultApi", new { DocId = dv.id });
-                response.Headers.Location = new Uri(uri);
-                response.Content = new StringContent(erro.Descricao);
-                return response;
-            }
+                Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+                erro = Lib_Primavera.PriIntegration.Encomendas_New(dv);
 
-            else
-            {
-                HttpResponseMessage error = Request.CreateResponse(HttpStatusCode.BadRequest);
-                error.Content = new StringContent(erro.Descricao);
-                return error;
+                if (erro.Erro == 0)
+                {
+                    var response = Request.CreateResponse(
+                       HttpStatusCode.Created, dv.id);
+                    string uri = Url.Link("DefaultApi", new { DocId = dv.id });
+                    response.Headers.Location = new Uri(uri);
+                    response.Content = new StringContent(erro.Descricao);
+                    return response;
+                }
+
+                else
+                {
+                    HttpResponseMessage error = Request.CreateResponse(HttpStatusCode.BadRequest);
+                    error.Content = new StringContent(erro.Descricao);
+                    return error;
+                }
             }
         }
     }

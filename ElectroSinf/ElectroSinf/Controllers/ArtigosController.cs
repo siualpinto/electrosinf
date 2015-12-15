@@ -14,7 +14,6 @@ namespace ElectroSinf.Controllers
     {
         //
         // GET: /Artigos/
-        
         public IEnumerable<Lib_Primavera.Model.Artigo> Get()
         {
             return Lib_Primavera.PriIntegration.ListaArtigos();
@@ -27,6 +26,5 @@ namespace ElectroSinf.Controllers
             Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
             return artigo;
         }
-
     }
 }

@@ -1,7 +1,6 @@
 <?
     session_set_cookie_params(0, '/', 'http://localhost:3000/'); 
-    session_start();  
-    $_SESSION['clienteID']='C001';
+    session_start(); 
 ?>
 <nav class="navbar navbar-default">
         <div class="container">
@@ -18,7 +17,26 @@
                     </div>
                     <button type="button" class="btn btn-default btn-sm" id="search_button">Procurar</button>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-form navbar-nav navbar-right">
+                <? if(!isset($_SESSION['clienteID'])){ ?>
+                    <li>
+                        <form class="form-inline">
+                          <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="Email">
+                          </div>
+                          <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                          </div>
+                          <button type="button" class="btn btn-default btn-sm" id="login">Login</button>
+                        </form>
+                    </li>
+                <?}else{?>
+                <li>
+                    <form class="form-inline" method="POST" action="../actions/logout.php">
+                        <input type="submit" class="btn btn-default btn-sm" value="Logout">
+                    </form>
+                </li>
+                <?}?>
                     <li>
                         <a href="#"> <span class="glyphicon glyphicon-share" aria-hidden="true"></span> </a>
                     </li>
