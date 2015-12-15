@@ -28,10 +28,10 @@ $(document).ready(function() {
                         $('#availability').append('<strong>Disponibilidade: Indisponível </strong>');
                     }
         
-                    for(var i=0; i < data['Stock_armazem'].length; ++i){
-                        $('#armazem').append('<label><input type="radio" name="armazem" value="'+ data['Stock_armazem'][i]['Descricao'] +'"checked>  '+ data['Stock_armazem'][i]['Descricao'] +' - Stock Disponível: '+ data['Stock_armazem'][i]['Stock_qtdd'] +' </label><br>' )
-                    }
-        
+                   for(var i=0; i < data['Stock_armazem'].length; ++i){
+                       $('#armazem').append('<label><input type="radio" name="armazem" value="'+ data['Stock_armazem'][i]['Descricao'] +'"checked>  '+ data['Stock_armazem'][i]['Descricao'] +' - Stock Disponível: '+ data['Stock_armazem'][i]['Stock_qtdd'] +' </label><br>' )
+                   }
+    
         
         
         

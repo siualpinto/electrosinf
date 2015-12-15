@@ -20,7 +20,7 @@
 
 <body>
    <?php include_once 'header.php';?>
-    <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?>>
+    
 <?php echo '<input type="text" id="artigo_id" class="hidden"value="'.$_GET['id'].'">';?>
     <div class="container">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -60,10 +60,13 @@
         
        
                 
-                
-                
                 <div class="product-info-item">
+                    <? if(isset($_SESSION['clienteID'])){ ?> 
+                     <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?>>-->
                     <button id="adicionar_carrinho" onclick="add_carrinho()" type="button" class="btn btn-success">Adicionar ao carrinho</button>
+                     <?} else {?> 
+                    <p> Tem que iniciar sessão para poder adicionar um produto ao carrinho </p>
+                       <?}?> 
                 </div>
 
             </div>
