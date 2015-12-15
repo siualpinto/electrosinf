@@ -73,5 +73,14 @@ namespace ElectroSinf.Lib_Primavera.Model
             get;
             set;
         }
+
+        // usado pelo menos no carrinho
+        public string LocalidadeCodPostal
+        {
+            get;
+            set;
+        }
+        public List<TDU_Carrinho> carrinho { set; get; }
+        public string NumTelefone { set; get; }
     }
 }

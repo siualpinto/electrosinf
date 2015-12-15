@@ -447,13 +447,27 @@ namespace ElectroSinf.Lib_Primavera
             }
             else return null;
         }
-        public static List<Model.TDU_Carrinho> GetCarrinhoCliente(string codCliente)
+        public static Model.Cliente GetCarrinhoCliente(string codCliente)
         {
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-                return Model.TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + codCliente + "'"));
+                if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente)) {
+                    GcpBECliente cli = PriEngine.Engine.Comercial.Clientes.Edita(codCliente);
+                    Cliente cliente = new Cliente();
+                    cliente.carrinho = TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + codCliente + "'"));
+                    cliente.CodPostal = cli.get_CodigoPostal();
+                    cliente.Distrito = PriEngine.Engine.Consulta("select Descricao from Distritos where Distrito="+cli.get_Distrito()+";").Valor("Descricao"); 
+                    cliente.Localidade = cli.get_Localidade();
+                    cliente.LocalidadeCodPostal = cli.get_LocalidadeCodigoPostal();
+                    cliente.Morada = cli.get_Morada();
+                    cliente.Pais = cli.get_Pais();
+                    cliente.NumContribuinte = cli.get_NumContribuinte();
+                    cliente.NumTelefone = cli.get_Telefone();
+                    return cliente;
+                }
             }
-            else return null;
+            
+            return null;
         }
         public static Lib_Primavera.Model.RespostaErro DelArtigoCarrinho(Model.TDU_Carrinho carrinho)
         {

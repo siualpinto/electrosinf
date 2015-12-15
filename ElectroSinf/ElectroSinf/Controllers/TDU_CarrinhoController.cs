@@ -17,17 +17,17 @@ namespace ElectroSinf.Controllers
         }
 
         //GET http://localhost:49234/api/TDU_Carrinho/MIGUEL
-        public List<TDU_Carrinho> Get(string id)
+        public Cliente Get(string id)
         {
-            List<TDU_Carrinho> carrinho = Lib_Primavera.PriIntegration.GetCarrinhoCliente(id);
-            if (carrinho == null)
+            Cliente cli= Lib_Primavera.PriIntegration.GetCarrinhoCliente(id);
+            if (cli == null)
             {
                 throw new HttpResponseException(
                   Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
-                return carrinho;
+                return cli;
             }
         }
 

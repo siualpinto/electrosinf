@@ -9,7 +9,7 @@ function getCarrinho(){
 		var produtos = $("#produtos");
 		var podeGerarFatura = true
 		$('#loading-indicator').hide();
-		$.each(data, function(index,element){
+		$.each(data.carrinho, function(index,element){
 			total+=element.PrecoTotal;
 			if(element.Stock < element.CDU_Quantidade || element.CDU_Quantidade<1){
 				podeGerarFatura=false;
@@ -102,6 +102,17 @@ function getCarrinho(){
 				window.location.reload();
 			});
 		});
+
+		var dados= "<h4>Dados para entrega/fatura</h4><div>";
+		dados+="<p><strong> Contribuinte: </strong>"+data.NumContribuinte+"</p>";
+		dados+="<p><strong> Morada: </strong>"+data.Morada+"</p>";
+		dados+="<p><strong> Localidade: </strong>"+data.Localidade+"</p>";
+		dados+="<p><strong> Código Postal: </strong>"+data.CodPostal+" "+data.LocalidadeCodPostal+"</p>";
+		dados+="<p><strong> Distrito: </strong>"+data.Distrito+"</p>";
+		dados+="<p><strong> Contribuinte: </strong>"+data.NumContribuinte+"</p>";
+		dados+="<p><strong> Telefone: </strong>"+data.NumTelefone+"</p>";
+		dados += "</div>"
+		produtos.parent().append(dados);
 	});
 }
 function start(){
