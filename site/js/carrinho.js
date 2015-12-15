@@ -29,7 +29,7 @@ function getCarrinho(){
 					                    +"<h4>"+element.Stock+" Produtos</h4>" 
 					                +"</div>"
 					                +"<div class=\"col-md-3\">"
-					                    +"<div class=\"col-md-4 col-md-offset-4\">"
+					                    +"<div class=\"col-md-5 col-md-offset-2\">"
 					                        +"<input style=\""+red+"\" type=\"number\" min=\"1\" class=\"form-control quantidade\" value="+element.CDU_Quantidade+">"
 					                    +"</div>"
 					                +"</div>"
