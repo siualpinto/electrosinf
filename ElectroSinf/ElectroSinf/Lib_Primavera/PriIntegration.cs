@@ -21,24 +21,17 @@ namespace ElectroSinf.Lib_Primavera
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
 
-            GcpBEArtigo objArtigo = new GcpBEArtigo();
+            GcpBEArtigo objArtigo;
             Model.Artigo myArt = new Model.Artigo();
 
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-
-                if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
-                {
+                objArtigo = PriEngine.Engine.Comercial.Artigos.Consulta(codArtigo);
+                if (objArtigo == null)
                     return null;
-                }
-                else
-                {
-                    objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
-                    double pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(codArtigo, "EUR", "UN", "PVP1", false, 0);
-                    myArt = new Model.Artigo(objArtigo, pvp1);
-                    return myArt;
-                }
-
+                double pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(codArtigo, "EUR", "UN", "PVP1", false, 0);
+                myArt = new Model.Artigo(objArtigo, pvp1);
+                return myArt;
             }
             else
             {
@@ -277,6 +270,53 @@ namespace ElectroSinf.Lib_Primavera
             }
             return listdv;
         }
+        public static List<Model.DocVenda> GET_Pedidos(string idCliente)
+        {
+            StdBELista objList, objListLin;
+            List<Model.DocVenda> listdv = new List<Model.DocVenda>();
+            List<Model.LinhaDocVenda> listlindv = new List<Model.LinhaDocVenda>();
+            LinhaDocVenda lindv;
+
+            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("select Id,Data, Estado from CabecDoc JOIN CabecDocStatus ON CabecDoc.Id = CabecDocStatus.IdCabecDoc where TipoDoc = 'ECL' and Entidade = '" + idCliente + "'");
+                while (!objList.NoFim())
+                {
+                    Model.DocVenda dv = new Model.DocVenda();
+                    dv.id = objList.Valor("Id");
+                    dv.Data = objList.Valor("Data");
+                    if (objList.Valor("Estado") == "T")
+                    {
+                        dv.estado = "Pronto";
+                    }
+                    else if (objList.Valor("Estado") == "P")
+                    {
+                        dv.estado = "Em Espera";
+                    }
+                    else dv.estado = "Anulado";
+
+                    objListLin = PriEngine.Engine.Consulta("SELECT Artigo,Descricao,Quantidade from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
+                    listlindv = new List<Model.LinhaDocVenda>();
+
+                    while (!objListLin.NoFim())
+                    {
+                        lindv = new Model.LinhaDocVenda();
+                        lindv.DescArtigo = objListLin.Valor("Descricao");
+                        lindv.CodArtigo = objListLin.Valor("Artigo");
+                        lindv.Quantidade = objListLin.Valor("Quantidade");
+                        listlindv.Add(lindv);
+                        objListLin.Seguinte();
+                    }
+
+                    dv.LinhasDoc = listlindv;
+
+                    listdv.Add(dv);
+                    objList.Seguinte();
+                }
+            }
+            return listdv;
+        }
+        /*
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
 
@@ -303,6 +343,8 @@ namespace ElectroSinf.Lib_Primavera
                 objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
                 listlindv = new List<Model.LinhaDocVenda>();
 
+               
+
                 while (!objListLin.NoFim())
                 {
                     lindv = new Model.LinhaDocVenda();
@@ -324,7 +366,7 @@ namespace ElectroSinf.Lib_Primavera
             }
             return null;
         }
-
+        */
         //public static Model.RespostaErro TransformaDoc(string id)
         //{
 
@@ -400,13 +442,29 @@ namespace ElectroSinf.Lib_Primavera
             }
             else return null;
         }
-        public static List<Model.TDU_Carrinho> GetCarrinhoCliente(string codCliente)
+        public static Model.Cliente GetCarrinhoCliente(string codCliente)
         {
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-                return Model.TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + codCliente + "'"));
+                GcpBECliente cli = PriEngine.Engine.Comercial.Clientes.Consulta(codCliente);
+                if (cli == null)
+                {
+                    return null;
+                }
+                Cliente cliente = new Cliente();
+                cliente.carrinho = TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + codCliente + "'"));
+                cliente.CodPostal = cli.get_CodigoPostal();
+                cliente.Distrito = PriEngine.Engine.Consulta("select Descricao from Distritos where Distrito=" + cli.get_Distrito() + ";").Valor("Descricao");
+                cliente.Localidade = cli.get_Localidade();
+                cliente.LocalidadeCodPostal = cli.get_LocalidadeCodigoPostal();
+                cliente.Morada = cli.get_Morada();
+                cliente.Pais = cli.get_Pais();
+                cliente.NumContribuinte = cli.get_NumContribuinte();
+                cliente.NumTelefone = cli.get_Telefone();
+                return cliente;
             }
-            else return null;
+
+            return null;
         }
         public static Lib_Primavera.Model.RespostaErro DelArtigoCarrinho(Model.TDU_Carrinho carrinho)
         {
@@ -441,6 +499,53 @@ namespace ElectroSinf.Lib_Primavera
         }
 
         //MUDADO PARA RECEBER ARMAZEM
+
+        public static Lib_Primavera.Model.RespostaErro UpdateCarrinhoObj(Model.TDU_Carrinho carrinho)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            StdBECamposChave tdu_carrinhoChaves = new StdBECamposChave();
+            if (carrinho.CDU_Quantidade < 1)
+            {
+                erro.Erro = 1;
+                erro.Descricao = "Quantidade errada";
+                return erro;
+            }
+            try
+            {
+                if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+                {
+                    tdu_carrinhoChaves.AddCampoChave("CDU_IdCliente", carrinho.CDU_IdCliente);
+                    tdu_carrinhoChaves.AddCampoChave("CDU_IdArtigo", carrinho.CDU_IdArtigo);
+
+                    if (PriEngine.Engine.TabelasUtilizador.Existe("TDU_Carrinho", tdu_carrinhoChaves))
+                    {
+                        PriEngine.Engine.TabelasUtilizador.ActualizaValorAtributo("TDU_Carrinho", tdu_carrinhoChaves, "CDU_Quantidade", carrinho.CDU_Quantidade);
+                    }
+                    else
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "Artigo não existe no carrinho";
+                        return erro;
+                    }
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
+
         public static Lib_Primavera.Model.RespostaErro InsereCarrinhoObj(Model.TDU_Carrinho carrinho)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -453,6 +558,13 @@ namespace ElectroSinf.Lib_Primavera
             int quantidadeExistente = 0;
             //AQUI
             StdBECampo armazem = new StdBECampo();
+
+            if (carrinho.CDU_Quantidade < 1)
+            {
+                erro.Erro = 1;
+                erro.Descricao = "Quantidade errada";
+                return erro;
+            }
 
             try
             {
@@ -758,12 +870,31 @@ namespace ElectroSinf.Lib_Primavera
         }
         public static List<List<Artigo>> SearchArtigosHome()
         {
-            List<List<Artigo>> artigosHome = new List<List<Artigo>>();   
+            List<List<Artigo>> artigosHome = new List<List<Artigo>>();
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
+                artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("SELECT top 3 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by Artigo DESC")));
 
-                artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("SELECT top 3 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()")));
-                artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("IF(select COUNT(DISTINCT Artigo) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) ) >$9 BEGIN select Art.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda, Total from (SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo) as Art Join (select top 10 Artigo, SUM(Quantidade) Total from LinhasDoc where Data >= DATEADD(month,-3,GETDATE()) GROUP BY Artigo ORDER BY SUM(Quantidade) DESC) as Linhas on Art.Artigo = Linhas.Artigo END ELSE SELECT top 10 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by NEWID()")));
+                string queryContaTop = "select COUNT(DISTINCT Artigo) Total from LinhasDoc JOIN CabecDoc ON LinhasDoc.IdCabecDoc = CabecDoc.Id where CabecDoc.Data >= DATEADD(month,-3,GETDATE()) and TipoDoc = 'FA';";
+
+                string queryGetTop = "select Art.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda, Total "
+                                        + "from (SELECT Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda "
+                                        + "FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo) as Art Join"
+                                        + "(select top 10 Artigo, SUM(Quantidade) Total "
+                                        + "from LinhasDoc JOIN CabecDoc ON LinhasDoc.IdCabecDoc = CabecDoc.Id "
+                                        + "where CabecDoc.Data >= DATEADD(month,-3,GETDATE()) and TipoDoc = 'FA' and LinhasDoc.Artigo !=''"
+                                        + "GROUP BY Artigo ORDER BY SUM(Quantidade) DESC) as Linhas on Art.Artigo = Linhas.Artigo ;";
+
+                string queryGetRandom = "SELECT top 10 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda "
+                                            + " FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by Artigo DESC;";
+                if (PriEngine.Engine.Consulta(queryContaTop).Valor("Total") > 9)
+                {
+                    artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta(queryGetTop)));
+                }
+                else
+                {
+                    artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta(queryGetRandom)));
+                }
                 return artigosHome;
             }
             else
@@ -798,20 +929,38 @@ namespace ElectroSinf.Lib_Primavera
             try
             {
                 if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
-                {     
+                {
                     StdBELista lastClient = new StdBELista();
-                    lastClient = PriEngine.Engine.Consulta("SELECT top 1 Cliente FROM PRIELECSINF.[dbo].[Clientes] WHERE Cliente LIKE 'C%' ORDER BY Cliente DESC;");
-                    string b = lastClient.Valor("Cliente");
-                    b=b.Replace("C", "0");
-                    int x = 0;
-                    Int32.TryParse(b, out x);
-                    x++;
-                    string n = x.ToString();
-                    string codCliente= "C";
-                    for(int i= 0; i<(3-n.Length);i++){
-                        codCliente = string.Concat(codCliente, "0");
+                    if (PriEngine.Engine.Comercial.Clientes.Existe("C001"))
+                    {
+                        lastClient = PriEngine.Engine.Consulta("SELECT top 1 Cliente FROM PRIELECSINF.[dbo].[Clientes] WHERE Cliente LIKE 'C%' ORDER BY Cliente DESC;");
+                        string b = lastClient.Valor("Cliente");
+                        b = b.Replace("C", "0");
+                        int x = 0;
+                        Int32.TryParse(b, out x);
+                        x++;
+                        string n = x.ToString();
+                        string codCliente = "C";
+                        for (int i = 0; i < (3 - n.Length); i++)
+                        {
+                            codCliente = string.Concat(codCliente, "0");
+                        }
+                        cli.CodCliente = string.Concat(codCliente, n);
                     }
-                    cli.CodCliente = string.Concat(codCliente, n);                   
+                    else
+                    {
+                        cli.CodCliente = "C001";
+                    }
+                    StdBECampos cmps = new StdBECampos();
+                    StdBECampo email = new StdBECampo();
+                    StdBECampo pwd = new StdBECampo();
+                    email.Nome = "CDU_Email";
+                    pwd.Nome = "CDU_Password";
+                    email.Valor = cli.Email;
+                    pwd.Valor = PriEngine.Platform.Criptografia.Encripta(cli.Password, 50);
+                    cmps.Insere(email);
+                    cmps.Insere(pwd);
+                    myCli.set_CamposUtil(cmps);
                     myCli.set_Cliente(cli.CodCliente);
                     myCli.set_Nome(cli.NomeCliente);
                     myCli.set_NomeFiscal(cli.NomeCliente);
@@ -822,14 +971,12 @@ namespace ElectroSinf.Lib_Primavera
                     myCli.set_CodigoPostal(cli.CodPostal);
                     myCli.set_Distrito(cli.Distrito);
                     myCli.set_Pais(cli.Pais);
-                    myCli.set_Cliente("C005");
-                    myCli.set_Nome("ola");
-                    myCli.set_NumContribuinte("123456987");
+                    myCli.set_LocalidadeCodigoPostal(cli.Localidade);
+                    myCli.set_ModoPag(cli.ModoPagamento);
+                    myCli.set_CondPag(cli.CondicaoPagamento);
                     PriEngine.Engine.IniciaTransaccao();
-                   // PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
+                    PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
                     PriEngine.Engine.TerminaTransaccao();
-                    
-                   // PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
                     erro.Erro = 0;
                     erro.Descricao = "Sucesso";
                     return erro;

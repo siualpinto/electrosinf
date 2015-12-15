@@ -50,6 +50,8 @@ namespace ElectroSinf.Lib_Primavera.Model
             set;
         }
         public string DocType { set; get; }
+        public string estado { set; get; }
+        public DateTime DataLiq { set; get; }
 
     }
 }

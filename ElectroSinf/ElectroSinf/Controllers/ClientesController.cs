@@ -18,7 +18,7 @@ namespace ElectroSinf.Controllers
             erro = Lib_Primavera.PriIntegration.InsereClienteObj(cliente);
 
             if (erro.Erro == 0)
-            {
+            { 
                 var response = Request.CreateResponse(
                    HttpStatusCode.Created, cliente);
                 string uri = Url.Link("DefaultApi", new { CodCliente = cliente.CodCliente });

@@ -10,7 +10,8 @@ namespace ElectroSinf.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            Response.Redirect("http://localhost:3000/electrosinf/site/pages/homepage.php");
+            return null;
         }
     }
 }

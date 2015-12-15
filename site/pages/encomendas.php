@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>EletroSinf Carrinho</title>
+    <title>EletroSinf Encomendas</title>
 
     <!-- Bootstrap -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -20,26 +20,21 @@
 <body>
    <?php include_once 'header.php';?>
     <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?> style= "display: none" >
-    <div id="produtos" class="container">
-
-        <div class="shop-label col-md-12 text-center">
-            <div class="col-md-3 shop-image">
-                <h4>Produto</h4>
-            </div>
-
+    <div id="faturas" class="container">
+        <div class="shop-label col-md-12">
             <div class="col-md-3">
-                <h4>Disponibilidade</h4>
+                <h4>Referência</h4>
             </div>
-
             <div class="col-md-3">
-                <h4>Quantidade</h4>
+                <h4>Data da encomenda</h4>
             </div>
 
             <div class="col-md-2">
-                <h4>Preço</h4>
+                <h4>Estado</h4>
             </div>
-            <div class="col-md-1">
-                <h4></h4>
+
+            <div class="col-md-4">
+                <h4>Artigo [Quantidade]</h4>
             </div>
         </div>
     </div>
@@ -52,7 +47,7 @@
     <script src="../js/bootstrap.min.js"></script>
     <!-- Other JS -->
     <script src="../js/header.js"></script>
-    <script src="../js/carrinho.js"></script>
+    <script src="../js/encomenda.js"></script>
 
 </body>
 

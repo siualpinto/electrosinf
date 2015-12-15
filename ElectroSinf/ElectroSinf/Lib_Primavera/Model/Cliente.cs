@@ -7,6 +7,16 @@ namespace ElectroSinf.Lib_Primavera.Model
 {
     public class Cliente
     {
+        public string Email
+        {
+            get;
+            set;
+        }
+        public string Password
+        {
+            get;
+            set; 
+        }
         public string CodCliente
         {
             get;
@@ -48,10 +58,29 @@ namespace ElectroSinf.Lib_Primavera.Model
             get;
             set;
         }
+        public string ModoPagamento
+        {
+            get;
+            set;
+        }
+        public string CondicaoPagamento
+        {
+            get;
+            set;
+        }
         public string Pais //País
         {
             get;
             set;
         }
+
+        // usado pelo menos no carrinho
+        public string LocalidadeCodPostal
+        {
+            get;
+            set;
+        }
+        public List<TDU_Carrinho> carrinho { set; get; }
+        public string NumTelefone { set; get; }
     }
 }

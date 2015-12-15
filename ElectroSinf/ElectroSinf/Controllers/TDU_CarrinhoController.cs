@@ -17,17 +17,17 @@ namespace ElectroSinf.Controllers
         }
 
         //GET http://localhost:49234/api/TDU_Carrinho/MIGUEL
-        public List<TDU_Carrinho> Get(string id)
+        public Cliente Get(string id)
         {
-            List<TDU_Carrinho> carrinho = Lib_Primavera.PriIntegration.GetCarrinhoCliente(id);
-            if (carrinho == null)
+            Cliente cli= Lib_Primavera.PriIntegration.GetCarrinhoCliente(id);
+            if (cli == null)
             {
                 throw new HttpResponseException(
                   Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
-                return carrinho;
+                return cli;
             }
         }
 
@@ -36,6 +36,20 @@ namespace ElectroSinf.Controllers
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             erro = Lib_Primavera.PriIntegration.InsereCarrinhoObj(carrinhoLinha);
+            if (erro.Erro == 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.Created, erro.Descricao);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+            }
+        }
+        //POST http://localhost:49234/api/TDU_Carrinho/
+        public HttpResponseMessage Put(TDU_Carrinho carrinhoLinha)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+            erro = Lib_Primavera.PriIntegration.UpdateCarrinhoObj(carrinhoLinha);
             if (erro.Erro == 0)
             {
                 return Request.CreateResponse(HttpStatusCode.Created, erro.Descricao);

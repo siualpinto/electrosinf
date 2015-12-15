@@ -6,7 +6,7 @@ $(document).ready(function() {
         data: {},
         async: false
     }).done(function (artigos) {
-
+      console.log(artigos);
     for(var i = 0; i < artigos[0].length; ++i){  
       active=""
       if (i==0) {active="active"};
