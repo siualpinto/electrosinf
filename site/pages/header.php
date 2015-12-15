@@ -20,7 +20,7 @@
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#"> <span class="glyphicon glyphicon-share" aria-hidden="true"></span> </a>
+                        <a href="http://localhost:3000/electrosinf/site/pages/register.php"> <span class="glyphicon glyphicon-share" aria-hidden="true"></span> </a>
                     </li>
                     <li>
                         <a href="carrinho.php"> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> </a>
