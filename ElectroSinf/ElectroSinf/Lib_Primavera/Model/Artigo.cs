@@ -15,11 +15,11 @@ namespace ElectroSinf.Lib_Primavera.Model
             DescArtigo = objArtigo.get_Descricao();
             if (objArtigo.get_Marca() != "")
             {
-                Marca = PriEngine.Engine.Comercial.Marcas.Edita(objArtigo.get_Marca()).get_Descricao();
+                Marca = PriEngine.Engine.Comercial.Marcas.DaValorAtributo(objArtigo.get_Marca(),"Descricao");
             }
             if (objArtigo.get_Modelo() != "" && objArtigo.get_Marca() != "")
             {
-                Modelo = PriEngine.Engine.Comercial.Modelos.Edita(objArtigo.get_Marca(), objArtigo.get_Modelo()).get_Descricao();
+                Modelo = PriEngine.Engine.Comercial.Modelos.DaValorAtributo(objArtigo.get_Marca(), objArtigo.get_Modelo(), "Descricao");
             }
             Preco = Math.Round(pvp1 * (1 + Convert.ToDouble(objArtigo.get_IVA()) / 100.0), 2);
             Especificacoes = PriIntegration.ListaEspecificacoesArtigo(CodArtigo);

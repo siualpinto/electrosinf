@@ -21,24 +21,17 @@ namespace ElectroSinf.Lib_Primavera
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
 
-            GcpBEArtigo objArtigo = new GcpBEArtigo();
+            GcpBEArtigo objArtigo;
             Model.Artigo myArt = new Model.Artigo();
 
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-
-                if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
-                {
+                objArtigo = PriEngine.Engine.Comercial.Artigos.Consulta(codArtigo);
+                if (objArtigo == null)
                     return null;
-                }
-                else
-                {
-                    objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
-                    double pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(codArtigo, "EUR", "UN", "PVP1", false, 0);
-                    myArt = new Model.Artigo(objArtigo, pvp1);
-                    return myArt;
-                }
-
+                double pvp1 = PriEngine.Engine.Comercial.ArtigosPrecos.DaPrecoArtigoMoeda(codArtigo, "EUR", "UN", "PVP1", false, 0);
+                myArt = new Model.Artigo(objArtigo, pvp1);
+                return myArt;
             }
             else
             {
@@ -284,7 +277,7 @@ namespace ElectroSinf.Lib_Primavera
 
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("select Id,Data, Estado from CabecDoc JOIN CabecDocStatus ON CabecDoc.Id = CabecDocStatus.IdCabecDoc where TipoDoc = 'ECL' and Entidade = '"+idCliente+"'");
+                objList = PriEngine.Engine.Consulta("select Id,Data, Estado from CabecDoc JOIN CabecDocStatus ON CabecDoc.Id = CabecDocStatus.IdCabecDoc where TipoDoc = 'ECL' and Entidade = '" + idCliente + "'");
                 while (!objList.NoFim())
                 {
                     Model.DocVenda dv = new Model.DocVenda();
@@ -451,22 +444,24 @@ namespace ElectroSinf.Lib_Primavera
         {
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-                if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente)) {
-                    GcpBECliente cli = PriEngine.Engine.Comercial.Clientes.Edita(codCliente);
-                    Cliente cliente = new Cliente();
-                    cliente.carrinho = TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + codCliente + "'"));
-                    cliente.CodPostal = cli.get_CodigoPostal();
-                    cliente.Distrito = PriEngine.Engine.Consulta("select Descricao from Distritos where Distrito="+cli.get_Distrito()+";").Valor("Descricao"); 
-                    cliente.Localidade = cli.get_Localidade();
-                    cliente.LocalidadeCodPostal = cli.get_LocalidadeCodigoPostal();
-                    cliente.Morada = cli.get_Morada();
-                    cliente.Pais = cli.get_Pais();
-                    cliente.NumContribuinte = cli.get_NumContribuinte();
-                    cliente.NumTelefone = cli.get_Telefone();
-                    return cliente;
+                GcpBECliente cli = PriEngine.Engine.Comercial.Clientes.Consulta(codCliente);
+                if (cli == null)
+                {
+                    return null;
                 }
+                Cliente cliente = new Cliente();
+                cliente.carrinho = TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM TDU_Carrinho WHERE CDU_IdCliente='" + codCliente + "'"));
+                cliente.CodPostal = cli.get_CodigoPostal();
+                cliente.Distrito = PriEngine.Engine.Consulta("select Descricao from Distritos where Distrito=" + cli.get_Distrito() + ";").Valor("Descricao");
+                cliente.Localidade = cli.get_Localidade();
+                cliente.LocalidadeCodPostal = cli.get_LocalidadeCodigoPostal();
+                cliente.Morada = cli.get_Morada();
+                cliente.Pais = cli.get_Pais();
+                cliente.NumContribuinte = cli.get_NumContribuinte();
+                cliente.NumTelefone = cli.get_Telefone();
+                return cliente;
             }
-            
+
             return null;
         }
         public static Lib_Primavera.Model.RespostaErro DelArtigoCarrinho(Model.TDU_Carrinho carrinho)
@@ -850,7 +845,7 @@ namespace ElectroSinf.Lib_Primavera
         }
         public static List<List<Artigo>> SearchArtigosHome()
         {
-            List<List<Artigo>> artigosHome = new List<List<Artigo>>();   
+            List<List<Artigo>> artigosHome = new List<List<Artigo>>();
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
                 artigosHome.Add(toArtigoList(PriEngine.Engine.Consulta("SELECT top 3 Artigo.Artigo, Descricao, STKActual, Marca, PVP1, IVA, Moeda FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo order by Artigo DESC")));
@@ -909,10 +904,10 @@ namespace ElectroSinf.Lib_Primavera
             try
             {
                 if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
-                {     
+                {
                     StdBELista lastClient = new StdBELista();
-                    if (PriEngine.Engine.Comercial.Clientes.Existe("C001")) 
-                    { 
+                    if (PriEngine.Engine.Comercial.Clientes.Existe("C001"))
+                    {
                         lastClient = PriEngine.Engine.Consulta("SELECT top 1 Cliente FROM PRIELECSINF.[dbo].[Clientes] WHERE Cliente LIKE 'C%' ORDER BY Cliente DESC;");
                         string b = lastClient.Valor("Cliente");
                         b = b.Replace("C", "0");
@@ -940,7 +935,7 @@ namespace ElectroSinf.Lib_Primavera
                     pwd.Valor = PriEngine.Platform.Criptografia.Encripta(cli.Password, 50);
                     cmps.Insere(email);
                     cmps.Insere(pwd);
-                    myCli.set_CamposUtil(cmps);                
+                    myCli.set_CamposUtil(cmps);
                     myCli.set_Cliente(cli.CodCliente);
                     myCli.set_Nome(cli.NomeCliente);
                     myCli.set_NomeFiscal(cli.NomeCliente);
