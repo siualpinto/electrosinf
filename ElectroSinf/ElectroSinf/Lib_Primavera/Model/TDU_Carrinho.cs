@@ -19,7 +19,11 @@ namespace ElectroSinf.Lib_Primavera.Model
         public int Stock { get; set; }
         public double PrecoTotal { set; get; }
         public string Nome { set; get; }
+        //AQUI
+        public string CDU_Armazem { set; get; }
 
+
+        //ALTERADO PARA RECEBER ARMAZEM
         public static List<TDU_Carrinho> toCarrinhoList(Interop.StdBE800.StdBELista objList)
         {
             double pvp1 = 0, iva = 0;
@@ -39,7 +43,9 @@ namespace ElectroSinf.Lib_Primavera.Model
                     CDU_Quantidade = objList.Valor("CDU_Quantidade"),
                     PrecoTotal = Math.Round((pvp1 * objList.Valor("CDU_Quantidade")),2),
                     Nome = descricao,
-                    Stock = (int)PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(idArtigo)
+                    Stock = (int)PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(idArtigo),
+                    //AQUI
+                    CDU_Armazem = objList.Valor("CDU_Armazem")
                 });
                 objList.Seguinte();
 

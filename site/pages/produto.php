@@ -44,6 +44,12 @@
                 </div>
                 <div id="availability" class="product-info-item">
                 </div>
+                <div class="product-info-item">
+                    <strong>Escolha um Armazém: </strong><br>
+                    <form id="armazem" action="" >
+                        
+                    </form>
+                </div>
 
                 
                 

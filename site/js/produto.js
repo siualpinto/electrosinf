@@ -27,6 +27,17 @@ $(document).ready(function() {
                     } else {
                         $('#availability').append('<strong>Disponibilidade: Indisponível </strong>');
                     }
+        
+                    for(var i=0; i < data['Stock_armazem'].length; ++i){
+                        $('#armazem').append('<label><input type="radio" name="armazem" value="'+ data['Stock_armazem'][i]['Descricao'] +'"checked>  '+ data['Stock_armazem'][i]['Descricao'] +' - Stock Disponível: '+ data['Stock_armazem'][i]['Stock_qtdd'] +' </label><br>' )
+                    }
+        
+        
+        
+        
+        
+        
+        
                     $('#img_artigo').append('<img  src="../img/'+data['CodArtigo']+'/1.jpg" class="img-responsive" alt="Maquina Lavar AEG">');
                     
        
@@ -73,6 +84,7 @@ $(document).ready(function() {
                         var counter = $('#TextBox').val();
                         counter++ ;
                         $('#TextBox').val(counter);
+                        
                 });
 
                 $('#MinusButton').click( function() {
@@ -97,7 +109,8 @@ var id=$('#artigo_id').val();
 
 function add_carrinho(){
                 var qtdade=$('#TextBox').val();
-                
+                var form = document.getElementById('armazem');
+                var armazem = form.elements["armazem"].value;
                 console.log(clienteID);
                 console.log("A adicionar ao carrinho!");    
                 var resultado = $.ajax({
@@ -107,12 +120,14 @@ function add_carrinho(){
                 data: {
                     CDU_IdCliente:clienteID, 
                     CDU_IdArtigo:id,
-                    CDU_Quantidade:qtdade
+                    CDU_Quantidade:qtdade,
+                    CDU_Armazem: armazem
                 },
                 async: false
                 }).done(function() {
                    console.log("Feito");
                 }).fail(function(){
+                    console.log(data); 
                    console.log("Erro ao adicionar ao carrinho!");
                 })  
 };

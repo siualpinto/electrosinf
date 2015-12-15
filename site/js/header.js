@@ -1,6 +1,27 @@
 $(document).ready(function() {
     console.log("ready!");
-        
+      $("#login").on("click",function(){
+        var userName = $("#email").val();
+        var pass = $("#password").val();
+        $.ajax({
+          type: "PUT",
+          dataType: "json",
+          url: "http://localhost:49234/api/clientes",
+          data: {Email:userName,Password:pass}
+        }).done(function (data) {
+          if(data.Erro==-1){
+            alert("Password errada");
+          }else if(data.Erro==0){
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "http://localhost:3000/electrosinf/site/actions/login.php",
+                data: {_cliente:data.Descricao,token:"aytidughasdpusagdusagdisadytadulhbweo8li721y837y2fyus"}
+            });
+              window.location.reload();      
+          }
+        });
+    });
     $.ajax({
         type: "GET",
         dataType: "json",
