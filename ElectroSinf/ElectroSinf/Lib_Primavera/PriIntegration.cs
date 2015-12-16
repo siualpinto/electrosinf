@@ -434,14 +434,14 @@ namespace ElectroSinf.Lib_Primavera
         //}
         #endregion DocVenda
         #region TDU_Carrinho
-        public static List<Model.TDU_Carrinho> ListaCarrinho()
-        {
-            if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
-            {
-                return Model.TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM  TDU_Carrinho"));
-            }
-            else return null;
-        }
+        //public static List<Model.TDU_Carrinho> ListaCarrinho()
+        //{
+        //    if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
+        //    {
+        //        return Model.TDU_Carrinho.toCarrinhoList(PriEngine.Engine.Consulta("SELECT * FROM  TDU_Carrinho"));
+        //    }
+        //    else return null;
+        //}
         public static Model.Cliente GetCarrinhoCliente(string codCliente)
         {
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)

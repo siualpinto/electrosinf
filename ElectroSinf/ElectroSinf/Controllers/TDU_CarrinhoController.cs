@@ -10,11 +10,11 @@ namespace ElectroSinf.Controllers
 {
     public class TDU_CarrinhoController : ApiController
     {
-        //GET http://localhost:49234/api/TDU_Carrinho/
-        public IEnumerable<Lib_Primavera.Model.TDU_Carrinho> Get()
-        {
-            return Lib_Primavera.PriIntegration.ListaCarrinho();
-        }
+        ////GET http://localhost:49234/api/TDU_Carrinho/
+        //public IEnumerable<Lib_Primavera.Model.TDU_Carrinho> Get()
+        //{
+        //    return Lib_Primavera.PriIntegration.ListaCarrinho();
+        //}
 
         //GET http://localhost:49234/api/TDU_Carrinho/MIGUEL
         public Cliente Get(string id)

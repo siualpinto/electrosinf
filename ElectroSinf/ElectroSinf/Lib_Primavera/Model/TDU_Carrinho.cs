@@ -43,9 +43,8 @@ namespace ElectroSinf.Lib_Primavera.Model
                     CDU_Quantidade = objList.Valor("CDU_Quantidade"),
                     PrecoTotal = Math.Round((pvp1 * objList.Valor("CDU_Quantidade")),2),
                     Nome = descricao,
-                    Stock = (int)PriEngine.Engine.Comercial.ArtigosArmazens.DaStockArtigo(idArtigo),
-                    //AQUI
-                    CDU_Armazem = objList.Valor("CDU_Armazem")
+                    Stock = (int)PriEngine.Engine.Consulta("select SUM(StkActual) Stock from ArtigoArmazem where Artigo = '"+idArtigo+"';").Valor("Stock"),
+                    CDU_Armazem = PriEngine.Engine.Consulta("select Descricao From Armazens where Armazem='"+objList.Valor("CDU_Armazem")+"'").Valor("Descricao")
                 });
                 objList.Seguinte();
 

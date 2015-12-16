@@ -15,7 +15,7 @@ function getCarrinho(){
 				podeGerarFatura=false;
 				red="border : 3px solid red";
 			}else red="";
-			
+			console.log(element);
 			produtos.append("<div class=\"shop-item col-md-12\">"
 								+"<input type=\"hidden\" id=\"\" value=\""+element.CDU_IdArtigo+"\" >"
 					            +"<div class=\"col-md-3 product-title\">"
@@ -26,7 +26,7 @@ function getCarrinho(){
 					                    +"<img src=\"../img/"+element.CDU_IdArtigo+"/1.jpg\" class=\"img-responsive\" alt=\"Micro\">" /*FALTA A IMAGEM*/
 					             	+"</div>"
 					                +"<div class=\"col-md-3\">"
-					                    +"<h4>"+element.Stock+" Produtos</h4>" 
+					                    +"<h4>"+element.Stock+" Produtos / "+element.CDU_Armazem+" </h4>" 
 					                +"</div>"
 					                +"<div class=\"col-md-3\">"
 					                    +"<div class=\"col-md-5 col-md-offset-2\">"
