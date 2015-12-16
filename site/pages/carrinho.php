@@ -1,9 +1,3 @@
-<?
-    if(!isset($_SESSION['clienteID'])){
-        header("Location: http://localhost:3000/electrosinf/site/pages/homepage.php");
-        die();
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +19,12 @@
 
 <body>
    <?php include_once 'header.php';?>
+   <?
+        if(!isset($_SESSION['clienteID'])){
+            header("Location: http://localhost:3000/electrosinf/site/pages/homepage.php");
+            die();
+        }
+    ?>
     <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?> style= "display: none" >
     <div id="produtos" class="container">
 

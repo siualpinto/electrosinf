@@ -16,9 +16,15 @@ $(document).ready(function() {
                 type: "POST",
                 dataType: "json",
                 url: "http://localhost:3000/electrosinf/site/actions/login.php",
-                data: {_cliente:data.Descricao,token:"aytidughasdpusagdusagdisadytadulhbweo8li721y837y2fyus"}
-            });
-              window.location.reload();      
+                data: {_cliente:data.Descricao,token:"aytidughasdpusagdusagdisadytadulhbweo8li721y837y2fyus"},
+                dataType: "json",
+                success: function (data) {
+                    window.location.reload(); 
+                },
+                error: function (data) {
+                    window.location.reload(); 
+                },
+            }); 
           }
         });
     });

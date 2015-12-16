@@ -1,4 +1,5 @@
 <?php
+	header('Content-Type: application/json');
 	if(isset($_POST['token'])){
 		if($_POST['token'] === "aytidughasdpusagdusagdisadytadulhbweo8li721y837y2fyus"){
 			if(isset($_POST['_cliente'])){ 
