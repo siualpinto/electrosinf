@@ -1,9 +1,8 @@
-var id=$('#artigo_id').val();
-var clienteID = $("#clienteID").val();
+
 
 $(document).ready(function() {
     console.log("ready!");
-    
+    var id=$('#artigo_id').val();
     var produto = $.ajax({
         type: "GET",
         url:"http://localhost:49234/api/artigos/" + id,
@@ -11,6 +10,7 @@ $(document).ready(function() {
         data: {},
         async: false
     }).done(function(data) { 
+            
                     console.log(data);
                     codArtigo=data['codArtigo'];
     
@@ -105,9 +105,9 @@ $(document).ready(function() {
  });
 
 
-var id=$('#artigo_id').val();
-
 function add_carrinho(){
+                var id=$('#artigo_id').val();
+                var clienteID = $("#clienteID").val();
                 var qtdade=$('#TextBox').val();
                 var form = document.getElementById('armazem');
                 var armazem = form.elements["armazem"].value;
