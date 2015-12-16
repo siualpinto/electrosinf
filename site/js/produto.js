@@ -57,7 +57,7 @@ $(document).ready(function() {
                             '<tr ><td class="back-grey"><strong>'+data['Especificacoes'][i]['CDU_Nome']+'</strong></td><td>'+data['Especificacoes'][i]["CDU_Valor"]+ '</td></tr>')
                         } else {
                         $('#specifications').append(
-                            '<tr class="product-spec-hidden"><td><strong>'+data['Especificacoes'][i]['CDU_Nome']+'</strong></td><td>'+data['Especificacoes'][i]["CDU_Valor"]+ '</td></tr>')
+                            '<tr class="product-spec-hidden"><td class="back-grey"><strong>'+data['Especificacoes'][i]['CDU_Nome']+'</strong></td><td>'+data['Especificacoes'][i]["CDU_Valor"]+ '</td></tr>')
                         }
                     }
         

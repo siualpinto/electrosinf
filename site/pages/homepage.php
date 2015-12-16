@@ -31,12 +31,12 @@
             <!-- Wrapper for slides -->
             <div id="carousel" class="carousel-inner" role="listbox">
 				<div class="item active">
-				  <img src="../img/banners/123.png" alt="...">
+				  <img src="../img/banners/fundo1.png" alt="...">
 				  <div class="carousel-caption">
 				  </div>
 				</div>
 				<div class="item">
-				  <img src="../img/banners/234.png" alt="...">
+				  <img src="../img/banners/fundo2.png" alt="...">
 				  <div class="carousel-caption">
 				  </div>
 				</div>
