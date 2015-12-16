@@ -3,6 +3,7 @@
 	if(isset($_POST['token'])){
 		if($_POST['token'] === "aytidughasdpusagdusagdisadytadulhbweo8li721y837y2fyus"){
 			if(isset($_POST['_cliente'])){ 
+				session_set_cookie_params(0, '/', 'http://localhost:3000/'); 
 				session_start(); 
     			$_SESSION['clienteID']=$_POST['_cliente'];
     			echo json_encode("login");
