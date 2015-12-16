@@ -62,7 +62,7 @@
                 
                 <div class="product-info-item">
                     <? if(isset($_SESSION['clienteID'])){ ?> 
-                     <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?>>-->
+                     <input type="hidden" id="clienteID" value=<?=$_SESSION['clienteID']?>>
                     <button id="adicionar_carrinho" onclick="add_carrinho()" type="button" class="btn btn-success">Adicionar ao carrinho</button>
                      <?} else {?> 
                     <p> Tem que iniciar sessão para poder adicionar um produto ao carrinho </p>
