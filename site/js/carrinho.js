@@ -45,17 +45,17 @@ function getCarrinho(){
 			
 		});
 
-		produtos.append("<div class=\"shop-total col-md-12 text-right\">"
+		produtos.append("<div class=\"shop-total col-md-4 col-md-offset-8 text-center\">"
 				            +"<h3> TOTAL:"+total.toFixed(2)+" € </h3>"
 				        +"</div>");
 
 		if(podeGerarFatura)
-			produtos.append("<div class=\"shop-buttons col-md-12\">"
-					            +"<div class=\"pull-right text-center col-md-3\">"
+			produtos.append("<div class=\"shop-buttons col-md-4 col-md-offset-8\">"
+					            +"<div class=\"text-center col-md-3\">"
 					                +"<button id=\"checkout\" type=\"submit\" class=\"btn btn-success text-center\">Checkout</button>"
 					            +"</div>"
 					        +"</div>");
-		else produtos.append("<div class=\"shop-buttons col-md-12\">"
+		else produtos.append("<div class=\"shop-buttons col-md-4 col-md-offset-8\">"
 					            +"<div class=\"text-center col-md-3\">"
 					                +"<button type=\"submit\" class=\"btn btn-warning text-center\">Não é possível satisfazer as quantidades indicadas as vermelho</button>"
 					            +"</div>"
@@ -103,7 +103,7 @@ function getCarrinho(){
 			});
 		});
 
-		var dados= "<h4>Dados para entrega/fatura</h4><div>";
+		var dados= '<h4 class="dadosCliente">Dados para entrega/fatura</h4><div>';
 		dados+="<p><strong> Contribuinte: </strong>"+data.NumContribuinte+"</p>";
 		dados+="<p><strong> Morada: </strong>"+data.Morada+"</p>";
 		dados+="<p><strong> Localidade: </strong>"+data.Localidade+"</p>";

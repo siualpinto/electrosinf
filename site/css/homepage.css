@@ -1,6 +1,13 @@
+/*
+#EBEBEB -> cinzento
+
+
+
+*/
+
 .carousel-container{	
-	width: 60%;
-	height: 50%;
+	width: 100%;
+	height: 100%;
 	margin: auto;
 }
 
@@ -10,9 +17,54 @@ a{
 .descricao {
     color: black;
     text-decoration: none;
+	min-height:50px;
 }
 
 .carousel-caption{
 	color: white;
     text-shadow: 0px 0px 5px #000000;
 }
+
+.top-item.col-md-4 a img{
+	
+	padding-left:15%;
+	padding-right:15%;
+	
+}
+
+.top-item.col-md-4 {
+	border-bottom:solid 1px #EBEBEB;
+	padding-bottom:3%
+	
+}
+
+.artigo-dados{
+	padding-left:5%;
+}
+
+.artigo-dados a .descricao{
+	color:#4b4f54;
+	/*font-size:15px;
+	font-weight:300px;*/
+	font: bold;
+}
+
+.top-title{
+	background-color: #EBEBEB;
+	border-bottom: solid 2px #125688;
+	padding-top:1px;
+	padding-left:5%;
+	
+}
+
+.preco{
+	color:#125688;
+}
+
+
+
+
+/*
+#carousel-example-generic{
+	min-width:100%;
+}*/

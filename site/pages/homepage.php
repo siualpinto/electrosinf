@@ -31,7 +31,16 @@
 
             <!-- Wrapper for slides -->
             <div id="carousel" class="carousel-inner" role="listbox">
-                
+				<div class="item active">
+				  <img src="../img/banners/123.png" alt="...">
+				  <div class="carousel-caption">
+				  </div>
+				</div>
+				<div class="item">
+				  <img src="../img/banners/234.png" alt="...">
+				  <div class="carousel-caption">
+				  </div>
+				</div>
             </div>
 
             <!-- Controls -->
@@ -48,7 +57,7 @@
 
     <div class="top-container">
         <div class="top-title">
-            <h3>Top Vendas</h3>
+            <h3>Produtos mais vendidos</h3>
         </div>
         <div class="top-list col-md-12">
         </div>

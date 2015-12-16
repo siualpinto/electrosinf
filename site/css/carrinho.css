@@ -3,7 +3,8 @@ html{
 }
 
 .shop-label{
-	border:1px solid black;
+	border-bottom:2px solid #125688;
+    background-color:#EBEBEB;
 	margin-top:2%;
 }
 
@@ -15,4 +16,22 @@ html{
 .shop-image{
 	padding-left:5%;
 	padding-right:5%;
+}
+
+.dadosCliente{
+    padding:2%;
+    border-bottom:2px solid #125688;
+    background-color:#EBEBEB;
+    margin-top:2%;
+}
+
+.shop-total{
+    background-color: #EBEBEB; 
+}
+
+.shop-buttons{
+    background-color: #EBEBEB; 
+    padding-left:10%;
+    padding-bottom:2%;
+    
 }

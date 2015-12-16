@@ -32,6 +32,9 @@
                     </li>
                 <?}else{?>
                 <li>
+					Bem-vindo 
+				</li>
+				<li>
                     <form class="form-inline" method="POST" action="../actions/logout.php">
                         <input type="submit" class="btn btn-default btn-sm" value="Logout">
                     </form>
@@ -42,6 +45,9 @@
                     </li>
                     <li>
                         <a href="carrinho.php"> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> </a>
+                    </li>
+					<li>
+                        <a href="encomendas.php"> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> </a>
                     </li>
                     <li>
                         <a href="#"> <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> </a>

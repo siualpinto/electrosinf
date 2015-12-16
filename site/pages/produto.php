@@ -31,9 +31,13 @@
         </div>
 
         <div class="col-md-6">
-            <div id="product-title" class="product-title">
-            
-            </div>
+			
+			<div class="row">
+				<div id="product-title" class="product-title col-md-8">
+				
+				</div>
+			
+			</div>
 
             <div class="product-info-container">
                 <div id="price" class="product-info-item">
@@ -44,7 +48,7 @@
                 </div>
                 <div id="availability" class="product-info-item">
                 </div>
-                <div class="product-info-item">
+                <div class="product-info-item2">
                     <strong>Escolha um Armazém: </strong><br>
                     <form id="armazem" action="" >
                         
@@ -52,11 +56,11 @@
                 </div>
 
                 
-                
-                <input type="text" name="TextBox" id="TextBox" value="1" readonly/>
-                <input type="Button" id='AddButton' value="+" />
-                <input type="Button" id='MinusButton' value="-" />
-
+                <div class="product-info-item2">
+					<input type="text" name="TextBox" id="TextBox" value="1" readonly/>
+					<input type="Button" id='AddButton' value="+" />
+					<input type="Button" id='MinusButton' value="-" />
+				</div>
         
        
                 
@@ -75,10 +79,6 @@
         </div>
 
         <div class="col-md-8 product-specs">
-            <div>
-                <h4>Mais Informações </h4>
-            </div>
-
             <div>
                 <p>
                 </p>
@@ -103,13 +103,14 @@
             </div>
         </div>
 
-        <div class="col-md-8 product-related">
-            <div>
+        <div class="col-md-8 product-related-top">
                 <h4>Relacionados </h4>
-            </div>
-            <div id="related-products" class="col-md-12 product-related-info">
+        </div>
+		<div class="col-md-8 product-related">
+			<div id="related-products" class="col-md-12 product-related-info">
 
-            </div>
+			</div>
+			
         </div>
 
     </div>

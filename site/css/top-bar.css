@@ -1,8 +1,32 @@
+
+
+
  .carousel-inner > .item > img,
   .carousel-inner > .item > a > img {
-      width: 70%;
+      width: 100%;
       margin: auto;
   }
 .inline {
     display:inline;
+}
+
+.navbar.navbar-default{
+	background-color: #EBEBEB;
+	border-bottom: solid 2px #125688;
+	
+}
+
+.navbar-header a.navbar-brand{
+	color: #125688;
+}
+
+
+#displayshit{
+	padding-bottom:2%
+}
+
+.dropdown.inline button{
+	border: 1px solid #125688;
+	background-color: #EBEBEB;
+	color:#125688;
 }
