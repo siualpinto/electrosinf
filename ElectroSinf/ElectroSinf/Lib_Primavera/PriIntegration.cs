@@ -756,13 +756,14 @@ namespace ElectroSinf.Lib_Primavera
             List<Artigo> artigos = new List<Artigo>();
             if (PriEngine.InitializeCompany(ElectroSinf.Properties.Settings.Default.Company.Trim(), ElectroSinf.Properties.Settings.Default.User.Trim(), ElectroSinf.Properties.Settings.Default.Password.Trim()) == true)
             {
-                StdBELista lst = PriEngine.Engine.Consulta("SELECT Artigo.Artigo,Descricao,IVA,PVP1 FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo WHERE CDU_Tipo=" + id);
+                StdBELista lst = PriEngine.Engine.Consulta("SELECT Artigo.Artigo,STKActual,Descricao,IVA,PVP1 FROM Artigo JOIN ArtigoMoeda ON Artigo.Artigo=ArtigoMoeda.Artigo WHERE CDU_Tipo=" + id);
                 Artigo art;
                 while (!lst.NoFim())
                 {
                     art = new Artigo();
                     art.CodArtigo = lst.Valor("Artigo");
                     art.DescArtigo = lst.Valor("Descricao");
+                    art.Stock = Convert.ToDouble(lst.Valor("STKActual"));
                     art.Preco = Math.Round(lst.Valor("PVP1") * (1 + Convert.ToDouble(lst.Valor("IVA")) / 100.0), 2);
                     artigos.Add(art);
                     lst.Seguinte();
