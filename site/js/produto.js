@@ -1,7 +1,7 @@
 
 
 $(document).ready(function() {
-    console.log("ready!");
+   // console.log("ready!");
     var id=$('#artigo_id').val();
     var produto = $.ajax({
         type: "GET",
@@ -11,7 +11,7 @@ $(document).ready(function() {
         async: false
     }).done(function(data) { 
             
-                    console.log(data);
+                    //console.log(data);
                     codArtigo=data['codArtigo'];
     
     
@@ -83,12 +83,9 @@ $(document).ready(function() {
 							);
                         }
                 }
-				
-				console.log("yooo");
-				console.log(data['Relacionados'].length);
+				//console.log(data['Relacionados'].length);
 				if(data['Relacionados'].length >0){
 					$(".product-related").show();
-					console.log("fds");
 				}
         
                 $('#AddButton').click( function() {
@@ -122,8 +119,8 @@ function add_carrinho(){
                 var qtdade=$('#TextBox').val();
                 var form = document.getElementById('armazem');
                 var armazem = form.elements["armazem"].value;
-                console.log(clienteID);
-                console.log("A adicionar ao carrinho!");    
+                //console.log(clienteID);
+                //console.log("A adicionar ao carrinho!");    
                 var resultado = $.ajax({
                 type: "POST",
                 url:"http://localhost:49234/api/TDU_Carrinho/",
@@ -136,10 +133,9 @@ function add_carrinho(){
                 },
                 async: false
                 }).done(function() {
-                   console.log("Feito");
 				   $("#adicionar_carrinho").parent().append("<p>Produto adicionado ao carrinho</p>");
                 }).fail(function(){
-                    console.log(data); 
+                   // console.log(data); 
                    console.log("Erro ao adicionar ao carrinho!");
                 })  
 };

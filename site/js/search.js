@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    console.log("ready!");
+    //console.log("ready!");
     var tipo=$('#type').val();
     var valor=$('#valor').val();
     var url="";
