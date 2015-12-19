@@ -20,7 +20,7 @@ namespace ElectroSinf.Controllers
             if (erro.Erro == 0)
             {
                 var response = Request.CreateResponse(
-                   HttpStatusCode.Created, erro.Erro);
+                   HttpStatusCode.Created, erro);
                 string uri = Url.Link("DefaultApi", new { CodCliente = cliente.CodCliente });
                 response.Headers.Location = new Uri(uri);
                 return response;
@@ -29,7 +29,7 @@ namespace ElectroSinf.Controllers
             else
             {
                // return Request.CreateResponse(HttpStatusCode.BadRequest);
-                var response = Request.CreateResponse(HttpStatusCode.Created, erro.Erro);
+                var response = Request.CreateResponse(HttpStatusCode.Created, erro);
                 return response;
             }
 

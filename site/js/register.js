@@ -36,8 +36,9 @@
                  CondicaoPagamento: condicao
              },
              async: false
-         }).done(function(data) {           
-            if(data=="0")
+         }).done(function(data) {   
+             alert(data["Erro"]);
+            if(data["Erro"]=="0")
                  { 
                  alert("Conta criada com sucesso!!!");
                       $myForm.submit(function(e) {
@@ -46,7 +47,7 @@
 				 window.location.href = "http://localhost:3000/electrosinf/site/pages/homepage.php";
                      return;
                  }
-             else if (data=="-1")
+             else if (data["Erro"]=="-1")
                 {
                  alert("Já existe uma pessoa com esse email!!!");
                  $myForm.submit(function(e) {
@@ -56,7 +57,7 @@
                 }
              else
                  {
-                 alert("Algum erro ocurreu na base de dados");
+                 alert("Algo falhou site");
                  window.location.href("http://localhost:3000/electrosinf/site/pages/homepage.php");
                  }
          });
